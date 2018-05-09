@@ -4,7 +4,9 @@
 
 > 成员：Zhiqi Zhang, Erzhi Liu, Zihua Zhao, Maosheng Zhu
 
-不断更新中……
+*不断更新中……*
+
+后端文件请放入`/source`文件夹中。
 
 ## 代码规范
 
