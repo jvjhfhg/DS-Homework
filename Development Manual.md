@@ -38,7 +38,7 @@ TODO
 
         如：`_myPrivateFunction()`, `_myPrivateVariable`
 
-    -   全大写命名的常量用下划线分割。
+    -   全大写命名的常量用下划线分隔。
 
         如：`MY_CONSTANT`
 
