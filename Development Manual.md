@@ -6,21 +6,80 @@ TODO
 
 ## 文件
 
-| 文件名               | 备注       |
-| -------------------- | ---------- |
-| lib/algorithm.hpp    | 常用算法库 |
-| lib/b_plus_tree.hpp  | B+树       |
-| lib/file_manager.hpp | 文件操作库 |
-| user.hpp             | 用户信息   |
-| train.hpp            | 车次信息   |
-| railway_manager.hpp  | 主管理库   |
-|                      |            |
-|                      |            |
-|                      |            |
+| 文件名                   | 备注                |
+| ------------------------ | ------------------- |
+| `lib/algorithm.hpp`      | 常用算法库          |
+| `lib/deque.hpp`          | deque类             |
+| `lib/exceptions.hpp`     | 异常处理库（STL用） |
+| `lib/map.hpp`            | map类               |
+| `lib/priority_queue.hpp` | priority_queue类    |
+| `lib/utility.hpp`        | pair类              |
+| `lib/b_plus_tree.hpp`    | B+树类              |
+| `user.hpp`               | 用户类              |
+| `train.hpp`              | 车次类              |
+| `order.hpp`              | 订单类              |
+| `railway_manager.hpp`    | 主交互库            |
 
 ## 对各文件的具体说明
 
+#### `lib/algorithm`
 
+-   **简述**：常用算法库。
+
+
+-   **函数**：
+    -   `swap(a, b)`：交换a和b。
+
+#### `lib/deque.hpp`
+
+-   **简述**：双端队列，与STL相似。
+
+#### `lib/exceptions.hpp`
+
+-   **简述**：异常处理库，主要给STL用。
+-   **四种exception**：
+    -   `index_out_of_bound`
+    -   `runtime_error`
+    -   `invalid_iterator`
+    -   `container_is_empty`
+
+#### `lib/map.hpp`
+
+-   **简述**：映射，与STL相似。
+
+#### `lib/priority_queue.hpp`
+
+-   **简述**：优先队列，与STL相似。
+
+#### `lib/utility.hpp`
+
+-   **简述**：pair，与STL相似，在STL大作业提供的`utility.hpp`的基础上增加了比较函数的重载。
+
+#### `lib/b_plus_tree.hpp`
+
+-   **简述**：B+树。
+
+#### `user.hpp`
+
+-   **简述**：用户类。
+
+#### `train.hpp`
+
+-   **简述**：车次类。
+
+#### `order.hpp`
+
+-   **简述**：订单类。
+
+#### `railway_manager.hpp`
+
+-   **简述**：主交互库。所有接口为`class Interactor`的静态公共成员函数。
+-   **接口**：
+    -   `int Register(char *username, char *password, char *email, char *phone)`：注册新用户，返回用户id。
+    -   `bool Login(int userid, char *password)`：用户登录，返回是否成功登录。
+    -   `pair<User, bool> QueryProfile(int userid)`：查询用户信息，若用户不存在，第二项返回false。
+    -   `bool ModifyProfile(int userid, char *username, char *password, char *email, char *phone)`：修改用户信息，若用户不存在返回false。
+    -   `bool ModifyPrivilege(int userid1, int userid2, User::UserPrivilege privilege)`：用户userid1申请将userid2的权限改为privilege，若userid1权限不够返回false。
 
 ## 代码规范
 
@@ -46,4 +105,4 @@ TODO
 
 -   **注释**：由于有开发文档描述具体的接口，所以留一些方便自己维护和相互查错的注释就可以了。
 
--   **只允许在自己的函数中使用`using`及`using namespace`语句，禁止全局使用。**
+-   **只允许在自己的函数中使用`using`及`using namespace`语句，禁止在头文件中全局使用。**

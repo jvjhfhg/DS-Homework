@@ -28,9 +28,25 @@ namespace sjtu {
         friend bool operator < (const pair &x, const pair &y) {
             return x.first == y.first ? x.second < y.second : x.first < y.first;
         }
+        
+        friend bool operator > (const pair &x, const pair &y) {
+            return y < x;
+        }
+        
+        friend bool operator <= (const pair &x, const pair &y) {
+            return !(y < x);
+        }
+        
+        friend bool operator >= (const pair &x, const pair &y) {
+            return !(x < y);
+        }
 
         friend bool operator == (const pair &x, const pair &y) {
             return x.first == y.first && x.second == y.second;
+        }
+        
+        friend bool operator != (const pair &x, const pair &y) {
+            return !(x == y);
         }
     };
 }

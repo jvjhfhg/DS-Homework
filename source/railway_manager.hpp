@@ -10,25 +10,21 @@ namespace sjtu {
 
         }
 
-        static int GetID(const char *username) {
+        static bool Login(int userid, const char *password) {
 
         }
 
-        static bool Login(int id, const char *password) {
+        static pair<User, bool> QueryProfile(int userid) {
 
         }
 
-        static pair<User, bool> QueryProfile(int id) {
-
-        }
-
-        static bool ModifyProfile(int id, const char *username, const char *password, const char *email, const char *phone) {
+        static bool ModifyProfile(int userid, const char *username, const char *password, const char *email, const char *phone) {
 
         }
 
         enum UserPrivilege { user = 1, admin = 2 };
 
-        static bool ModifyPrivilege(int id1, int id2, UserPrivilege privilege) {
+        static bool ModifyPrivilege(int userid1, int userid2, UserPrivilege privilege) {
 
         }
 
