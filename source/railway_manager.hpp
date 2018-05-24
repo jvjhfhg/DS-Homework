@@ -14,7 +14,7 @@ namespace sjtu {
 
         }
 
-        static pair<User, bool> QueryProfile(int userid) {
+        static User QueryProfile(int userid) {
 
         }
 

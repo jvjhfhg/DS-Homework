@@ -77,7 +77,7 @@ TODO
 -   **接口**：
     -   `int Register(char *username, char *password, char *email, char *phone)`：注册新用户，返回用户id。
     -   `bool Login(int userid, char *password)`：用户登录，返回是否成功登录。
-    -   `pair<User, bool> QueryProfile(int userid)`：查询用户信息，若用户不存在，第二项返回false。
+    -   `User QueryProfile(int userid)`：查询用户信息，若用户不存在，返回一个**userid为-1、privilege为0 (unregistered)的用户**。
     -   `bool ModifyProfile(int userid, char *username, char *password, char *email, char *phone)`：修改用户信息，若用户不存在返回false。
     -   `bool ModifyPrivilege(int userid1, int userid2, User::UserPrivilege privilege)`：用户userid1申请将userid2的权限改为privilege，若userid1权限不够返回false。
 
