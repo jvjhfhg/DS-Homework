@@ -5,7 +5,27 @@ Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934
 	hash=None, flags=None
 Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
-Class sjtu.User: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+Class RailwayManager_DS_2018Spring.User: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.String, System.String, System.String, System.String, Int32, System.Enum): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String username : Public
+    System.String password : Public
+    System.String email : Public
+    System.String phone : Public
+    Int32 id : Public
+    System.Enum priv UserPrivilege IsBoxed : Public
+Class RailwayManager_DS_2018Spring.Database: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    Login(String, String): PrivateScope, Public, Static, HideBySig
+    Login(Int32, String): PrivateScope, Public, Static, HideBySig
+    Register(String, String, String, String): PrivateScope, Public, Static, HideBySig
+    QueryProfile(Int32): PrivateScope, Public, Static, HideBySig
+    Vector(): PrivateScope, Public, Static, HideBySig
+Struct RailwayManager_DS_2018Spring.UserPrivilege: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    RailwayManager_DS_2018Spring.UserPrivilege unregistered = 0 : Public, Static, Literal, HasDefault
+    RailwayManager_DS_2018Spring.UserPrivilege user = 1 : Public, Static, Literal, HasDefault
+    RailwayManager_DS_2018Spring.UserPrivilege admin = 2 : Public, Static, Literal, HasDefault

@@ -24,11 +24,11 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            this.UsernameBox = new System.Windows.Forms.TextBox();
+            this.UseridBox = new System.Windows.Forms.TextBox();
             this.PasswordBox = new System.Windows.Forms.TextBox();
             this.VerificationBox = new System.Windows.Forms.TextBox();
             this.VerificationCode = new CCWin.SkinControl.SkinCode();
-            this.UsernameLabel = new System.Windows.Forms.Label();
+            this.UseridLabel = new System.Windows.Forms.Label();
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.VerificationLabel = new System.Windows.Forms.Label();
             this.LoginButton = new System.Windows.Forms.Button();
@@ -37,13 +37,13 @@
             this.HintLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // UsernameBox
+            // UseridBox
             // 
-            this.UsernameBox.Location = new System.Drawing.Point(83, 59);
-            this.UsernameBox.Name = "UsernameBox";
-            this.UsernameBox.Size = new System.Drawing.Size(153, 21);
-            this.UsernameBox.TabIndex = 0;
-            this.UsernameBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UsernameBox_KeyDown);
+            this.UseridBox.Location = new System.Drawing.Point(83, 59);
+            this.UseridBox.Name = "UseridBox";
+            this.UseridBox.Size = new System.Drawing.Size(153, 21);
+            this.UseridBox.TabIndex = 0;
+            this.UseridBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UsernameBox_KeyDown);
             // 
             // PasswordBox
             // 
@@ -108,14 +108,14 @@
         "Y",
         "Z"};
             // 
-            // UsernameLabel
+            // UseridLabel
             // 
-            this.UsernameLabel.AutoSize = true;
-            this.UsernameLabel.Location = new System.Drawing.Point(36, 62);
-            this.UsernameLabel.Name = "UsernameLabel";
-            this.UsernameLabel.Size = new System.Drawing.Size(41, 12);
-            this.UsernameLabel.TabIndex = 4;
-            this.UsernameLabel.Text = "用户名";
+            this.UseridLabel.AutoSize = true;
+            this.UseridLabel.Location = new System.Drawing.Point(36, 62);
+            this.UseridLabel.Name = "UseridLabel";
+            this.UseridLabel.Size = new System.Drawing.Size(41, 12);
+            this.UseridLabel.TabIndex = 4;
+            this.UseridLabel.Text = "用户ID";
             // 
             // PasswordLabel
             // 
@@ -182,19 +182,20 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(278, 224);
+            this.Controls.Add(this.UseridBox);
             this.Controls.Add(this.HintLabel);
             this.Controls.Add(this.HelpLink);
             this.Controls.Add(this.RegisterLink);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.VerificationLabel);
             this.Controls.Add(this.PasswordLabel);
-            this.Controls.Add(this.UsernameLabel);
+            this.Controls.Add(this.UseridLabel);
             this.Controls.Add(this.VerificationCode);
             this.Controls.Add(this.VerificationBox);
             this.Controls.Add(this.PasswordBox);
-            this.Controls.Add(this.UsernameBox);
             this.Name = "LoginForm";
             this.Text = "铁卢12306-登录";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,11 +203,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox UsernameBox;
+        private System.Windows.Forms.TextBox UseridBox;
         private System.Windows.Forms.TextBox PasswordBox;
         private System.Windows.Forms.TextBox VerificationBox;
         private CCWin.SkinControl.SkinCode VerificationCode;
-        private System.Windows.Forms.Label UsernameLabel;
+        private System.Windows.Forms.Label UseridLabel;
         private System.Windows.Forms.Label PasswordLabel;
         private System.Windows.Forms.Label VerificationLabel;
         private System.Windows.Forms.Button LoginButton;

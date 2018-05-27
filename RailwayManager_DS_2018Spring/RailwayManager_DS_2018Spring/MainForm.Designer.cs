@@ -24,21 +24,37 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.TicketGrid = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.TicketGrid)).BeginInit();
             this.SuspendLayout();
+            // 
+            // TicketGrid
+            // 
+            this.TicketGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TicketGrid.Location = new System.Drawing.Point(186, 112);
+            this.TicketGrid.Name = "TicketGrid";
+            this.TicketGrid.RowTemplate.Height = 23;
+            this.TicketGrid.Size = new System.Drawing.Size(600, 400);
+            this.TicketGrid.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(798, 524);
+            this.Controls.Add(this.TicketGrid);
             this.Name = "MainForm";
             this.Text = "铁卢12306";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.TicketGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView TicketGrid;
     }
 }
 
