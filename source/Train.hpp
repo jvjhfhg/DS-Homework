@@ -1,5 +1,4 @@
-#ifndef "Train.hpp"
-#define "Train.hpp"
+#pragma once
 #include<fstream>
 #include<iostream>
 #include<bptree.cpp>
@@ -94,4 +93,3 @@ public:
 };
 
 
-#endif

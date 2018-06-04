@@ -1,5 +1,4 @@
-#ifndef "Order_user.hpp"
-#define "Order_user.hpp"
+#pragma once
 #include<fstream>
 #include<cstring>
 #include<iostream>
@@ -66,5 +65,4 @@ public:
     }
 };
 
-#endif
 

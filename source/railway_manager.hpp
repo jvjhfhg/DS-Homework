@@ -91,6 +91,58 @@ public:
         }
         DeleteTrain(id);
     }
+    static int clean()
+    {
+        _User._Root.clear();
+        _Train._Root.clear();
+        _Ticket._Root.clear();
+        _Order_User._Root.clear();
+        _Order_Time._Root.clear();
+        return 1;
+    }
+    static vector<pair<string, ticket_data>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    {
+        ///listnum = length of vector;
+        ///if(0) return;
+        date d(Date, catalog)
+        ticket_key t(loc1, loc2, d);
+        return _Ticket.query_ticket(t);
+    }
+    static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
+    {
+        string c = _Train._Root.query(id).second._Catalog;
+        date d(Date, c);
+        order_key ok(id, d);
+        bool b = _Order_User._Root.query(ok).second;
+        if(b)
+        {
+            order_map m = _Order_User._Root.query(ok).first;
+            ticket_order o = m.query(train_id).first;
+            o._Num_Of_Ticket += num;
+            m._Sub_Root.modify(train_id, o);
+            return 1;
+        }
+        else
+        {
+            order_map m;
+            ticket_key tk(loc1, loc2, d);
+            ticket_map tm = _Ticket._Root.query(tk).first;
+            ticket_data td = tm._Sub_Root.query(train_id).first;
+            ticket_order o(loc1, loc2, td, num);
+            m._Sub_Root.insert(train_id, o);
+            _Order_User._Root.insert(ok ,m);
+            return 1;
+        }
+    }
+    static bool RefundTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
+    {
+        return BuyTicket(id, -num, train_id, loc1, loc2, Date, kind);
+    }
+    static vector<pair<string, ticket_order>> query_order(int id, date t)
+    {
+        ///listnum = length of vector;
+        return _Order_User.query_order(id, t);
+    }
 };
 
 }

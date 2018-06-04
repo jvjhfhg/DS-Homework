@@ -1,5 +1,4 @@
-#ifndef "User.hpp"
-#define "User.hpp"
+#pragma once
 #include<fstream>
 #include<iostream>
 #include<bptree.cpp>
@@ -59,4 +58,4 @@ public:
         return true;
     }
 };
-#endif
+

@@ -1,5 +1,4 @@
-#ifndef "Order_user.hpp"
-#define "Order_user.hpp"
+#pragma once
 #include<fstream>
 #include<cstring>
 #include<iostream>
@@ -28,9 +27,9 @@ public:
         Iofile.open("_Order_Time");
         _Root = BPtree<remain_data, int>("_Order_Time");
     }
+    int query_remain(remain_data r)
+    {
+        return _Root.query(r).second;
+    }
 };
-
-
-
-#endif
 

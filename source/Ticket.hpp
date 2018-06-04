@@ -1,5 +1,4 @@
-#ifndef "User.hpp"
-#define "User.hpp"
+#pragma once
 #include<fstream>
 #include<iostream>
 #include<bptree.cpp>
@@ -77,9 +76,8 @@ public:
         _Iofile.open("_Ticket_Data")
         _Root = BPtree<ticket_data, ticket_map> ("_Ticket_Data");
     }
-    vector<pair<string, ticket_data>> query_ticket(order_time t, ticket_key _Key)
+    vector<pair<string, ticket_data>> query_ticket(ticket_key _Key)
     {
-        if(0) return;
         ticket_map m = _Root.query(_Key).first;
         return m._Sub_Root.traverse();
     }
@@ -99,4 +97,4 @@ public:
         }
     }
 };
-#endif
+
