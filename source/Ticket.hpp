@@ -83,5 +83,20 @@ public:
         ticket_map m = _Root.query(_Key).first;
         return m._Sub_Root.traverse();
     }
+    void add_ticket(ticket_key k, string id, ticket_data d)
+    {
+        bool b = _Root.query(k).second;
+        if(b)
+        {
+            ticket_map m = _Root.query(k).first;
+            m.insert(id, d);
+        }
+        else
+        {
+            ticket_map m;
+            m.insert(id, d);
+            _Root.insert(k, m);
+        }
+    }
 };
 #endif

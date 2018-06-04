@@ -29,7 +29,7 @@ private:
     train_station _Station[65];
 public:
     train_data(const char* b,const char* c,int d,int e,const char** f,train_station* g)
-    :,_Name(b),_catalog(c),_Num_Station(d),_Num_Price(e);
+    :,_Name(b),_Catalog(c),_Num_Station(d),_Num_Price(e);
     {
         for(int i = 0;i < _Num_Price;i++) _Name_Price[i] = f[i];
         for(int i = 0;i < _Num_Station;i++) _Station[i] = g[i];
