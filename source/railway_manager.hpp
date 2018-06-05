@@ -64,9 +64,31 @@ public:
     {
         return _Train.modify_train(a, b, c, d, e, f, g);
     }
-    static bool SellTrain(const char* id)
+    static bool SaleTrain(const char* id)
     {
-        date
+        train_data d = _Train.query_train(id).second;
+        for(int k = 1,k <= 30;k++)
+        {
+            date day(2018, 6, k, d._Catalog);
+            for(int i = 0;i < d._Num_Station - 1;i++)
+            {
+                for(int j = i + 1;j < d._Num_Station;j++)
+                {
+                    ticket_key aaa(d._Station[i]._Name, d.Station[j]._Name, day);
+                    pair<string, double> p[7];
+                    for(int l = 0;l < d._Num_Price;l++)
+                    {
+                        p[l].first = d.Name_Price[l];
+                        double money = 0;
+                        for(int h = i + 1;h <= j;h++) money += d.Station[h]._Price[l];
+                        p[l].second = money;
+                    }
+                    ticket_data ccc(d._Station[i]._Arrive, day, d._Station[j]._Arrive, d._Num_Price, p);
+                    string bbb(id);
+                    _Ticket.add_ticket(aaa, bbb, ccc);
+                }
+            }
+        }
         DeleteTrain(id);
     }
 };
