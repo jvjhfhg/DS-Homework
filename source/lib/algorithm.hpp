@@ -6,3 +6,67 @@ namespace sjtu {
         Type t(a); a = b; b = t;
     }
 }
+
+class string{
+public:
+	char ch[61];
+	int length;
+	string(char*s){
+		char*ss=s;
+		while(*ss)ss++;
+		length=ss-s;
+		for(int i=0;s+i<=ss;i++)
+			ch[i]=s[i];
+	}
+	bool operator<(string w){
+		char*oo=w.ch;
+		for(int i=0;;i++){
+			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
+			if(ch[i]!=oo[i])return ch[i]<oo[i];
+		}
+	}
+class time
+{
+public:
+    int hour;
+    int minute;
+    time(int a, int b): hour(a), minute(b) {}
+    time(const char*s)
+	{
+    	int X;
+    	sscanf(s,"%d-%d-%d %d:%d",&X,&X,&X,&hour,&mimute);
+	}
+	bool operator <(time o)
+    {
+        if(hour < o.hour) return true;
+        if(hour > o.hour) return false;
+        if(minute < o.minute) return true;
+        return false;
+    }
+};
+class date
+{
+public:
+    int year;
+    int month;
+    int day;
+    string catalog;
+    date(int a, int b, int c, const char* d): year(a), month(b), day(c), catalog(d) {}
+    date(int a, int b, int c, string d): year(a), month(b), day(c), catalog(d) {}
+    data(const char*s1,const char*s2) : catalog(s2)
+	{
+    	int X;
+    	sscanf(s,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
+	}
+    bool operator < (date o)
+    {
+        if(year < o.year) return true;
+        if(year > o.year) return false;
+        if(month < o.month) return true;
+        if(month > o.month) return false;
+        if(day < o.day) return true;
+        if(day > o.day) return false;
+        if(catalog < o.catalog) return true;
+        return false;
+    }
+};
