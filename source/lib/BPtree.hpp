@@ -4,13 +4,12 @@
 #include<cmath>
 #include<cstring>
 #include"utility.hpp"
-#include<vector>
-
-typedef long long ll;
+#include"vector.hpp"
 
 namespace sjtu {
 	template<class Key, class T, class Compare = std::less<Key> >
 	class BPtree {
+        typedef long long ll;
 	public:
 		friend class ticket_map;
 		friend class order_user;
@@ -78,7 +77,6 @@ namespace sjtu {
 
 		//删库跑路;
 		void clear() {
-
 			File = fopen(file, "w");
 			fclose(File);
 			node rt;
@@ -90,7 +88,7 @@ namespace sjtu {
 		}
 
 		//在当前块中查找键值所在位置，若键值小于当前的第一个键值，则返回-1;
-		int search(Key& kk, node* ss) {
+		int search(const Key& kk, node* ss) {
 			//	if(cmp(kk , ss->key[0])){
 			//		return -1;
 			//  }
@@ -103,7 +101,7 @@ namespace sjtu {
 		}
 
 		//在所有块中查找键值所在位置，只会找到对应的块的位置，不能查找在头的;
-		ll search_node(Key& kk) {
+		ll search_node(const Key& kk) {
 			char* tmp[K];
 			file_seek(root);
 			fread(tmp, K, 1, File);
@@ -138,7 +136,7 @@ namespace sjtu {
 		}
 
 		//中序遍历
-		void traverse(node* s, std::vector<pair<Key, T> > &a) {
+		void traverse(node* s, vector<pair<Key, T> > &a) {
 			char* tmp[K];
 			if (s->is_leaf) {
 				for (int i = 0; i < s->size; ++i) {
@@ -146,7 +144,7 @@ namespace sjtu {
 				}
 			}
 			else {
-				//	a.push_back(std::pair<Key, T>(-1，-1));
+				//	a.push_back(pair<Key, T>(-1，-1));
 				for (int i = 0; i < s->size; ++i) {
 					char*tmp2[K];
 					file_seek(s->son[i]);
@@ -154,16 +152,16 @@ namespace sjtu {
 					node* now = (node*)tmp2;
 					traverse(now, a);
 				}
-				//	a.push_back(std::pair<Key, T>(-2， - 2 ));
+				//	a.push_back(pair<Key, T>(-2， - 2 ));
 			}
 		}
 
-		std::vector<pair<Key, T> > traverse() {
+		vector<pair<Key, T> > traverse() {
 			char* tmp[K];
 			file_seek(root);
 			fread(tmp, K, 1, File);
 			node* rt = (node*)tmp;
-			std::vector<pair<Key, T> > s;
+			vector<pair<Key, T> > s;
 			traverse(rt, s);
 			return s;
 		}
@@ -290,7 +288,7 @@ namespace sjtu {
 		}
 
 		//插入主函数
-		bool insert(Key& kk, T& dd) {
+		bool insert(const Key& kk, const T& dd) {
 			char* tmp[K];
 			ll nn;
 			file_seek(root);
@@ -370,7 +368,7 @@ namespace sjtu {
 		}
 
 		//修改主函数;
-		void modify(Key& kk, T& dd) {
+		void modify(const Key& kk,const T& dd) {
 			char* tmp[K];
 			ll p = search_node(kk);
 			file_seek(p);
@@ -705,7 +703,7 @@ namespace sjtu {
 		}
 
 		//删除主函数;
-		void erase(Key& kk) {
+		void erase(const Key& kk) {
 			char* tmp[K];
 			char* tmp2[K];
 			ll p = search_node(kk);
