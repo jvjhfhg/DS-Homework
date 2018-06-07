@@ -2,7 +2,7 @@
 #include<fstream>
 #include<iostream>
 #include"lib/BPtree.hpp"
-#include<vector>//#include"vector.hpp"
+#include"lib/vector.hpp"
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
 namespace sjtu
@@ -15,6 +15,7 @@ private:
     string _Catalog;
 public:
     ticket_key(const char* a, const char* b, const char* c): _Loc1(a), _Loc2(b), _Catalog(c) {}
+    ticket_key(string a, string b, string c): _Loc1(a), _Loc2(b), _Catalog(c) {}
     ticket_key(const ticket_key& o): _Loc1(o._Loc1), _Loc2(o._Loc2), _Catalog(o._Catalog) {}
     bool operator<(ticket_key o)
     {
@@ -49,8 +50,9 @@ class ticket_map
 {
 private:
     BPtree<string, ticket_data> _Sub_Root;
-public:
     static int _Num_Of_File;
+public:
+    friend class Database;
     friend class ticket;
     ticket_map():_Sub_Root("Fuck you!")
     {
@@ -73,12 +75,13 @@ class ticket
 private:
     BPtree<ticket_key, ticket_map> _Root;
 public:
+    friend class Interactor;
     ticket():_Root("_Ticket_Data")
     {
         std::fstream _Iofile;
         _Iofile.open("_Ticket_Data");
     }
-    std::vector<pair<string, ticket_data>> query_ticket(ticket_key _Key)
+    vector<pair<string, ticket_data>> query_ticket(ticket_key _Key)
     {
         ticket_map m = _Root.query(_Key).first;
         return m._Sub_Root.traverse();

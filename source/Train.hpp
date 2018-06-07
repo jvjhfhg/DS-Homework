@@ -32,6 +32,7 @@ private:
     string _Name_Price[7];
     train_station _Station[65];
 public:
+    friend class Interactor;
     train_data(const char* b,const char* c,int d,int e,const char** f,train_station* g)
     :_Name(b), _Catalog(c), _Num_Station(d), _Num_Price(e), _Published(false)
     {
@@ -67,6 +68,7 @@ class train
 private:
     BPtree<string, train_data> _Root;
 public:
+    friend class Interactor;
     train():_Root("_Train_Data")
     {
         std::fstream _Iofile;
@@ -96,7 +98,7 @@ public:
     }
     bool modify_train(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
-        train_data t(b, c, d, e, f);
+        train_data t(b, c, d, e, f, g);
         _Root.modify(a, t);
         return true;
     }

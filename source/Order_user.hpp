@@ -6,7 +6,7 @@
 #include<cstdio>
 #include"lib/algorithm.hpp"
 #include"ticket.hpp"
-#include<vector>///#include"vector.hpp"
+#include"lib/vector.hpp"
 #include"lib/utility.hpp"
 namespace sjtu
 {
@@ -34,19 +34,21 @@ private:
     string _Loc2;
     ticket_data _Other_Data;
 public:
-    ticket_order(const char* a, const char* b, ticket_data c, int i):_Loc1(a), _Loc2(b), _Other_data(c), _Num_Of_Ticket(i) {}
+    ticket_order(const char* a, const char* b, ticket_data c, int i):_Loc1(a), _Loc2(b), _Other_Data(c), _Num_Of_Ticket(i) {}
 };
 
 class order_map
 {
 private:
     BPtree<string, ticket_order> _Sub_Root;
-public:
     static int _Num_Of_File;
+public:
+    friend class order_user;
+    friend class Database;
     order_map():_Sub_Root("Fuck you!")
     {
         char* str;
-        sprintf(str, _Num_Of_File);
+        sprintf(str, "%d", _Num_Of_File);
         const char* cstr(str);
         std::fstream _Iofile;
         _Iofile.open(cstr);
@@ -60,16 +62,17 @@ class order_user
 private:
     BPtree<order_key, order_map> _Root;
 public:
+    friend class Interactor;
     order_user():_Root("_Order_User")
     {
         std::fstream _Iofile;
         _Iofile.open("_Order_User");
 
     }
-    std::vector<pair<string, ticket_order>> query_order(int id, date t)
+    vector<pair<string, ticket_order>> query_order(int id, date t)
     {
         order_key k(id, t);
-        order_map m = _Root.query(k);
+        order_map m = _Root.query(k).first;
         return m._Sub_Root.traverse();
     }
 };

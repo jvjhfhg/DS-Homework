@@ -34,6 +34,8 @@ private:
     BPtree<int, user_data> _Root;
     static int _Cur_Id;
 public:
+    friend class Database;
+    friend class Interactor;
     user(): _Root("_User_Data")
     {
         std::fstream _Iofile;

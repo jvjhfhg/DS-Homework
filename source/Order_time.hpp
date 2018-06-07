@@ -35,6 +35,7 @@ class order_time
 private:
     BPtree<remain_data, int> _Root;
 public:
+    friend class Interactor;
     order_time():_Root("_Order_Time")
     {
         std::fstream _Iofile;
