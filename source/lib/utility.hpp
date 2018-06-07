@@ -6,9 +6,9 @@ namespace sjtu {
     public:
         T1 first;
         T2 second;
-        
+
     public:
-        constexpr pair(): first(), second() {}
+        pair(): first(), second() {}
 
         pair(const pair &oth) = default;
 
@@ -19,24 +19,39 @@ namespace sjtu {
         template <class U1, class U2>
         pair(U1 &&x, U2 &&y): first(x), second(y) {}
 
-        template<class U1, class U2>
+        template <class U1, class U2>
         pair(const pair<U1, U2> &oth): first(oth.first), second(oth.second) {}
 
-        template<class U1, class U2>
+        template <class U1, class U2>
         pair(pair<U1, U2> &&oth): first(oth.first), second(oth.second) {}
+
+        pair &operator = (const pair &oth) {
+            if (this == &oth) return *this;
+            first = oth.first;
+            second = oth.second;
+            return *this;
+        }
+
+        template <class U1, class U2>
+        pair &operator = (const pair<U1, U2> &oth) {
+            if (this == &oth) return *this;
+            first = oth.first;
+            second = oth.second;
+            return *this;
+        }
 
         friend bool operator < (const pair &x, const pair &y) {
             return x.first == y.first ? x.second < y.second : x.first < y.first;
         }
-        
+
         friend bool operator > (const pair &x, const pair &y) {
             return y < x;
         }
-        
+
         friend bool operator <= (const pair &x, const pair &y) {
             return !(y < x);
         }
-        
+
         friend bool operator >= (const pair &x, const pair &y) {
             return !(x < y);
         }
@@ -44,7 +59,7 @@ namespace sjtu {
         friend bool operator == (const pair &x, const pair &y) {
             return x.first == y.first && x.second == y.second;
         }
-        
+
         friend bool operator != (const pair &x, const pair &y) {
             return !(x == y);
         }

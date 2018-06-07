@@ -5,14 +5,15 @@ namespace sjtu {
     void swap(Type &a, Type &b) {
         Type t(a); a = b; b = t;
     }
-}
+
 
 class string{
 public:
 	char ch[61];
 	int length;
-	string(char*s){
-		char*ss=s;
+	string(const char*s){
+		const char*ss;
+		ss=s;
 		while(*ss)ss++;
 		length=ss-s;
 		for(int i=0;s+i<=ss;i++)
@@ -25,6 +26,23 @@ public:
 			if(ch[i]!=oo[i])return ch[i]<oo[i];
 		}
 	}
+	bool operator>(string w){
+		char*oo=w.ch;
+		for(int i=0;;i++){
+			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
+			if(ch[i]!=oo[i])return ch[i]>oo[i];
+		}
+	}
+	bool operator==(string w){
+		char*oo=w.ch;
+		for(int i=0;;i++){
+			if(ch[i]==0||oo[i]==0)return ch[i]==0&&oo[i]==0;
+			if(ch[i]!=oo[i])return 0;
+		}
+	}
+
+};
+
 class time
 {
 public:
@@ -34,7 +52,7 @@ public:
     time(const char*s)
 	{
     	int X;
-    	sscanf(s,"%d-%d-%d %d:%d",&X,&X,&X,&hour,&mimute);
+    	sscanf(s,"%d-%d-%d %d:%d",&X,&X,&X,&hour,&minute);
 	}
 	bool operator <(time o)
     {
@@ -53,10 +71,10 @@ public:
     string catalog;
     date(int a, int b, int c, const char* d): year(a), month(b), day(c), catalog(d) {}
     date(int a, int b, int c, string d): year(a), month(b), day(c), catalog(d) {}
-    data(const char*s1,const char*s2) : catalog(s2)
+    date(const char*s1,const char*s2) : catalog(s2)
 	{
     	int X;
-    	sscanf(s,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
+    	sscanf(s1,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
 	}
     bool operator < (date o)
     {
@@ -70,3 +88,4 @@ public:
         return false;
     }
 };
+}

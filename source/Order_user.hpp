@@ -2,12 +2,14 @@
 #include<fstream>
 #include<cstring>
 #include<iostream>
-#include<bptree.cpp>
+#include"BPtree.hpp"
 #include<cstdio>
-#include"lib_utility.hpp"
+#include"lib/algorithm.hpp"
 #include"ticket.hpp"
-#include"vector.hpp"
-
+#include<vector>///#include"vector.hpp"
+#include"lib/utility.hpp"
+namespace sjtu
+{
 class order_key
 {
 private:
@@ -15,6 +17,13 @@ private:
     date _Date;
 public:
     order_key(int a, date d): _User_Id(a), _Date(d) {}
+    bool operator < (const order_key &o)
+    {
+        if(_User_Id < o._User_Id) return true;
+        if(_User_Id > o._User_Id) return false;
+        if(_Date < o._Date) return true;
+        return false;
+    }
 };
 
 class ticket_order
@@ -54,15 +63,15 @@ public:
     order_user()
     {
         fstream _Iofile;
-        _Iofile,open("_Order_User");
+        _Iofile.open("_Order_User");
         _Root = BPtree<order_key, order_map> ("_Order_User");
     }
-    vector<pair<string, ticket_order>> query_order(int id, date t)
+    std::vector<pair<string, ticket_order>> query_order(int id, date t)
     {
         order_key k(id, t);
         order_map m = _Root.query(k);
         return m._Sub_Root.traverse();
     }
 };
-
+}
 

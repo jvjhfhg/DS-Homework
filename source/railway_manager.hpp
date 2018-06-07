@@ -58,38 +58,36 @@ public:
     }
     static bool DeleteTrain(const char* id)
     {
+        if(_Train.query_train(id).second._Published) return false;
         return _Train.delete_train(id);
     }
     static bool ModifyTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
+        if(_Train.query_train(id).second._Published) return false;
         return _Train.modify_train(a, b, c, d, e, f, g);
     }
     static bool SaleTrain(const char* id)
     {
         train_data d = _Train.query_train(id).second;
-        for(int k = 1,k <= 30;k++)
+        for(int i = 0;i < d._Num_Station - 1;i++)
         {
-            date day(2018, 6, k, d._Catalog);
-            for(int i = 0;i < d._Num_Station - 1;i++)
+            for(int j = i + 1;j < d._Num_Station;j++)
             {
-                for(int j = i + 1;j < d._Num_Station;j++)
+                ticket_key aaa(d._Station[i]._Name, d.Station[j]._Name, d._Catalog);
+                pair<string, double> p[7];
+                for(int l = 0;l < d._Num_Price;l++)
                 {
-                    ticket_key aaa(d._Station[i]._Name, d.Station[j]._Name, day);
-                    pair<string, double> p[7];
-                    for(int l = 0;l < d._Num_Price;l++)
-                    {
-                        p[l].first = d.Name_Price[l];
-                        double money = 0;
-                        for(int h = i + 1;h <= j;h++) money += d.Station[h]._Price[l];
-                        p[l].second = money;
-                    }
-                    ticket_data ccc(d._Station[i]._Arrive, day, d._Station[j]._Arrive, d._Num_Price, p);
-                    string bbb(id);
-                    _Ticket.add_ticket(aaa, bbb, ccc);
+                    p[l].first = d.Name_Price[l];
+                    double money = 0;
+                    for(int h = i + 1;h <= j;h++) money += d.Station[h]._Price[l];
+                    p[l].second = money;
                 }
+                ticket_data ccc(d._Station[i]._Arrive, d._Station[j]._Arrive, d._Num_Price, p);
+                string bbb(id);
+                _Ticket.add_ticket(aaa, bbb, ccc);
             }
         }
-        DeleteTrain(id);
+        _Train.query_train(id).second._Published = true;
     }
     static int clean()
     {
@@ -112,11 +110,14 @@ public:
     {
         string c = _Train._Root.query(id).second._Catalog;
         date d(Date, c);
+        order_map m;
+        ticket_key tk(loc1, loc2, d);
+        ticket_map tm = _Ticket._Root.query(tk).first;
         order_key ok(id, d);
         bool b = _Order_User._Root.query(ok).second;
         if(b)
         {
-            order_map m = _Order_User._Root.query(ok).first;
+            m = _Order_User._Root.query(ok).first;
             ticket_order o = m.query(train_id).first;
             o._Num_Of_Ticket += num;
             m._Sub_Root.modify(train_id, o);
@@ -124,9 +125,6 @@ public:
         }
         else
         {
-            order_map m;
-            ticket_key tk(loc1, loc2, d);
-            ticket_map tm = _Ticket._Root.query(tk).first;
             ticket_data td = tm._Sub_Root.query(train_id).first;
             ticket_order o(loc1, loc2, td, num);
             m._Sub_Root.insert(train_id, o);
