@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"BPtree.hpp"
+#include"lib/BPtree.hpp"
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
 namespace sjtu
@@ -34,7 +34,7 @@ private:
     BPtree<int, user_data> _Root;
     static int _Cur_Id;
 public:
-    user(): _Root(BPtree<int, user_data>("_User_Data"))
+    user(): _Root("_User_Data")
     {
         std::fstream _Iofile;
         _Iofile.open("_User_Data");

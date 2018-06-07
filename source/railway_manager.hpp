@@ -52,7 +52,7 @@ public:
     {
         return _Train.add_train(a, b, c, d, e, f, g);
     }
-    static pair<char*, train_data> QueryTrain(const char* id)
+    static pair<const char*, train_data> QueryTrain(const char* id)
     {
         return _Train.query_train(id);
     }
@@ -63,7 +63,7 @@ public:
     }
     static bool ModifyTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
-        if(_Train.query_train(id).second._Published) return false;
+        if(_Train.query_train(a).second._Published) return false;
         return _Train.modify_train(a, b, c, d, e, f, g);
     }
     static bool SaleTrain(const char* id)
@@ -98,7 +98,7 @@ public:
         _Order_Time._Root.clear();
         return 1;
     }
-    static vector<pair<string, ticket_data>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    static std::vector<pair<string, ticket_data>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
         ///if(0) return;
@@ -136,7 +136,7 @@ public:
     {
         return BuyTicket(id, -num, train_id, loc1, loc2, Date, kind);
     }
-    static vector<pair<string, ticket_order>> query_order(int id, date t)
+    static std::vector<pair<string, ticket_order>> query_order(int id, date t)
     {
         ///listnum = length of vector;
         return _Order_User.query_order(id, t);

@@ -2,7 +2,7 @@
 #include<fstream>
 #include<cstring>
 #include<iostream>
-#include"BPtree.hpp"
+#include"lib/BPtree.hpp"
 #include<cstdio>
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
@@ -35,11 +35,10 @@ class order_time
 private:
     BPtree<remain_data, int> _Root;
 public:
-    order_time()
+    order_time():_Root("_Order_Time")
     {
-        fstream _Iofile;
-        Iofile.open("_Order_Time");
-        _Root = BPtree<remain_data, int>("_Order_Time");
+        std::fstream _Iofile;
+        _Iofile.open("_Order_Time");
     }
     int query_remain(remain_data r)
     {

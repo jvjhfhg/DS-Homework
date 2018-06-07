@@ -119,7 +119,7 @@ namespace sjtu {
 		}
 
 		//查找主函数;
-		pair<T&, bool> query(Key& kk) {
+		pair<T&, bool> query(const Key& kk) {
 			char* tmp[K];
 			ll p = search_node(kk);
 			file_seek(p);

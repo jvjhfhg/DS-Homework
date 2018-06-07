@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"BPtree.hpp"
+#include"lib/BPtree.hpp"
 #include<vector>//#include"vector.hpp"
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
@@ -39,7 +39,7 @@ public:
     {
         for(int i = 0;i < d;i++) _Price[i] = e[i];
     }
-    ticket_data(const ticket_data &o):_Time_From(o._Time_From),_Time_To(o.Time_To),_Price_Num(o._Price_Num)
+    ticket_data(const ticket_data &o):_Time_From(o._Time_From),_Time_To(o._Time_To),_Price_Num(o._Price_Num)
     {
         for(int i = 0;i < _Price_Num;i++) _Price[i] = o._Price[i];
     }
@@ -49,16 +49,17 @@ class ticket_map
 {
 private:
     BPtree<string, ticket_data> _Sub_Root;
-    static int _Num_Of_File;
 public:
-    ticket_map()
+    static int _Num_Of_File;
+    friend class ticket;
+    ticket_map():_Sub_Root("Fuck you!")
     {
         char* str;
-        sprintf(str, _Num_Of_File);
+        sprintf(str, "%d", _Num_Of_File);
         const char* cstr(str);
-        fstream _Iofile;
+        std::fstream _Iofile;
         _Iofile.open(cstr);
-        _Sub_Root = BPtree<string, ticket_data> (cstr);
+        _Sub_Root.file = cstr;
         _Num_Of_File++;
     }
     void insert(string a, ticket_data b)
@@ -72,11 +73,10 @@ class ticket
 private:
     BPtree<ticket_key, ticket_map> _Root;
 public:
-    ticket()
+    ticket():_Root("_Ticket_Data")
     {
-        fstream _Iofile;
-        _Iofile.open("_Ticket_Data")
-        _Root = BPtree<ticket_data, ticket_map> ("_Ticket_Data");
+        std::fstream _Iofile;
+        _Iofile.open("_Ticket_Data");
     }
     std::vector<pair<string, ticket_data>> query_ticket(ticket_key _Key)
     {

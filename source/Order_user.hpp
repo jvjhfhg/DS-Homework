@@ -2,7 +2,7 @@
 #include<fstream>
 #include<cstring>
 #include<iostream>
-#include"BPtree.hpp"
+#include"lib/BPtree.hpp"
 #include<cstdio>
 #include"lib/algorithm.hpp"
 #include"ticket.hpp"
@@ -41,16 +41,16 @@ class order_map
 {
 private:
     BPtree<string, ticket_order> _Sub_Root;
-    static int _Num_Of_File;
 public:
-    order_map()
+    static int _Num_Of_File;
+    order_map():_Sub_Root("Fuck you!")
     {
         char* str;
         sprintf(str, _Num_Of_File);
         const char* cstr(str);
-        fstream _Iofile;
+        std::fstream _Iofile;
         _Iofile.open(cstr);
-        _Sub_Root = BPtree<string, ticket_order> (cstr);
+        _Sub_Root.file = cstr;
         _Num_Of_File--;
     }
 };
@@ -60,11 +60,11 @@ class order_user
 private:
     BPtree<order_key, order_map> _Root;
 public:
-    order_user()
+    order_user():_Root("_Order_User")
     {
-        fstream _Iofile;
+        std::fstream _Iofile;
         _Iofile.open("_Order_User");
-        _Root = BPtree<order_key, order_map> ("_Order_User");
+
     }
     std::vector<pair<string, ticket_order>> query_order(int id, date t)
     {

@@ -50,6 +50,7 @@ public:
     }
     train_data& operator =(const train_data& o)
     {
+        if (this == &o) return *this;
         _Name = o._Name;
         _Catalog = o._Catalog;
         _Num_Station = o._Num_Station;
@@ -80,11 +81,12 @@ public:
     }
     pair<const char*, train_data> query_train(const char* id)
     {
+        return pair<const char *, train_data>(id, _Root.query(id).first);
         ///if(!_Root.query(id).second) return 0;
-        pair<const char*, train_data> p;
-        p.first = id;
+        //pair<const char*, train_data> p;
+        //p.first = id;
         //p.second = _Root.query(id).first;
-        return p;
+        //return p;
     }
     bool delete_train(const char* id)
     {

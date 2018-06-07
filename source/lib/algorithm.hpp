@@ -11,6 +11,7 @@ class string{
 public:
 	char ch[61];
 	int length;
+	string() = default;
 	string(const char*s){
 		const char*ss;
 		ss=s;
@@ -19,6 +20,22 @@ public:
 		for(int i=0;s+i<=ss;i++)
 			ch[i]=s[i];
 	}
+    string(const string&z){
+        const char*ss=z.ch;
+        while(*ss)ss++;
+        length=ss-z.ch ;
+        for(int i=0;z.ch+i<=ss;i++)
+            ch[i]=z.ch[i];
+	}
+    string& operator=(const string&z){
+		const char*ss=z.ch;
+		while(*ss)ss++;
+		length=ss-z.ch;
+		for(int i=0;z.ch+i<=ss;i++)
+			ch[i]=z.ch[i];
+		return *this;
+	}
+
 	bool operator<(string w){
 		char*oo=w.ch;
 		for(int i=0;;i++){
@@ -48,7 +65,7 @@ class time
 public:
     int hour;
     int minute;
-    time(int a, int b): hour(a), minute(b) {}
+    time(int a = 0, int b = 0): hour(a), minute(b) {}
     time(const char*s)
 	{
     	int X;
