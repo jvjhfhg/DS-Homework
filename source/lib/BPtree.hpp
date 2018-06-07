@@ -6,11 +6,10 @@
 #include"utility.hpp"
 #include"vector.hpp"
 
-typedef long long ll;
-
 namespace sjtu {
 	template<class Key, class T, class Compare = std::less<Key> >
 	class BPtree {
+        typedef long long ll;
 	public:
 		friend class ticket_map;
 		friend class order_user;
