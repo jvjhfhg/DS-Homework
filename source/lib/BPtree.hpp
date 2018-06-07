@@ -4,7 +4,7 @@
 #include<cmath>
 #include<cstring>
 #include"utility.hpp"
-#include<vector>
+#include"vector.hpp"
 
 typedef long long ll;
 
@@ -138,7 +138,7 @@ namespace sjtu {
 		}
 
 		//中序遍历
-		void traverse(node* s, std::vector<pair<Key, T> > &a) {
+		void traverse(node* s, vector<pair<Key, T> > &a) {
 			char* tmp[K];
 			if (s->is_leaf) {
 				for (int i = 0; i < s->size; ++i) {
@@ -146,7 +146,7 @@ namespace sjtu {
 				}
 			}
 			else {
-				//	a.push_back(std::pair<Key, T>(-1，-1));
+				//	a.push_back(pair<Key, T>(-1，-1));
 				for (int i = 0; i < s->size; ++i) {
 					char*tmp2[K];
 					file_seek(s->son[i]);
@@ -154,16 +154,16 @@ namespace sjtu {
 					node* now = (node*)tmp2;
 					traverse(now, a);
 				}
-				//	a.push_back(std::pair<Key, T>(-2， - 2 ));
+				//	a.push_back(pair<Key, T>(-2， - 2 ));
 			}
 		}
 
-		std::vector<pair<Key, T> > traverse() {
+		vector<pair<Key, T> > traverse() {
 			char* tmp[K];
 			file_seek(root);
 			fread(tmp, K, 1, File);
 			node* rt = (node*)tmp;
-			std::vector<pair<Key, T> > s;
+			vector<pair<Key, T> > s;
 			traverse(rt, s);
 			return s;
 		}
