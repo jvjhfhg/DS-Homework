@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"BPtree.hpp"
+#include"lib/BPtree.hpp"
 #include"lib/algorithm.hpp"
 #include"Ticket.hpp"
 #include"lib/utility.hpp"
@@ -15,7 +15,10 @@ public:
     time _Start;
     time _Stopover;
     double _Price[7];
-    train_station(const char* a, time b, time c, time d, double* e): _Name(a), _Arrive(b), _start(c), _Stopover(d), _Price(e){}
+    train_station(const char* a = "", time b = time(), time c = time(), time d = time(), double* e = nullptr): _Name(a), _Arrive(b), _Start(c), _Stopover(d)
+    {
+        for(int i = 0;i <7;i++) _Price[i] = e[i];
+    }
 };
 
 class train_data
@@ -30,7 +33,7 @@ private:
     train_station _Station[65];
 public:
     train_data(const char* b,const char* c,int d,int e,const char** f,train_station* g)
-    :, _Name(b), _Catalog(c), _Num_Station(d), _Num_Price(e), _Published(false)
+    :_Name(b), _Catalog(c), _Num_Station(d), _Num_Price(e), _Published(false)
     {
         for(int i = 0;i < _Num_Price;i++) _Name_Price[i] = f[i];
         for(int i = 0;i < _Num_Station;i++) _Station[i] = g[i];
@@ -58,40 +61,41 @@ public:
     }
 };
 
-class train;
+class train
 {
 private:
     BPtree<string, train_data> _Root;
 public:
-    train()
+    train():_Root("_Train_Data")
     {
-        fstream _Iofile;
+        std::fstream _Iofile;
         _Iofile.open("_Train_Data");
-        _Root = Bptree<int, user_data>("_Train_Data");
     }
     bool add_train(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
         train_data t(b, c, d, e, f, g);
-        _Root.insert(a, t);
+        string s(a);
+        _Root.insert(s, t);
         return true;
     }
-    pair<char*, train_data> query_train(const char* id)
+    pair<const char*, train_data> query_train(const char* id)
     {
         ///if(!_Root.query(id).second) return 0;
-        pair<char*, train_data> p;
+        pair<const char*, train_data> p;
         p.first = id;
-        p.second = _Root.query(id).first;
+        //p.second = _Root.query(id).first;
         return p;
     }
     bool delete_train(const char* id)
     {
-        _Root.erase(id);
+        string is(id);
+        _Root.erase(is);
         return true;
     }
     bool modify_train(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
         train_data t(b, c, d, e, f);
-        _Root.modify(id, t);
+        _Root.modify(a, t);
         return true;
     }
 };
