@@ -83,7 +83,7 @@ public:
         if(minute < o.minute) return true;
         return false;
     }
-    const char *ToString() {
+    const char *ToString() const {
         char res[15];
         sprintf(res, "%02d:%02d", hour, minute);
         return res;
@@ -104,6 +104,11 @@ public:
     	int X;
     	sscanf(s1,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
 	}
+    const char *ToString() const {
+        char res[15];
+        sprintf(res, "%04d-%02d-%02d", year, month, day);
+        return res;
+    }
     bool operator < (const date o)const
     {
         if(year < o.year) return true;
