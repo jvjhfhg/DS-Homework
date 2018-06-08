@@ -115,7 +115,7 @@ public:
     static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {
         string c = _Data_Base._Train._Root.query(train_id).first._Catalog;
-        date d(Date, c.ch);
+        date d(Date, c._str);
         order_map m;
         ticket_key tk(loc1, loc2, c);
         ticket_map tm = _Data_Base._Ticket._Root.query(tk).first;

@@ -13,6 +13,7 @@ class string {
         int _length;
 
     public:
+        friend class Interactor;
         string(const char *str = "") {
             _length = strlen(_str);
             for (int i = 0; i < _length; ++i)
