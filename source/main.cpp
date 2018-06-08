@@ -1,6 +1,7 @@
 // This is the main source file of backend test
 
 #include <cstdio>
+#include <cstring>
 
 #include "railway_manager.hpp"
 #include "lib/algorithm.hpp"
@@ -42,8 +43,9 @@ int main() {
                 continue;
             }
             printf("%d\n", (int)res.size());
-            for (auto i: res)
-                printf("%s %s %s", i.first, a, c, i.second._Time_From.ToString(), b, )
+            for (auto i: res) {
+                printf("%s %s %s %s %s %s %s ", i.first.first.c_str(), a, i.second.first.ToString(), i.first.second._Time_From.ToString(), );
+            }
         }
     }
     
