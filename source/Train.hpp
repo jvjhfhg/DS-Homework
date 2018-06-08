@@ -33,6 +33,8 @@ private:
     train_station _Station[65];
 public:
     friend class Interactor;
+    friend class train;
+    train_data() = default;
     train_data(const char* b,const char* c,int d,int e,const char** f,train_station* g)
     :_Name(b), _Catalog(c), _Num_Station(d), _Num_Price(e), _Published(false)
     {
@@ -101,6 +103,12 @@ public:
         train_data t(b, c, d, e, f, g);
         _Root.modify(a, t);
         return true;
+    }
+    void publish(string id)
+    {
+        train_data td = _Root.query(id).first;
+        td._Published = true;
+        _Root.modify(id, td);
     }
 };
 }

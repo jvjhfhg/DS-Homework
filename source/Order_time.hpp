@@ -16,8 +16,9 @@ private:
     string _Loc2;
     date _Date;
 public:
+    remain_data():_Train_Id(), _Loc1(), _Loc2(), _Date() {}
     remain_data(const char* a, const char* b, const char* c, date d): _Train_Id(a), _Loc1(b), _Loc2(c), _Date(d){}
-    bool operator <(const remain_data &o)
+    bool operator <(const remain_data &o)const
     {
         if(_Train_Id < o._Train_Id) return true;
         if(_Train_Id > o._Train_Id) return false;

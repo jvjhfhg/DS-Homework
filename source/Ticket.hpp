@@ -14,16 +14,22 @@ private:
     string _Loc2;
     string _Catalog;
 public:
+    ticket_key() = default;
     ticket_key(const char* a, const char* b, const char* c): _Loc1(a), _Loc2(b), _Catalog(c) {}
     ticket_key(string a, string b, string c): _Loc1(a), _Loc2(b), _Catalog(c) {}
     ticket_key(const ticket_key& o): _Loc1(o._Loc1), _Loc2(o._Loc2), _Catalog(o._Catalog) {}
-    bool operator<(ticket_key o)
+    bool operator<(const ticket_key& o)const
     {
         if(_Loc1 < o._Loc1) return true;
         if(_Loc1 > o._Loc1) return false;
         if(_Loc2 < o._Loc2) return true;
         if(_Loc2 > o._Loc2) return false;
         if(_Catalog < o._Catalog) return true;
+        return false;
+    }
+    bool operator == (const ticket_key &o)const
+    {
+        if(_Loc1 == o._Loc1 && _Loc2 == o._Loc2 && _Catalog == o._Catalog) return true;
         return false;
     }
 };
@@ -36,6 +42,10 @@ private:
     int _Price_Num;
     pair<string, double> _Price[7];
 public:
+    ticket_data():_Time_From(), _Time_To(), _Price_Num(0)
+    {
+        _Price[0] = pair<string, double>(string(), double());
+    }
     ticket_data(time a, time c, int d, pair<string, double>* e):_Time_From(a), _Time_To(c), _Price_Num(d)
     {
         for(int i = 0;i < d;i++) _Price[i] = e[i];
@@ -54,6 +64,7 @@ private:
 public:
     friend class Database;
     friend class ticket;
+    friend class Interactor;
     ticket_map():_Sub_Root("Fuck you!")
     {
         char* str;

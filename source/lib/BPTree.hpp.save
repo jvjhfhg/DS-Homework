@@ -84,7 +84,7 @@ namespace sjtu {
 			rt.pos = at_end = K;
 			at_end += K;
 			root = rt.pos;
-			File = fopen(file, "rb+");
+			file_open(file, rt.pos);
 			fwrite((char*)(&rt), sizeof(rt), 1, File);
 		}
 

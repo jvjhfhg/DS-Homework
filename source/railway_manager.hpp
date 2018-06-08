@@ -94,7 +94,7 @@ public:
                 _Data_Base._Ticket.add_ticket(aaa, bbb, ccc);
             }
         }
-        _Data_Base._Train.query_train(id).second._Published = true;
+        _Data_Base._Train.publish(id);
     }
     static int clean()
     {
@@ -109,23 +109,22 @@ public:
     {
         ///listnum = length of vector;
         ///if(0) return;
-        date d(Date, catalog);
-        ticket_key t(loc1, loc2, d);
+        ticket_key t(loc1, loc2, catalog);
         return _Data_Base._Ticket.query_ticket(t);
     }
     static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {
-        string c = _Data_Base._Train._Root.query(id).second._Catalog;
-        date d(Date, c);
+        string c = _Data_Base._Train._Root.query(train_id).first._Catalog;
+        date d(Date, c.ch);
         order_map m;
-        ticket_key tk(loc1, loc2, d);
+        ticket_key tk(loc1, loc2, c);
         ticket_map tm = _Data_Base._Ticket._Root.query(tk).first;
         order_key ok(id, d);
         bool b = _Data_Base._Order_User._Root.query(ok).second;
         if(b)
         {
             m = _Data_Base._Order_User._Root.query(ok).first;
-            ticket_order o = m.query(train_id).first;
+            ticket_order o = m._Sub_Root.query(train_id).first;
             o._Num_Of_Ticket += num;
             m._Sub_Root.modify(train_id, o);
             return 1;

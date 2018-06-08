@@ -39,22 +39,22 @@ public:
 		return *this;
 	}
 
-	bool operator<(const string w)const{
-		char*oo=(char*)w.ch;
+	bool operator<(string&w){
+		char*oo=w.ch;
 		for(int i=0;;i++){
 			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
 			if(ch[i]!=oo[i])return ch[i]<oo[i];
 		}
 	}
-	bool operator>(const string w)const{
-		char*oo=(char*)w.ch;
+	bool operator>(stringw){
+		char*oo=w.ch;
 		for(int i=0;;i++){
 			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
 			if(ch[i]!=oo[i])return ch[i]>oo[i];
 		}
 	}
-	bool operator==(const string w)const{
-		char*oo=(char*)w.ch;
+	bool operator==(string w){
+		char*oo=w.ch;
 		for(int i=0;;i++){
 			if(ch[i]==0||oo[i]==0)return ch[i]==0&&oo[i]==0;
 			if(ch[i]!=oo[i])return 0;
@@ -97,7 +97,7 @@ public:
     	int X;
     	sscanf(s1,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
 	}
-    bool operator < (const date o)const
+    bool operator < (date o)
     {
         if(year < o.year) return true;
         if(year > o.year) return false;
@@ -113,7 +113,7 @@ public:
         if(year == o.year && month == o.month && day == o.day && catalog == o.catalog) return true;
         return false;
     }
-    bool operator ==(const date& o)const
+    bool operator ==(const date& o)
     {
         if(year == o.year && month == o.month && day == o.day && catalog == o.catalog) return true;
         return false;
