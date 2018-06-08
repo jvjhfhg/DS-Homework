@@ -13,7 +13,7 @@ namespace sjtu {
         typedef long long ll;
 	public:
 		const char* file;
-		static const int K = 4096;
+		static const int K = 8192;
 
 		//max1,max2è®°å½•çš„åˆ†åˆ«æ˜¯è¿‡æ¸¡èŠ‚ç‚¹ã€å¶å­èŠ‚ç‚¹çš„æœ€å¤§ç©ºé—´ï¼Œmin1,min2åˆ†åˆ«ä¸ºå‰è€…çš„ä¸€åŠ;
 		static const int max1 = 20; // 2000 * 8 / (sizeof(Key));
@@ -59,6 +59,7 @@ namespace sjtu {
 
 		//æž„é€ å‡½æ•°éœ€ä¼ å‚æ–‡ä»¶æŒ‡é’ˆï¼Œé»˜è®¤å‡½æ•°ä¼šäº‹å…ˆæž„é€ ä¸€ä¸ªroot;
         BPTree(const char* f) :file(f) {
+			fclose(fopen(f , "w"));
 			File = fopen(f, "rb+");
 			file = f;
 			node rt;
@@ -116,20 +117,20 @@ namespace sjtu {
 		}
 
 		//æŸ¥æ‰¾ä¸»å‡½æ•°;
-		pair<T&, bool> query(const Key& kk) {
+		pair<T, bool> query(const Key& kk) {
 			char* tmp[K];
 			ll p = search_node(kk);
 			file_seek(p);
 			fread(tmp, K, 1, File);
 			node* now = (node*)tmp;
 			int k = search(kk, now) - 1;
-			if (k == -1)  return pair<T&, bool>(now->data[0], false);
+			if (k == -1)  return pair<T, bool>(now->data[0], false);
 			else {
 				if (cmp(now->key[k], kk)) {
-					return pair<T&, bool>(now->data[k], false);
+					return pair<T, bool>(now->data[k], false);
 				}
 				else {
-					return pair<T&, bool>(now->data[k], true);
+					return pair<T, bool>(now->data[k], true);
 				}
 			}
 		}
@@ -377,7 +378,7 @@ namespace sjtu {
 			//if(now->key[k] != kk){int X = 1 / 0;}
 			now->key[k - 1] = kk;
 			now->data[k - 1] = dd;
-			update_father(now);
+			if(k == 1)update_father(now);
 			file_seek(now->pos);
 			fwrite((char*)now, K, 1, File);
 		}
