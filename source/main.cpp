@@ -43,7 +43,7 @@ int main() {
             }
             printf("%d\n", (int)res.size());
             for (auto i: res)
-                printf("%s %s %s", i.first, a, c, i.second.)
+                printf("%s %s %s", i.first, a, c, i.second._Time_From.ToString(), b, )
         }
     }
     
