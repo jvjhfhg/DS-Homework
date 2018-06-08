@@ -7,61 +7,62 @@ namespace sjtu {
     }
 
 
-class string{
-public:
-	char ch[61];
-	int length;
-	string(){
-        length=0;
-        ch[0]=0;
-	}
-	string(const char*s){
-		const char*ss;
-		ss=s;
-		while(*ss)ss++;
-		length=ss-s;
-		for(int i=0;s+i<=ss;i++)
-			ch[i]=s[i];
-	}
-    string(const string&z){
-        const char*ss=z.ch;
-        while(*ss)ss++;
-        length=ss-z.ch ;
-        for(int i=0;z.ch+i<=ss;i++)
-            ch[i]=z.ch[i];
-	}
-    string& operator=(const string&z){
-		const char*ss=z.ch;
-		while(*ss)ss++;
-		length=ss-z.ch;
-		for(int i=0;z.ch+i<=ss;i++)
-			ch[i]=z.ch[i];
-		return *this;
-	}
+class string {
+    private:
+        char _str[61];
+        int _length;
 
-	bool operator<(const string w)const{
-		char*oo=(char*)w.ch;
-		for(int i=0;;i++){
-			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
-			if(ch[i]!=oo[i])return ch[i]<oo[i];
-		}
-	}
-	bool operator>(const string w)const{
-		char*oo=(char*)w.ch;
-		for(int i=0;;i++){
-			if(ch[i]==0||oo[i]==0)return oo[i]!=0;
-			if(ch[i]!=oo[i])return ch[i]>oo[i];
-		}
-	}
-	bool operator==(const string w)const{
-		char*oo=(char*)w.ch;
-		for(int i=0;;i++){
-			if(ch[i]==0||oo[i]==0)return ch[i]==0&&oo[i]==0;
-			if(ch[i]!=oo[i])return 0;
-		}
-	}
+    public:
+        string(const char *str = "") {
+            _length = strlen(_str);
+            for (int i = 0; i < _length; ++i)
+                _str[i] = str[i];
+            _str[_length] = '\0';
+        }
 
-};
+        string(const string &oth) {
+            _length = oth._length;
+            for (int i = 0; i < _length; ++i)
+                _str[i] = oth._str[i];
+            _str[_length] = '\0';
+        }
+
+        string &operator = (const string &oth) {
+            if (this == &oth) return *this;
+            _length = oth._length;
+            for (int i = 0; i < _length; ++i)
+                _str[i] = oth._str[i];
+            _str[_length] = '\0';
+            return *this;
+        }
+
+        bool operator < (const string &oth) const {
+            for (int i = 0; i < _length && i < oth._length; ++i) {
+                if (_str[i] < oth._str[i]) return true;
+                if (_str[i] > oth._str[i]) return false;
+            }
+            return _length < oth._length;
+        }
+
+        bool operator > (const string &oth) const {
+            return oth < *this;
+        }
+
+        bool operator == (const string &oth) const {
+            if (_length != oth._length) return false;
+            for (int i = 0; i < _length; ++i)
+                if (_str[i] != oth._str[i]) return false;
+            return true;
+        }
+
+        const int length() const {
+            return _length;
+        }
+
+        const char *c_str() const {
+            return _str;
+        }
+    };
 
 class time
 {
