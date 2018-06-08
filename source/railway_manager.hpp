@@ -105,12 +105,38 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
-    static vector<pair<string, ticket_data>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    static vector<pair<pair<string, ticket_data>, pair<date, date>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
         ///if(0) return;
+        vector<pair<date, date>> vpdd;
         ticket_key t(loc1, loc2, catalog);
-        return _Data_Base._Ticket.query_ticket(t);
+        vector<pair<string, ticket_data>> vpstd(_Data_Base._Ticket.query_ticket(t));
+        date dx(Date, catalog);
+        pair<date, date> pdd(dx, dx);
+        for(int j = 0;j < vpstd.size();j++) vpdd.push_back(pdd);
+        {
+            for(int i = 0;i < vpstd.size();i++)
+            {
+                ticket_data td = vpstd[i].second;
+                while(td._Time_From.hour > 24)
+                {
+                    td._Time_From.hour -= 24;
+                    vpdd[i].first.day += 1;
+                }
+                while(td._Time_To.hour > 24)
+                {
+                    td._Time_To.hour -= 24;
+                    vpdd[i].second.day += 1;
+                }
+            }
+        }
+        vector<pair<pair<string, ticket_data>, pair<date, date>>> vppstpdd;
+        for(int j = 0;j < vpstd.size();j++)
+        {
+            vppstpdd[j] = pair<pair<string, ticket_data>, pair<date, date>>(vpstd[j], vpdd[j]);
+        }
+        return vppstpdd;
     }
     static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {

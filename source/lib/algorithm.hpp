@@ -88,6 +88,24 @@ public:
         sprintf(res, "%02d:%02d", hour, minute);
         return res;
     }
+    time& operator +=(int x)
+    {
+        hour = hour + x;
+        return *this;
+    }
+    time& operator -=(int x)
+    {
+        hour = hour - x;
+        return *this;
+    }
+    time operator +(int x)
+    {
+        return time(hour + x, minute);
+    }
+    time operator -(int x)
+    {
+        return time(hour - x, minute);
+    }
 };
 class date
 {

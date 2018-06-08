@@ -39,7 +39,28 @@ public:
     :_Name(b), _Catalog(c), _Num_Station(d), _Num_Price(e), _Published(false)
     {
         for(int i = 0;i < _Num_Price;i++) _Name_Price[i] = f[i];
-        for(int i = 0;i < _Num_Station;i++) _Station[i] = g[i];
+        for(int i = 0;i < _Num_Station;i++)
+        {
+            time tmp(0, 0);
+            int dlt = 0;
+            _Station[i]._Name = g[i]._Name;
+            _Station[i]._Arrive = g[i]._Arrive + dlt;
+            _Station[i]._Start = g[i]._Start + dlt;
+            _Station[i]._Stopover = g[i]._Stopover;
+            if(_Station[i]._Arrive < tmp)
+            {
+                dlt += 24;
+                _Station[i]._Arrive += dlt;
+                _Station[i]._Start += dlt;
+            }
+            else if(_Station[i]._Start < tmp)
+            {
+                dlt += 24;
+                _Station[i]._Start += dlt;
+            }
+            tmp = _Station[i]._Start;
+        }
+
     }
     train_data(const train_data& o)
     {
