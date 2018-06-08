@@ -54,7 +54,9 @@ public:
     }
     user_data query_profile(int id)
     {
-        return _Root.query(id).first;
+        auto res = _Root.query(id);
+        if (res.second == false)
+        return .first;
     }
     bool modify_profile(int id, const char* a, const char* b, const char* c, const char* d)
     {

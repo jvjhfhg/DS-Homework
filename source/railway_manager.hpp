@@ -96,7 +96,7 @@ public:
         }
         _Data_Base._Train.publish(id);
     }
-    static int clean()
+    static int Clean()
     {
         _Data_Base._User._Root.clear();
         _Data_Base._Train._Root.clear();
@@ -142,7 +142,7 @@ public:
     {
         return BuyTicket(id, -num, train_id, loc1, loc2, Date, kind);
     }
-    static vector<pair<string, ticket_order>> query_order(int id, date t)
+    static vector<pair<string, ticket_order>> QueryOrder(int id, date t)
     {
         ///listnum = length of vector;
         return _Data_Base._Order_User.query_order(id, t);
