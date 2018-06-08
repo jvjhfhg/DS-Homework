@@ -6,8 +6,7 @@ namespace sjtu {
         Type t(a); a = b; b = t;
     }
 
-
-class string {
+    class string {
     private:
         char _str[61];
         int _length;
