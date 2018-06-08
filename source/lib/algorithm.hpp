@@ -55,7 +55,7 @@ namespace sjtu {
             return true;
         }
 
-        const int length() const {
+        int length() const {
             return _length;
         }
 
