@@ -76,13 +76,13 @@ namespace sjtu {
 
 		//åˆ åº“è·‘è·¯;
 		void clear() {
-			File = fopen(file, "w");
-			fclose(File);
+			fclose(fopen(file, "w"));
 			node rt;
 			rt.pos = at_end = K;
 			at_end += K;
 			root = rt.pos;
 			File = fopen(file, "rb+");
+			file_seek(rt.pos);
 			fwrite((char*)(&rt), sizeof(rt), 1, File);
 		}
 
