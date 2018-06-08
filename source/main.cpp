@@ -25,7 +25,25 @@ int main() {
         } else if (opt == "query_profile") {
             scanf("%d", &x);
             auto res = sjtu::Interactor::QueryProfile(x);
-            if (res.)
+            if (res.second == false) puts("0");
+            else printf("%s %s %s %d\n", res.first._User_Name, res.first._Email, res.first._Phone, res.first._Privilege);
+        } else if (opt == "modify_profile") {
+            scanf("%d%s%s%s%s", &x, a, b, c, d);
+            printf("%d\n", sjtu::Interactor::ModifyProfile(x, a, b, c, d));
+        } else if (opt == "modify_privilege") {
+            scanf("%d%d%d", &x, &y, &z);
+            if (z < 1 || z > 2) puts("0");
+            else printf("%d\n", sjtu::Interactor::ModifyPrivilege(x, y, z));
+        } else if (opt == "query_ticket") {
+            scanf("%s%s%s%s", a, b, c, d);
+            auto res = sjtu::Interactor::QueryTicket(a, b, c, d);
+            if ((int)res.size() == 0) {
+                puts("-1");
+                continue;
+            }
+            printf("%d\n", (int)res.size());
+            for (auto i: res)
+                printf("%s %s %s", i.first, a, c, i.second.)
         }
     }
     

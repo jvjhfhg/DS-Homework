@@ -52,11 +52,9 @@ public:
         if(_Root.query(id).second == true) return true;
         return false;
     }
-    user_data query_profile(int id)
+    pair<user_data, bool> query_profile(int id)
     {
-        auto res = _Root.query(id);
-        if (res.second == false)
-        return .first;
+        return _Root.query(id);
     }
     bool modify_profile(int id, const char* a, const char* b, const char* c, const char* d)
     {

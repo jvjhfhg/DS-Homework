@@ -83,6 +83,11 @@ public:
         if(minute < o.minute) return true;
         return false;
     }
+    const char *ToString() {
+        char res[15];
+        sprintf(res, "%02d:%02d", hour, minute);
+        return res;
+    }
 };
 class date
 {

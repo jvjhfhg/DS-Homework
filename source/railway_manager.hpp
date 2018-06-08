@@ -43,7 +43,7 @@ public:
     {
         return _Data_Base._User.login(id, name);
     }
-    static user_data QueryProfile(int id)
+    static pair<user_data, bool> QueryProfile(int id)
     {
         return _Data_Base._User.query_profile(id);
     }

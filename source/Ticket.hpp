@@ -9,7 +9,7 @@ namespace sjtu
 {
 class ticket_key
 {
-private:
+public:
     string _Loc1;
     string _Loc2;
     string _Catalog;
@@ -36,7 +36,7 @@ public:
 
 class ticket_data
 {
-private:
+public:
     time _Time_From;
     time _Time_To;
     int _Price_Num;
