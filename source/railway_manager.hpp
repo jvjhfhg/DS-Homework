@@ -8,8 +8,8 @@
 #include"Ticket.hpp"
 #include"Order_time.hpp"
 #include<fstream>
-
-
+#include"lib/map.hpp"
+#include<cmath>
 
 namespace sjtu
 {
@@ -21,9 +21,10 @@ private:
     ticket _Ticket;
     order_user _Order_User;
     order_time _Order_Time;
+    map<string, string> _Station;
 public:
     friend class Interactor;
-    Database():_User(), _Train(), _Ticket(), _Order_User(), _Order_Time()
+    Database():_User(), _Train(), _Ticket(), _Order_User(), _Order_Time(), _Station()
     {
         user::_Cur_Id = 2018;
         order_map::_Num_Of_File = -1;
@@ -78,6 +79,7 @@ public:
         train_data d = _Data_Base._Train.query_train(id).second;
         for(int i = 0;i < d._Num_Station - 1;i++)
         {
+            _Data_Base._Station[d._Station[i]._Name] = d._Catalog;
             for(int j = i + 1;j < d._Num_Station;j++)
             {
                 ticket_key aaa(d._Station[i]._Name, d._Station[j]._Name, d._Catalog);
@@ -105,7 +107,7 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
-    static vector<pair<pair<string, ticket_data>, pair<date, date>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    static vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
         ///if(0) return;
@@ -131,10 +133,11 @@ public:
                 }
             }
         }
-        vector<pair<pair<string, ticket_data>, pair<date, date>>> vppstpdd;
+        vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>> vppstpdd;
         for(int j = 0;j < vpstd.size();j++)
         {
-            vppstpdd[j] = pair<pair<string, ticket_data>, pair<date, date>>(vpstd[j], vpdd[j]);
+            vppstpdd[j].second = pair<pair<string, ticket_data>, pair<date, date>>(vpstd[j], vpdd[j]);
+            vppstpdd[j].first = _Data_Base._Train.query_train(vpstd[j].first._str);
         }
         return vppstpdd;
     }
@@ -172,6 +175,54 @@ public:
     {
         ///listnum = length of vector;
         return _Data_Base._Order_User.query_order(id, t);
+    }
+    static pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>> QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
+    {
+        map::iterator<string, string> it(&_Data_Base._Station);
+        date d(Date, Catalog);
+        time mint(233333, 233333);
+        pair<string, ticket_data> pst1;
+        pair<const char*, train_data> pcc1;
+        pair<string, ticket_data> pst2;
+        pair<const char*, train_data> pcc2;
+        for(it = _Data_Base._Station.begin(); it != _Data_Base._Station.end(); it++)
+        {
+            string Loc3 = it.retkey();
+            ticket_key tk1(Loc1, Loc3, d.catalog);
+            ticket_key tk2(Loc3, Loc1, d.catalog);
+            ticket_key tk3(Loc2, Loc3, d.catalog);
+            ticket_key tk4(Loc3, Loc2, d.catalog);
+            vector<pair<string, ticket_data>> vpstd1;
+            vector<pair<string, ticket_data>> vpstd2;
+            if(_Data_Base._Ticket.query_ticket(tk1).size() != 0 && _Data_Base._Ticket.query_ticket(tk3).size() != 0)
+            {
+                time t;
+                vpstd1 = _Data_Base._Ticket.query_ticket(tk1);
+                vpstd2 = _Data_Base._Ticket.query_ticket(tk3);
+                for(int i = 0;i < vpstd1.size();i++)
+                {
+                    for(int j = 0;j < vpstd2.size();j++)
+                    {
+                        t.hour = abs(vpstd1[i].second._Time_To.hour - vpstd1[i].second._Time_From.hour) + abs(vpstd2[j].second._Time_To.hour - vpstd2[j].second._Time_From.hour);
+                        t.minute = abs(vpstd1[i].second._Time_To.minute - vpstd1[i].second._Time_From.minute) + abs(vpstd2[j].second._Time_To.minute - vpstd2[j].second._Time_From.minute);
+                        if(t < mint)
+                        {
+                            mint = t;
+                            string id1 = _Data_Base._Ticket.query_ticket(tk1)[i].first;
+                            string id3 = _Data_Base._Ticket.query_ticket(tk1)[j].first;
+                            pst1 = pair<string, ticket_data>(id1 ,vpstd1[i].second);
+                            pcc1 = pair<const char*, train_data>(id1._str, _Data_Base._Train.query_train(id1._str).second);
+                            pst2 = pair<string, ticket_data>(id3 ,vpstd2[i].second);
+                            pcc2 = pair<const char*, train_data>(id3._str, _Data_Base._Train.query_train(id3._str).second);
+                        }
+                    }
+                }
+                continue;
+            }
+        }
+        pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp1(pst1, pcc1);
+        pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp2(pst2, pcc2);
+        return pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>>(ppsp1, ppsp2);
     }
 };
 
