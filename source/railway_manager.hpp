@@ -109,7 +109,7 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
-    static vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    static vector<vector<string>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
         ///if(0) return;
@@ -141,7 +141,58 @@ public:
             vppstpdd[j].second = pair<pair<string, ticket_data>, pair<date, date>>(vpstd[j], vpdd[j]);
             vppstpdd[j].first = _Data_Base._Train.query_train(vpstd[j].first._str);
         }
-        return vppstpdd;
+        vector<vector<string>> _ret;
+        for(int i = 0;i < vppstpdd.size();i++)
+        {
+            vector<string> tmp;
+            tmp.push_back(vppstpdd[i].first.first);
+            tmp.push_back(loc1);
+
+            char* s1;
+            date dx1(vppstpdd[i].second.second.first);
+            sprintf(s1, "%d-%d-%d", dx1.year, dx1.month, dx1.day);
+            tmp.push_back((const char*)s1);
+
+            char* s3;
+            time tx(vppstpdd[i].second.first.second._Time_From);
+            sprintf(s3, "%d:%d", tx.hour, tx.minute);
+            tmp.push_back((const char*)s3);
+            tmp.push_back(loc2);
+
+            char* s2;
+            date dx2(vppstpdd[i].second.second.second);
+            sprintf(s2, "%d-%d-%d", dx2.year, dx2.month, dx2.day);
+            tmp.push_back((const char*)s2);
+
+            char* s4;
+            time ty(vppstpdd[i].second.first.second._Time_To);
+            sprintf(s4, "%d:%d", ty.hour, ty.minute);
+            tmp.push_back((const char*)s4);
+
+            int num = vppstpdd[i].first.second._Num_Price;
+            for(int j = 0;j < num;j++)
+            {
+                tmp.push_back(vppstpdd[i].first.second._Name_Price[j]);
+                remain_data rd1(vppstpdd[i].first.first, loc1, loc2, dx);
+                remain_data rd2(vppstpdd[i].first.first, loc2, loc1, dx);
+                int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
+                char* csc1;
+                sprintf(csc1, "%d", lft);
+                tmp.push_back((const char*)csc1);
+                double price;
+                for(int k = 0;k < vppstpdd[i].first.second._Num_Station; k++)
+                {
+                    train_station ts(vppstpdd[i].first.second._Station[k]);
+                    if(ts._Name == loc1) price += ts._Price[j];
+                    if(ts._Name == loc2) price -= ts._Price[j];
+                }
+                char* csc2;
+                sprintf(csc2, "%lf", price);
+                tmp.push_back((const char*)csc2);
+            }
+            _ret.push_back(tmp);
+        }
+        return _ret;
     }
     static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {
