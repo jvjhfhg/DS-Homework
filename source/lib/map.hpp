@@ -270,11 +270,6 @@ namespace sjtu {
                 return _pos->_val;
             }
 
-            value_type retkey() {
-                if (_pos == nullptr)
-                    throw invalid_iterator();
-                return _pos->_key;
-            }
 
             bool operator == (const iterator &oth) const {
                 return _container == oth._container && _pos == oth._pos;

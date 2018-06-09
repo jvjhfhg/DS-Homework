@@ -5,13 +5,13 @@
 
 namespace sjtu {
     template <class Key, class T>
-    class BPTree {
+    class MPTree {
         const char *filename;
         std::map<Key, T> Tree;
         std::fstream io;
 
     public:
-        BPTree(const char *f): filename(f) {
+        MPTree(const char *f): filename(f) {
             io.open(filename, std::fstream::in);
             if (!io) {
                 io.open(filename, std::fstream::out | std::fstream::binary);
@@ -32,7 +32,7 @@ namespace sjtu {
             io.close();
         }
 
-        ~BPTree() {
+        ~MPTree() {
             io.open(filename, std::fstream::out | std::fstream::binary);
             int cnt = Tree.size();
             io.write((const char *)(&cnt), sizeof cnt);

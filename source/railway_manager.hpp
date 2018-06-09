@@ -21,11 +21,13 @@ private:
     ticket _Ticket;
     order_user _Order_User;
     order_time _Order_Time;
-    map<string, string> _Station;
+    BPtree<string, string> _Station;
 public:
     friend class Interactor;
-    Database():_User(), _Train(), _Ticket(), _Order_User(), _Order_Time(), _Station()
+    Database():_User(), _Train(), _Ticket(), _Order_User(), _Order_Time(), _Station("stations")
     {
+        std::fstream _Iofile;
+        _Iofile.open("stations");
         user::_Cur_Id = 2018;
         order_map::_Num_Of_File = -1;
         ticket_map::_Num_Of_File = 1;
@@ -79,7 +81,7 @@ public:
         train_data d = _Data_Base._Train.query_train(id).second;
         for(int i = 0;i < d._Num_Station - 1;i++)
         {
-            _Data_Base._Station[d._Station[i]._Name] = d._Catalog;
+            if(!_Data_Base._Station.query(d._Station[i]._Name).second) _Data_Base._Station.insert(d._Station[i]._Name, d._Catalog);
             for(int j = i + 1;j < d._Num_Station;j++)
             {
                 ticket_key aaa(d._Station[i]._Name, d._Station[j]._Name, d._Catalog);
@@ -178,22 +180,23 @@ public:
     }
     static pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>> QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
     {
-        map::iterator<string, string> it(&_Data_Base._Station);
         date d(Date, Catalog);
         time mint(233333, 233333);
         pair<string, ticket_data> pst1;
         pair<const char*, train_data> pcc1;
         pair<string, ticket_data> pst2;
         pair<const char*, train_data> pcc2;
-        for(it = _Data_Base._Station.begin(); it != _Data_Base._Station.end(); it++)
+        vector<pair<string, string>> vss(_Data_Base._Station.traverse());
+        for(int k = 0;k < vss.size();k++)
         {
-            string Loc3 = it.retkey();
+            string Loc3 = vss[k].first;
             ticket_key tk1(Loc1, Loc3, d.catalog);
             ticket_key tk2(Loc3, Loc1, d.catalog);
             ticket_key tk3(Loc2, Loc3, d.catalog);
             ticket_key tk4(Loc3, Loc2, d.catalog);
             vector<pair<string, ticket_data>> vpstd1;
             vector<pair<string, ticket_data>> vpstd2;
+            ;
             if(_Data_Base._Ticket.query_ticket(tk1).size() != 0 && _Data_Base._Ticket.query_ticket(tk3).size() != 0)
             {
                 time t;
