@@ -109,12 +109,7 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
-<<<<<<< HEAD
     static vector<vector<string>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
-=======
-    
-    static vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
->>>>>>> 6b848fb120324e38d39274ef916f71b67465f5df
     {
         ///listnum = length of vector;
         ///if(0) return;
@@ -234,7 +229,7 @@ public:
         ///listnum = length of vector;
         return _Data_Base._Order_User.query_order(id, t);
     }
-    static pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>> QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
+    static pair<vector<string>, vector<string>> QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
     {
         date d(Date, Catalog);
         time mint(233333, 233333);
@@ -243,6 +238,7 @@ public:
         pair<string, ticket_data> pst2;
         pair<const char*, train_data> pcc2;
         vector<pair<string, string>> vss(_Data_Base._Station.traverse());
+        string minloc;
         for(int k = 0;k < vss.size();k++)
         {
             string Loc3 = vss[k].first;
@@ -273,6 +269,7 @@ public:
                             pcc1 = pair<const char*, train_data>(id1._str, _Data_Base._Train.query_train(id1._str).second);
                             pst2 = pair<string, ticket_data>(id3 ,vpstd2[i].second);
                             pcc2 = pair<const char*, train_data>(id3._str, _Data_Base._Train.query_train(id3._str).second);
+                            minloc = Loc3;
                         }
                     }
                 }
@@ -281,7 +278,105 @@ public:
         }
         pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp1(pst1, pcc1);
         pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp2(pst2, pcc2);
-        return pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>>(ppsp1, ppsp2);
+        pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>> wtf(ppsp1, ppsp2);
+        pair<vector<string>, vector<string>> _ret;
+        vector<string> tmp;
+        tmp.push_back(wtf.first.first.first);
+        tmp.push_back(Loc1);
+
+        char* s1;
+        date dx1(Date, Catalog);
+        sprintf(s1, "%d-%d-%d", dx1.year, dx1.month, dx1.day);
+        tmp.push_back((const char*)s1);
+
+        char* s3;
+        time tx(wtf.first.first.second._Time_From);
+        sprintf(s3, "%d:%d", tx.hour, tx.minute);
+        tmp.push_back((const char*)s3);
+        tmp.push_back(minloc);
+
+        char* s2;
+        date dx2(Date, Catalog);
+        sprintf(s2, "%d-%d-%d", dx2.year, dx2.month, dx2.day);
+        tmp.push_back((const char*)s2);
+
+        char* s4;
+        time ty(wtf.first.first.second._Time_To);
+        sprintf(s4, "%d:%d", ty.hour, ty.minute);
+        tmp.push_back((const char*)s4);
+
+        int num = wtf.first.second.second._Num_Price;
+        for(int j = 0;j < num;j++)
+        {
+            tmp.push_back(wtf.first.second.second._Name_Price[j]);
+            remain_data rd1(wtf.first.first.first._str, Loc1, Loc2, d);
+            remain_data rd2(wtf.first.first.first._str, Loc2, Loc1, d);
+            int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
+            char* csc1;
+            sprintf(csc1, "%d", lft);
+            tmp.push_back((const char*)csc1);
+            double price;
+            for(int k = 0;k < wtf.first.second.second._Num_Station; k++)
+            {
+                train_station ts(wtf.first.second.second._Station[k]);
+                if(ts._Name == Loc1) price += ts._Price[j];
+                if(ts._Name == Loc2) price -= ts._Price[j];
+            }
+            char* csc2;
+            sprintf(csc2, "%lf", price);
+            tmp.push_back((const char*)csc2);
+        }
+        _ret.first = tmp;
+
+
+        tmp.clear();
+        tmp.push_back(wtf.second.first.first);
+        tmp.push_back(minloc);
+
+        char* s5;
+        date dx3(Date, Catalog);
+        sprintf(s5, "%d-%d-%d", dx3.year, dx3.month, dx3.day);
+        tmp.push_back((const char*)s5);
+
+        char* s7;
+        time tu(wtf.second.first.second._Time_From);
+        sprintf(s7, "%d:%d", tu.hour, tu.minute);
+        tmp.push_back((const char*)s7);
+        tmp.push_back(Loc2);
+
+        char* s6;
+        date dx4(Date, Catalog);
+        sprintf(s6, "%d-%d-%d", dx4.year, dx4.month, dx4.day);
+        tmp.push_back((const char*)s6);
+
+        char* s8;
+        time tv(wtf.second.first.second._Time_To);
+        sprintf(s8, "%d:%d", tv.hour, tv.minute);
+        tmp.push_back((const char*)s8);
+
+        num = wtf.second.second.second._Num_Price;
+        for(int j = 0;j < num;j++)
+        {
+            tmp.push_back(wtf.second.second.second._Name_Price[j]);
+            remain_data rd1(wtf.second.first.first._str, Loc1, Loc2, d);
+            remain_data rd2(wtf.second.first.first._str, Loc2, Loc1, d);
+            int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
+            char* csc1;
+            sprintf(csc1, "%d", lft);
+            tmp.push_back((const char*)csc1);
+            double price;
+            for(int k = 0;k < wtf.second.second.second._Num_Station; k++)
+            {
+                train_station ts(wtf.second.second.second._Station[k]);
+                if(ts._Name == Loc1) price += ts._Price[j];
+                if(ts._Name == Loc2) price -= ts._Price[j];
+            }
+            char* csc2;
+            sprintf(csc2, "%lf", price);
+            tmp.push_back((const char*)csc2);
+        }
+        _ret.second = tmp;
+        return _ret;
     }
 };
 
