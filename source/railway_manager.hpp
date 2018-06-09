@@ -109,6 +109,7 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
+    
     static vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>>  QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
