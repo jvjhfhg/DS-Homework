@@ -44,6 +44,7 @@ public:
     int Register(const char* a, const char* b, const char* c, const char* d)
     {
         user_data u(a, b, c, d);
+        if(_Cur_Id == 2018)u._Privilege = 2;
         _Root.insert(_Cur_Id, u);
         return _Cur_Id++;
     }
@@ -67,7 +68,10 @@ public:
     }
     bool modify_privilege(int id1, int id2, int privilege)
     {
+        user_data now(_Root.query(id1).first);
+        if(now._Privilege == 1)return 0;
         user_data u(_Root.query(id2).first);
+        if(u._Privilege == 2 && privilege == 1)return 0;
         u._Privilege = privilege;
         _Root.modify(id2, u);
         return true;

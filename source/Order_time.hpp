@@ -47,13 +47,20 @@ public:
         std::fstream _Iofile;
         _Iofile.open("_Order_Time");
     }
+    void add_remain(remain_data r)
+    {
+        _Root.insert(r, 2000);
+    }
     int query_remain(remain_data r)
     {
+        if(!_Root.query(r).second) _Root.insert(r, 2000);
         return _Root.query(r).second;
     }
     void alter_remain(remain_data r, int x)
     {
-        _Root.modify(r, x);
+        int y = _Root.query(r).second;
+        y -= x;
+        _Root.modify(r, y);
     }
 };
 }

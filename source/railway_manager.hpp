@@ -209,6 +209,8 @@ public:
             ticket_order o = m._Sub_Root.query(train_id).first;
             o._Num_Of_Ticket += num;
             m._Sub_Root.modify(train_id, o);
+            remain_data r(train_id, loc1, loc2, d);
+            _Data_Base._Order_Time.alter_remain(r, num);
             return 1;
         }
         else
@@ -217,6 +219,8 @@ public:
             ticket_order o(loc1, loc2, td, num);
             m._Sub_Root.insert(train_id, o);
             _Data_Base._Order_User._Root.insert(ok ,m);
+             remain_data r(train_id, loc1, loc2, d);
+            _Data_Base._Order_Time.alter_remain(r, num);
             return 1;
         }
     }
