@@ -2,7 +2,7 @@
 #include<fstream>
 #include<cstring>
 #include<iostream>
-#include"lib/BPtree.hpp"
+#include"lib/b_plus_tree.hpp"
 #include<cstdio>
 #include"lib/algorithm.hpp"
 #include"ticket.hpp"
@@ -52,15 +52,15 @@ public:
 class order_map
 {
 private:
-    BPtree<string, ticket_order> _Sub_Root;
-    static int _Num_Of_File;
+    BPTree<string, ticket_order> _Sub_Root;
+    int _Num_Of_File;
 public:
     friend class order_user;
     friend class Database;
     friend class Interactor;
-    order_map():_Sub_Root("Fuck you!")
+    order_map():_Sub_Root("Fuck you!") , _Num_Of_File(-1)
     {
-        char* str;
+        char str[3];
         sprintf(str, "%d", _Num_Of_File);
         const char* cstr(str);
         std::fstream _Iofile;
@@ -73,7 +73,7 @@ public:
 class order_user
 {
 private:
-    BPtree<order_key, order_map> _Root;
+    BPTree<order_key, order_map> _Root;
 public:
     friend class Interactor;
     order_user():_Root("_Order_User")

@@ -2,7 +2,7 @@
 #include<fstream>
 #include<cstring>
 #include<iostream>
-#include"lib/BPtree.hpp"
+#include"lib/b_plus_tree.hpp"
 #include<cstdio>
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
@@ -29,12 +29,17 @@ public:
         if(_Date < o._Date) return true;
         return false;
     }
+	bool operator == (const remain_data &o)const
+    {
+        if(_Train_Id == o._Train_Id && _Loc1 == o._Loc1 && _Loc2 == o._Loc2 && _Date == o._Date) return true;
+        return false;
+    }
 };
 
 class order_time
 {
 private:
-    BPtree<remain_data, int> _Root;
+    BPTree<remain_data, int> _Root;
 public:
     friend class Interactor;
     order_time():_Root("_Order_Time")
@@ -45,6 +50,10 @@ public:
     int query_remain(remain_data r)
     {
         return _Root.query(r).second;
+    }
+    void alter_remain(remain_data r, int x)
+    {
+        _Root.modify(r, x);
     }
 };
 }

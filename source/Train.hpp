@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"lib/BPtree.hpp"
+#include"lib/b_plus_tree.hpp"
 #include"lib/algorithm.hpp"
 #include"Ticket.hpp"
 #include"lib/utility.hpp"
@@ -17,7 +17,7 @@ public:
     double _Price[7];
     train_station(const char* a = "", time b = time(), time c = time(), time d = time(), double* e = nullptr): _Name(a), _Arrive(b), _Start(c), _Stopover(d)
     {
-        for(int i = 0;i <7;i++) _Price[i] = e[i];
+        if(e != NULL)for(int i = 0;i <7;i++) _Price[i] = e[i];
     }
 };
 
@@ -89,7 +89,7 @@ public:
 class train
 {
 private:
-    BPtree<string, train_data> _Root;
+    BPTree<string, train_data> _Root;
 public:
     friend class Interactor;
     train():_Root("_Train_Data")

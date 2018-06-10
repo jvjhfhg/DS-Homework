@@ -21,62 +21,62 @@ private:
     ticket _Ticket;
     order_user _Order_User;
     order_time _Order_Time;
-    BPtree<string, string> _Station;
+    BPTree<string, string> _Station;
 public:
     friend class Interactor;
-    Database():_User(), _Train(), _Ticket(), _Order_User(), _Order_Time(), _Station("stations")
+    Database(): _Station("stations")
     {
         std::fstream _Iofile;
         _Iofile.open("stations");
-        user::_Cur_Id = 2018;
-        order_map::_Num_Of_File = -1;
-        ticket_map::_Num_Of_File = 1;
+        //user::_Cur_Id = 2018;
+        //order_map::_Num_Of_File = -1;
+        //ticket_map::_Num_Of_File = 1;
     }
 };
 class Interactor
 {
 private:
-    static Database _Data_Base;
+    Database _Data_Base;
 public:
-    static int Register(const char* a, const char* b, const char* c, const char* d)
+    int Register(const char* a, const char* b, const char* c, const char* d)
     {
         return _Data_Base._User.Register(a, b, c, d);
     }
-    static bool Login(int id, const char* name)
+    bool Login(int id, const char* name)
     {
         return _Data_Base._User.login(id, name);
     }
-    static pair<user_data, bool> QueryProfile(int id)
+    pair<user_data, bool> QueryProfile(int id)
     {
         return _Data_Base._User.query_profile(id);
     }
-    static bool ModifyProfile(int id, const char* a, const char* b, const char* c, const char* d)
+    bool ModifyProfile(int id, const char* a, const char* b, const char* c, const char* d)
     {
         return _Data_Base._User.modify_profile(id, a, b, c, d);
     }
-    static bool ModifyPrivilege(int id1, int id2, int privilege)
+    bool ModifyPrivilege(int id1, int id2, int privilege)
     {
         return _Data_Base._User.modify_privilege(id1, id2, privilege);
     }
-    static bool AddTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
+    bool AddTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
         return _Data_Base._Train.add_train(a, b, c, d, e, f, g);
     }
-    static pair<const char*, train_data> QueryTrain(const char* id)
+    pair<const char*, train_data> QueryTrain(const char* id)
     {
         return _Data_Base._Train.query_train(id);
     }
-    static bool DeleteTrain(const char* id)
+    bool DeleteTrain(const char* id)
     {
         if(_Data_Base._Train.query_train(id).second._Published) return false;
         return _Data_Base._Train.delete_train(id);
     }
-    static bool ModifyTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
+    bool ModifyTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
     {
         if(_Data_Base._Train.query_train(a).second._Published) return false;
         return _Data_Base._Train.modify_train(a, b, c, d, e, f, g);
     }
-    static bool SaleTrain(const char* id)
+    bool SaleTrain(const char* id)
     {
         train_data d = _Data_Base._Train.query_train(id).second;
         for(int i = 0;i < d._Num_Station - 1;i++)
@@ -100,7 +100,7 @@ public:
         }
         _Data_Base._Train.publish(id);
     }
-    static int Clean()
+    int Clean()
     {
         _Data_Base._User._Root.clear();
         _Data_Base._Train._Root.clear();
@@ -109,7 +109,7 @@ public:
         _Data_Base._Order_Time._Root.clear();
         return 1;
     }
-    static vector<vector<string>> QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
+    vector<vector<string> > QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
     {
         ///listnum = length of vector;
         ///if(0) return;
@@ -194,7 +194,7 @@ public:
         }
         return _ret;
     }
-    static bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
+    bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {
         string c = _Data_Base._Train._Root.query(train_id).first._Catalog;
         date d(Date, c._str);
@@ -220,16 +220,16 @@ public:
             return 1;
         }
     }
-    static bool RefundTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
+    bool RefundTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
     {
         return BuyTicket(id, -num, train_id, loc1, loc2, Date, kind);
     }
-    static vector<pair<string, ticket_order>> QueryOrder(int id, date t)
+    vector<pair<string, ticket_order> > QueryOrder(int id, date t)
     {
         ///listnum = length of vector;
         return _Data_Base._Order_User.query_order(id, t);
     }
-    static pair<vector<string>, vector<string>> QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
+    pair<vector<string>, vector<string> > QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
     {
         date d(Date, Catalog);
         time mint(233333, 233333);

@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"lib/BPtree.hpp"
+#include"lib/b_plus_tree.hpp"
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
 namespace sjtu
@@ -31,12 +31,12 @@ public:
 class user
 {
 private:
-    BPtree<int, user_data> _Root;
-    static int _Cur_Id;
+    BPTree<int, user_data> _Root;
+    int _Cur_Id;
 public:
     friend class Database;
     friend class Interactor;
-    user(): _Root("_User_Data")
+    user(): _Root("_User_Data"), _Cur_Id(2018) 
     {
         std::fstream _Iofile;
         _Iofile.open("_User_Data");
@@ -49,7 +49,8 @@ public:
     }
     bool login(int id, const char* name)
     {
-        if(_Root.query(id).second == true) return true;
+    	auto cur = _Root.query(id);
+        if(cur.second == true && cur.first._Password == name) return true;
         return false;
     }
     pair<user_data, bool> query_profile(int id)
@@ -59,6 +60,8 @@ public:
     bool modify_profile(int id, const char* a, const char* b, const char* c, const char* d)
     {
         user_data u(a, b, c, d, _Root.query(id).first._Privilege);
+        auto cur = _Root.query(id);
+        if(cur.second == false)return 0;
         _Root.modify(id, u);
         return true;
     }

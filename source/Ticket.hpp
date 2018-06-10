@@ -1,7 +1,7 @@
 #pragma once
 #include<fstream>
 #include<iostream>
-#include"lib/BPtree.hpp"
+#include"lib/b_plus_tree.hpp"
 #include"lib/vector.hpp"
 #include"lib/algorithm.hpp"
 #include"lib/utility.hpp"
@@ -59,13 +59,13 @@ public:
 class ticket_map
 {
 private:
-    BPtree<string, ticket_data> _Sub_Root;
-    static int _Num_Of_File;
+    BPTree<string, ticket_data> _Sub_Root;
+    int _Num_Of_File;
 public:
     friend class Database;
     friend class ticket;
     friend class Interactor;
-    ticket_map():_Sub_Root("Fuck you!")
+    ticket_map():_Sub_Root("Fuck you!") , _Num_Of_File(1)
     {
         char* str;
         sprintf(str, "%d", _Num_Of_File);
@@ -84,7 +84,7 @@ public:
 class ticket
 {
 private:
-    BPtree<ticket_key, ticket_map> _Root;
+    BPTree<ticket_key, ticket_map> _Root;
 public:
     friend class Interactor;
     ticket():_Root("_Ticket_Data")
