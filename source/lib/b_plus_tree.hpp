@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+// #define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include<iostream>
 #include<cmath>
@@ -13,23 +13,24 @@ namespace sjtu {
         typedef long long ll;
 	public:
 		const char* file;
-		static const int K = 4096;
+		char _data[50];
+        static const int K = 4096;
 
-		//max1,max2Ã¨Â®Â°Ã¥Â½â€¢Ã§Å¡â€Ã¥Ë†â€ Ã¥Ë†Â«Ã¦ËœÂ¯Ã¨Â¿â€¡Ã¦Â¸Â¡Ã¨Å â€šÃ§â€šÂ¹Ã£â‚¬ÂÃ¥ÂÂ¶Ã¥Â­ÂÃ¨Å â€šÃ§â€šÂ¹Ã§Å¡â€Ã¦Å“â‚¬Ã¥Â¤Â§Ã§Â©ÂºÃ©â€”Â´Ã¯Â¼Å’min1,min2Ã¥Ë†â€ Ã¥Ë†Â«Ã¤Â¸ÂºÃ¥â€°ÂÃ¨â‚¬â€¦Ã§Å¡â€Ã¤Â¸â‚¬Ã¥ÂÅ ;
-		static const int max1 = 16; // 2000 * 8 / (sizeof(Key));
-		static const int max2 = 16; // 2000 * 8 / (sizeof(T));
+		//max1,max2?¡§???¡ã?£¤??a€¡é?¡ì??a€??£¤??a€ ?£¤?????|???¡¥?¡§??a€??|?????¡§? a€??¡ìa€??1?¡êa?????£¤?????£¤?-???¡§? a€??¡ìa€??1?¡ì??a€??|?¡°a???£¤?¡è?¡ì?¡ì???o??a€¡±?¡ä?¡¥???¡¯min1,min2?£¤??a€ ?£¤?????¡è???o?£¤a€¡ã???¡§a??a€|?¡ì??a€??¡è??a???£¤??? ;
+		static const int max1 = 24; // 2000 * 8 / (sizeof(Key));
+		static const int max2 = 24; // 2000 * 8 / (sizeof(T));
 		static const int min1 = max1 / 2;
 		static const int min2 = max2 / 2;
-		static const int max0 = 16;
+		static const int max0 = 24;
 
-		//Ã¨Å â€šÃ§â€šÂ¹Ã¤Â¿ÂÃ¥Â­ËœÃ¤Âºâ€ Ã¥Â½â€œÃ¥â€°ÂÃ¨Å â€šÃ§â€šÂ¹Ã§Å¡â€Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã§Ë†Â¶Ã¤ÂºÂ²Ã§Å¡â€Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¥â€°ÂÃ©Â©Â±Ã£â‚¬ÂÃ¥ÂÅ½Ã§Â»Â§Ã§Å¡â€Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¤Â¸â‚¬Ã¤Âºâ€ºÃ¤Â¿Â¡Ã¦ÂÂ¯Ã¯Â¼Å’Ã¥Â¤Â§Ã¥Â°ÂÃ¯Â¼Å’Ã¦ËœÂ¯Ã¥ÂÂ¦Ã¦ËœÂ¯Ã¥ÂÂ¶Ã¥Â­ÂÃ¨Å â€šÃ§â€šÂ¹;
-		//Ã¦â€°â‚¬Ã¦Å“â€°Ã§Å¡â€Ã¦â€¢Â°Ã§Â»â€Ã©Æ’Â½Ã¦ËœÂ¯0_based;
+		//?¡§? a€??¡ìa€??1?¡è?????£¤?-???¡è?oa€ ?£¤??a€??£¤a€¡ã???¡§? a€??¡ìa€??1?¡ì??a€??¡è?????¡ì?????¡¥???¡¯?¡ì?????¡è?o?2?¡ì??a€??¡è?????¡ì?????¡¥???¡¯?£¤a€¡ã???????¡À?¡êa?????£¤?????¡ì???¡ì?¡ì??a€??¡è?????¡ì?????¡¥???¡¯?¡è??a???¡è?oa€o?¡è?????|???¡¥?¡¥???¡¯?£¤?¡è?¡ì?£¤?¡ã???¡¥???¡¯?|???¡¥?£¤???|?|???¡¥?£¤?????£¤?-???¡§? a€??¡ìa€??1;
+		//?|a€¡ãa???|?¡°a€¡ã?¡ì??a€??|a€¡é?¡ã?¡ì??a€????¡¯???|???¡¥0_based;
 		class node {
 		public:
 			ll pos, father, prev, succ;
 			Key key[max0];
 			ll son[max0];
-			T data[max0];
+			ll data[max0];
 			int size;
 			bool is_leaf;
 		public:
@@ -40,54 +41,89 @@ namespace sjtu {
 			}
 		};
 
-		//Ã¤Â¿ÂÃ¥Â­ËœÃ¤Âºâ€ BPtreeÃ§Å¡â€Ã¦Â Â¹Ã¨Å â€šÃ§â€šÂ¹Ã§Å¡â€Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¤Â»Â¥Ã¥ÂÅ Ã¦â€¢Â´Ã¤Â¸ÂªÃ¦â€“â€¡Ã¤Â»Â¶Ã§Å¡â€Ã¦Å“â‚¬Ã¥ÂÅ½Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¦Â¯ÂÃ¦Â¬Â¡Ã§Å¡â€Ã¦Ââ€™Ã¥â€¦Â¥Ã©Æ’Â½Ã¤Â»Å½Ã¦Å“â‚¬Ã¥ÂÅ½Ã¥Â¼â‚¬Ã¥Â§â€¹Ã¯Â¼Å’Ã¤Â»Å½4096Ã¥Â¼â‚¬Ã¥Â§â€¹Ã¦Ââ€™Ã¥â€¦Â¥;
+		//?¡è?????£¤?-???¡è?oa€ BPtree?¡ì??a€??|? ?1?¡§? a€??¡ìa€??1?¡ì??a€??¡è?????¡ì?????¡¥???¡¯?¡è???£¤?£¤??? ?|a€¡é?¡ä?¡è???a?|a€¡°a€??¡è?????¡ì??a€??|?¡°a???£¤?????¡è?????¡ì?????¡¥???¡¯?|?¡¥???|?????¡ì??a€??|??a€??£¤a€|?£¤???¡¯???¡è?????|?¡°a???£¤?????£¤??a???£¤?¡ìa€1?¡¥???¡¯?¡è????4096?£¤??a???£¤?¡ìa€1?|??a€??£¤a€|?£¤;
 		ll root;
 		ll at_end;
+		ll at_end2;
 		FILE* File;
+		FILE* Data;
 
 		Compare cmp;
 
-		//Ã¥Â¼â‚¬Ã¦â€“â€¡Ã¤Â»Â¶Ã¯Â¼Å’Ã¥Â¹Â¶Ã¤Â¸â€Ã¥Â®Å¡Ã¤Â½Â;
+		//?£¤??a???|a€¡°a€??¡è?????¡¥???¡¯?£¤?1???¡è??a€??£¤?????¡è????;
 		void file_seek(ll s) {
 			fseek(File, s, SEEK_SET);
 		}
 
-		//Ã¥â€¦Â³Ã¦â€“â€¡Ã¤Â»Â¶;
+		//?£¤a€|?3?|a€¡°a€??¡è????;
 		void file_close() {
 			fclose(File);
 		}
 
-		//Ã¦Å¾â€Ã©â‚¬Â Ã¥â€¡Â½Ã¦â€¢Â°Ã©Å“â‚¬Ã¤Â¼Â Ã¥Ââ€šÃ¦â€“â€¡Ã¤Â»Â¶Ã¦Å’â€¡Ã©â€™Ë†Ã¯Â¼Å’Ã©Â»ËœÃ¨Â®Â¤Ã¥â€¡Â½Ã¦â€¢Â°Ã¤Â¼Å¡Ã¤Âºâ€¹Ã¥â€¦Ë†Ã¦Å¾â€Ã©â‚¬Â Ã¤Â¸â‚¬Ã¤Â¸Âªroot;
+		//?|??a€???a??? ?£¤a€????|a€¡é?¡ã???¡°a???¡è??? ?£¤??a€??|a€¡°a€??¡è?????|?¡¯a€???a€????¡¥???¡¯???????¡§???¡è?£¤a€????|a€¡é?¡ã?¡è?????¡è?oa€1?£¤a€|???|??a€???a??? ?¡è??a???¡è???aroot;
         BPTree(const char* f) :file(f) {
-			fclose(fopen(f , "w"));
-			File = fopen(f, "rb+");
-			file = f;
-			node rt;
-			at_end = K;
-			rt.pos = at_end;
-			at_end += K;
-			root = rt.pos;
-			file_seek(rt.pos);
-			fwrite((char*)(&rt), sizeof(rt), 1, File);
+        	strcpy(_data , "data_of_");
+        	strcat(_data+8 , f);
+			if(!(File = fopen(file , "rb+"))){
+				fclose(fopen(file , "w"));
+				fclose(fopen(_data , "w"));
+				File = fopen(file, "rb+");
+				Data = fopen(_data, "rb+");
+				node rt;
+				at_end = K;
+				rt.pos = at_end;
+				at_end += K;
+				at_end2 = sizeof(T);
+				root = rt.pos;
+				file_seek(rt.pos);
+				fwrite((char*)(&rt), sizeof(rt), 1, File);
+				file_seek(0);
+				fwrite(&root , 8 , 1 ,File);
+				file_seek(8);
+				fwrite(&at_end , 8 , 1 ,File);
+				file_seek(16);
+				fwrite(&at_end2 , 8 , 1 ,File);
+			}
+			else{
+				Data = fopen(_data, "rb+");
+				file_seek(0);
+				fread(&root , 8 , 1 ,File);
+				file_seek(8);
+				fread(&at_end , 8 , 1 ,File);
+				file_seek(16);
+				fread(&at_end2 , 8 , 1 ,File);
+			}
 		}
 
 		~BPTree() {
 			fclose(File);
+			fclose(Data);
 		}
 
-		//Ã¥Ë†Â Ã¥Âºâ€œÃ¨Â·â€˜Ã¨Â·Â¯;
+		//?£¤??? ?£¤?oa€??¡§?¡¤a€??¡§?¡¤?¡¥;
 		void clear() {
+			fclose(File);
+			fclose(Data);
 			fclose(fopen(file, "w"));
+			fclose(fopen(_data, "w"));
 			node rt;
 			rt.pos = at_end = K;
 			at_end += K;
+			at_end2 = sizeof(T);
 			root = rt.pos;
 			File = fopen(file, "rb+");
+			Data = fopen(_data, "rb+");
 			file_seek(rt.pos);
 			fwrite((char*)(&rt), sizeof(rt), 1, File);
+			file_seek(0);
+			fwrite(&root , 8 , 1 ,File);
+			file_seek(8);
+			fwrite(&at_end , 8 , 1 ,File);
+			file_seek(16);
+			fwrite(&at_end2 , 8 , 1 ,File);
 		}
 
-		//Ã¥Å“Â¨Ã¥Â½â€œÃ¥â€°ÂÃ¥Ââ€”Ã¤Â¸Â­Ã¦Å¸Â¥Ã¦â€°Â¾Ã©â€Â®Ã¥â‚¬Â¼Ã¦â€°â‚¬Ã¥Å“Â¨Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¨â€¹Â¥Ã©â€Â®Ã¥â‚¬Â¼Ã¥Â°ÂÃ¤ÂºÅ½Ã¥Â½â€œÃ¥â€°ÂÃ§Å¡â€Ã§Â¬Â¬Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ©â€Â®Ã¥â‚¬Â¼Ã¯Â¼Å’Ã¥Ë†â„¢Ã¨Â¿â€Ã¥â€ºÅ¾-1;
+		//?£¤?¡°?¡§?£¤??a€??£¤a€¡ã???£¤??a€¡±?¡è???-?|???£¤?|a€¡ã????a€????£¤a?????|a€¡ãa???£¤?¡°?¡§?¡è?????¡ì?????¡¥???¡¯?¡§a€1?£¤??a€????£¤a?????£¤?¡ã???¡è?o???£¤??a€??£¤a€¡ã???¡ì??a€??¡ì?????¡è??a???¡è???a??a€????£¤a?????¡¥???¡¯?£¤??a?¡é?¡§??a€??£¤a€o??-1;
 		int search(const Key& kk, node* ss) {
 			//	if(cmp(kk , ss->key[0])){
 			//		return -1;
@@ -100,7 +136,7 @@ namespace sjtu {
 			return ss->size;
 		}
 
-		//Ã¥Å“Â¨Ã¦â€°â‚¬Ã¦Å“â€°Ã¥Ââ€”Ã¤Â¸Â­Ã¦Å¸Â¥Ã¦â€°Â¾Ã©â€Â®Ã¥â‚¬Â¼Ã¦â€°â‚¬Ã¥Å“Â¨Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¥ÂÂªÃ¤Â¼Å¡Ã¦â€°Â¾Ã¥Ë†Â°Ã¥Â¯Â¹Ã¥Âºâ€Ã§Å¡â€Ã¥Ââ€”Ã§Å¡â€Ã¤Â½ÂÃ§Â½Â®Ã¯Â¼Å’Ã¤Â¸ÂÃ¨Æ’Â½Ã¦Å¸Â¥Ã¦â€°Â¾Ã¥Å“Â¨Ã¥Â¤Â´Ã§Å¡â€;
+		//?£¤?¡°?¡§?|a€¡ãa???|?¡°a€¡ã?£¤??a€¡±?¡è???-?|???£¤?|a€¡ã????a€????£¤a?????|a€¡ãa???£¤?¡°?¡§?¡è?????¡ì?????¡¥???¡¯?£¤???a?¡è?????|a€¡ã???£¤???¡ã?£¤?¡¥?1?£¤?oa€??¡ì??a€??£¤??a€¡±?¡ì??a€??¡è?????¡ì?????¡¥???¡¯?¡è?????¡§?¡¯???|???£¤?|a€¡ã???£¤?¡°?¡§?£¤?¡è?¡ä?¡ì??a€?;
 		ll search_node(const Key& kk) {
 			char* tmp[K];
 			file_seek(root);
@@ -116,35 +152,50 @@ namespace sjtu {
 			return st->pos;
 		}
 
-		//Ã¦Å¸Â¥Ã¦â€°Â¾Ã¤Â¸Â»Ã¥â€¡Â½Ã¦â€¢Â°;
+		//?|???£¤?|a€¡ã???¡è?????£¤a€????|a€¡é?¡ã;
 		pair<T, bool> query(const Key& kk) {
 			char* tmp[K];
+			if(at_end == 2 * K){
+				T XX;
+				return (pair<T, bool>){XX , false};
+			}
 			ll p = search_node(kk);
 			file_seek(p);
 			fread(tmp, K, 1, File);
 			node* now = (node*)tmp;
 			int k = search(kk, now) - 1;
-			if (k == -1)  return pair<T, bool>(now->data[0], false);
+			if (k == -1){
+				T dd;
+				fseek(Data, now->data[0], SEEK_SET);
+				fread(&dd, sizeof(T), 1, Data);
+				return pair<T, bool>(dd, false);
+			}
 			else {
+				T dd;
+				fseek(Data, now->data[k], SEEK_SET);
+				fread(&dd, sizeof(T), 1, Data);
 				if (cmp(now->key[k], kk)) {
-					return pair<T, bool>(now->data[k], false);
+					return pair<T, bool>(dd, false);
 				}
 				else {
-					return pair<T, bool>(now->data[k], true);
+					return pair<T, bool>(dd, true);
 				}
 			}
 		}
 
-		//Ã¤Â¸Â­Ã¥ÂºÂÃ©ÂÂÃ¥Å½â€ 
+		//?¡è???-?£¤?o?????????£¤??a€ 
 		void traverse(node* s, vector<pair<Key, T> > &a) {
 			char* tmp[K];
 			if (s->is_leaf) {
 				for (int i = 0; i < s->size; ++i) {
-					a.push_back(pair<Key, T>(s->key[i], s->data[i]));
+					T dd;
+					fseek(Data, s->data[i], SEEK_SET);
+					fread(&dd, sizeof(T), 1, Data);
+					a.push_back(pair<Key, T>(s->key[i], dd));
 				}
 			}
 			else {
-				//	a.push_back(pair<Key, T>(-1Ã¯Â¼Å’-1));
+				//	a.push_back(pair<Key, T>(-1?¡¥???¡¯-1));
 				for (int i = 0; i < s->size; ++i) {
 					char*tmp2[K];
 					file_seek(s->son[i]);
@@ -152,7 +203,7 @@ namespace sjtu {
 					node* now = (node*)tmp2;
 					traverse(now, a);
 				}
-				//	a.push_back(pair<Key, T>(-2Ã¯Â¼Å’ - 2 ));
+				//	a.push_back(pair<Key, T>(-2?¡¥???¡¯ - 2 ));
 			}
 		}
 
@@ -166,7 +217,7 @@ namespace sjtu {
 			return s;
 		}
 
-		//Ã¥Â°â€ Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ¥Ââ€”Ã¤Â¸Â­Ã§Â¬Â¬Ã¥â€¡Â Ã¤Â¸ÂªÃ¥â€¦Æ’Ã§Â´Â Ã¥ÂÅ Ã¥â€¦Â¶Ã¤Â¹â€¹Ã¥ÂÅ½Ã§Å¡â€Ã¥â€¦Æ’Ã§Â´Â Ã¥ÂÅ½Ã§Â§Â»Ã¤Â¸â‚¬Ã¤Â¸Âª;
+		//?£¤?¡ãa€ ?¡è??a???¡è???a?£¤??a€¡±?¡è???-?¡ì?????£¤a€?? ?¡è???a?£¤a€|?¡¯?¡ì?¡ä? ?£¤??? ?£¤a€|???¡è?1a€1?£¤?????¡ì??a€??£¤a€|?¡¯?¡ì?¡ä? ?£¤?????¡ì?¡ì???¡è??a???¡è???a;
 		void move_back(int k, node* ss) {
 			for (int i = ss->size; i > k; --i) {
 				if (ss->is_leaf) {
@@ -181,7 +232,7 @@ namespace sjtu {
 			ss->size++;
 		}
 
-		//Ã¥Â°â€ Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ¥Ââ€”Ã¤Â¸Â­Ã§Â¬Â¬Ã¥â€¡Â Ã¤Â¸ÂªÃ¥â€¦Æ’Ã§Â´Â Ã¥ÂÅ Ã¥â€¦Â¶Ã¤Â¹â€¹Ã¥ÂÅ½Ã§Å¡â€Ã¥â€¦Æ’Ã§Â´Â Ã¥â€°ÂÃ§Â§Â»Ã¤Â¸â‚¬Ã¤Â¸Âª;
+		//?£¤?¡ãa€ ?¡è??a???¡è???a?£¤??a€¡±?¡è???-?¡ì?????£¤a€?? ?¡è???a?£¤a€|?¡¯?¡ì?¡ä? ?£¤??? ?£¤a€|???¡è?1a€1?£¤?????¡ì??a€??£¤a€|?¡¯?¡ì?¡ä? ?£¤a€¡ã???¡ì?¡ì???¡è??a???¡è???a;
 		void move_front(int k, node* ss) {
 			for (int i = k - 1; i < ss->size - 1; ++i) {
 				if (ss->is_leaf) {
@@ -196,7 +247,7 @@ namespace sjtu {
 			ss->size--;
 		}
 
-		//Ã¦â€ºÂ´Ã¦â€“Â°Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ¨Å â€šÃ§â€šÂ¹Ã§Å¡â€Ã§Ë†Â¶Ã¤ÂºÂ²Ã§Å¡â€Ã©â€Â®Ã¥â‚¬Â¼Ã¯Â¼Å’Ã¨â€¹Â¥Ã§â€ºÂ¸Ã§Â­â€°Ã¥Ë†â„¢Ã¤Â¸ÂÃ¤Â½Å“Ã¤Â¸ÂºÃ¯Â¼Å’Ã¨â€¹Â¥Ã¤Â¸ÂÃ§Â­â€°Ã¥Ë†â„¢Ã¤Â¿Â®Ã¦â€Â¹;
+		//?|a€o?¡ä?|a€¡°?¡ã?¡è??a???¡è???a?¡§? a€??¡ìa€??1?¡ì??a€??¡ì?????¡è?o?2?¡ì??a€???a€????£¤a?????¡¥???¡¯?¡§a€1?£¤?¡ìa€o???¡ì?-a€¡ã?£¤??a?¡é?¡è?????¡è???¡°?¡è???o?¡¥???¡¯?¡§a€1?£¤?¡è?????¡ì?-a€¡ã?£¤??a?¡é?¡è?????|a€??1;
 		void update_father(node* s) {
 			if (s->pos == root)return;
 			char* tmp[K];
@@ -217,7 +268,7 @@ namespace sjtu {
 			}
 		}
 
-		//Ã¦â€ºÂ´Ã¦â€“Â°Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ¥Ââ€”Ã§Å¡â€Ã¥â€Â¿Ã¥Â­ÂÃ§Å¡â€Ã§Ë†Â¶Ã¤ÂºÂ²;
+		//?|a€o?¡ä?|a€¡°?¡ã?¡è??a???¡è???a?£¤??a€¡±?¡ì??a€??£¤a€????£¤?-???¡ì??a€??¡ì?????¡è?o?2;
 		void update_son(node* s, int k) {
 			if (s->is_leaf)  return;
 			char* tmp[K];
@@ -229,7 +280,7 @@ namespace sjtu {
 			fwrite((char*)so, K, 1, File);
 		}
 
-		//Ã¥Ë†â€ Ã¨Â£â€šÃ¦â€“Â°Ã¥Ââ€”;
+		//?£¤??a€ ?¡§?¡êa€??|a€¡°?¡ã?£¤??a€¡±;
 		void divide(node* a, int p) {
 			char*tmp[K];
 			node new_node;
@@ -287,7 +338,7 @@ namespace sjtu {
 				fwrite((char*)fa, K, 1, File);
 		}
 
-		//Ã¦Ââ€™Ã¥â€¦Â¥Ã¤Â¸Â»Ã¥â€¡Â½Ã¦â€¢Â°
+		//?|??a€??£¤a€|?£¤?¡è?????£¤a€????|a€¡é?¡ã
 		bool insert(const Key& kk, const T& dd) {
 			char* tmp[K];
 			ll nn;
@@ -300,7 +351,11 @@ namespace sjtu {
 				at_end += K;
 				new_node.father = root;
 				new_node.key[0] = kk;
-				new_node.data[0] = dd;
+				new_node.data[0] = at_end2;
+				at_end2 += sizeof(T);
+				ll dt = new_node.data[0];
+				fseek(Data, dt, SEEK_SET);
+				fwrite(&dd, sizeof(T), 1, Data);
 				new_node.size = 1;
 				new_node.is_leaf = true;
 				rt->key[0] = kk;
@@ -310,6 +365,12 @@ namespace sjtu {
 				fwrite((char*)(&new_node), sizeof(new_node), 1, File);
 				fseek(File, root, SEEK_SET);
 				fwrite((char*)rt, K, 1, File);
+				file_seek(0);
+				fwrite(&root , 8 , 1 ,File);
+				file_seek(8);
+				fwrite(&at_end , 8 , 1 ,File);
+				file_seek(16);
+				fwrite(&at_end2 , 8 , 1 ,File);
 				return true;
 			}
 			node* now;
@@ -320,7 +381,11 @@ namespace sjtu {
 				now = (node*)tmp;
 				move_back(0, now);
 				now->key[0] = kk;
-				now->data[0] = dd;
+				now->data[0] = at_end2;
+				at_end2 += sizeof(T);
+				ll dt = now->data[0];
+				fseek(Data, dt, SEEK_SET);
+				fwrite(&dd, sizeof(T), 1, Data);
 				update_father(now);
 				file_seek(now->pos);
 				fwrite((char*)now, K, 1, File);
@@ -337,7 +402,11 @@ namespace sjtu {
 				else {
 					move_back(k, now);
 					now->key[k] = kk;
-					now->data[k] = dd;
+					now->data[k] = at_end2;
+					at_end2 += sizeof(T);
+					ll dt = now->data[k];
+					fseek(Data, dt, SEEK_SET);
+					fwrite(&dd, sizeof(T), 1, Data);
 					file_seek(now->pos);
 					fwrite((char*)now, K, 1, File);
 				}
@@ -364,10 +433,16 @@ namespace sjtu {
 				fwrite((char*)(&new_root), sizeof(new_root), 1, File);
 				divide(now, max0 / 2);
 			}
+			file_seek(0);
+			fwrite(&root , 8 , 1 ,File);
+			file_seek(8);
+			fwrite(&at_end , 8 , 1 ,File);
+			file_seek(16);
+			fwrite(&at_end2 , 8 , 1 ,File);
 			return true;
 		}
 
-		//Ã¤Â¿Â®Ã¦â€Â¹Ã¤Â¸Â»Ã¥â€¡Â½Ã¦â€¢Â°;
+		//?¡è?????|a€??1?¡è?????£¤a€????|a€¡é?¡ã;
 		void modify(const Key& kk,const T& dd) {
 			char* tmp[K];
 			ll p = search_node(kk);
@@ -377,13 +452,15 @@ namespace sjtu {
 			int k = search(kk, now);
 			//if(now->key[k] != kk){int X = 1 / 0;}
 			now->key[k - 1] = kk;
-			now->data[k - 1] = dd;
+			ll dt = now->data[k - 1];
+			fseek(Data, dt, SEEK_SET);
+			fwrite(&dd, sizeof(T), 1, Data);
 			if(k == 1)update_father(now);
 			file_seek(now->pos);
 			fwrite((char*)now, K, 1, File);
 		}
 
-		//Ã¥Ââ€˜Ã¥Â·Â¦Ã¥â€¦â€Ã¥Â¼Å¸Ã¥â‚¬Å¸Ã¥â€Â¿Ã¥Â­ÂÃ¯Â¼Å’Ã¨â€¹Â¥Ã¥â€°ÂÃ¨â‚¬â€¦Ã¦Å“â€°Ã¨Â¶Â³Ã¥Â¤Å¸Ã§Å¡â€Ã¨Â¿â€Ã¥â€ºÅ¾true;
+		//?£¤??a€??£¤?¡¤?|?£¤a€|a€??£¤?????£¤a?????£¤a€????£¤?-???¡¥???¡¯?¡§a€1?£¤?£¤a€¡ã???¡§a??a€|?|?¡°a€¡ã?¡§???3?£¤?¡è???¡ì??a€??¡§??a€??£¤a€o??true;
 		bool borrow_left(node* a) {
 			char* tmp[K];
 			char* tmp2[K];
@@ -443,7 +520,7 @@ namespace sjtu {
 			}
 		}
 
-		//Ã¥Ââ€˜Ã¥ÂÂ³Ã¥Â­ÂÃ¦Â â€˜Ã¥â‚¬Å¸Ã¤Â¸â‚¬Ã¤Â¸ÂªÃ¥Â­Â©Ã¥Â­Â;
+		//?£¤??a€??£¤???3?£¤?-???|? a€??£¤a?????¡è??a???¡è???a?£¤?-???£¤?-??;
 		bool borrow_right(node* a) {
 			char* tmp[K];
 			char* tmp2[K];
@@ -503,7 +580,7 @@ namespace sjtu {
 			}
 		}
 
-		//Ã¥ÂË†Ã¥Â¹Â¶Ã¤Â¸Â¤Ã¤Â¸ÂªÃ¥Ââ€”;
+		//?£¤?????£¤?1???¡è???¡è?¡è???a?£¤??a€¡±;
 		void merge_left(node* s) {
 			char* tmp[K];
 			char* tmp2[K];
@@ -642,7 +719,7 @@ namespace sjtu {
 			}
 		}
 
-		//Ã¥ÂË†Ã¥Â¹Â¶Ã¤Â¸Â»Ã¥â€¡Â½Ã¦â€¢Â°;
+		//?£¤?????£¤?1???¡è?????£¤a€????|a€¡é?¡ã;
 		void merge(node* s) {
 			if (s->pos == root) return;
 			char* tmp[K];
@@ -702,7 +779,7 @@ namespace sjtu {
 			}
 		}
 
-		//Ã¥Ë†Â Ã©â„¢Â¤Ã¤Â¸Â»Ã¥â€¡Â½Ã¦â€¢Â°;
+		//?£¤??? ??a?¡é?¡è?¡è?????£¤a€????|a€¡é?¡ã;
 		void erase(const Key& kk) {
 			char* tmp[K];
 			char* tmp2[K];
@@ -751,6 +828,12 @@ namespace sjtu {
 				fwrite((char*)now, K, 1, File);
 				merge(now);
 			}
+			file_seek(0);
+			fwrite(&root , 8 , 1 ,File);
+			file_seek(8);
+			fwrite(&at_end , 8 , 1 ,File);
+			file_seek(16);
+			fwrite(&at_end2 , 8 , 1 ,File);
 		}
 		bool check(ll cur) {
 			char*tmp[K];

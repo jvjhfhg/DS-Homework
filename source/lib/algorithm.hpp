@@ -1,33 +1,45 @@
 #pragma once
 
+#include <cstdio>
+#include <cstring>
+
+#include <string>
+
 namespace sjtu {
     template <class Type>
     void swap(Type &a, Type &b) {
         Type t(a); a = b; b = t;
     }
-
-    class string {
+    
+    class String {
     private:
-        char _str[61];
+        char _str[45];
         int _length;
 
     public:
-        friend class Interactor;
-        string(const char *str = "") {
-            _length = strlen(_str);
+        String(const char *str = "") {
+            _length = strlen(str);
             for (int i = 0; i < _length; ++i)
                 _str[i] = str[i];
             _str[_length] = '\0';
         }
 
-        string(const string &oth) {
+        String(const String &oth) {
             _length = oth._length;
             for (int i = 0; i < _length; ++i)
                 _str[i] = oth._str[i];
             _str[_length] = '\0';
         }
 
-        string &operator = (const string &oth) {
+        String &operator = (const char *str) {
+            _length = strlen(str);
+            for (int i = 0; i < _length; ++i)
+                _str[i] = str[i];
+            _str[_length] = '\0';
+            return *this;
+        }
+
+        String &operator = (const String &oth) {
             if (this == &oth) return *this;
             _length = oth._length;
             for (int i = 0; i < _length; ++i)
@@ -36,7 +48,7 @@ namespace sjtu {
             return *this;
         }
 
-        bool operator < (const string &oth) const {
+        bool operator < (const String &oth) const {
             for (int i = 0; i < _length && i < oth._length; ++i) {
                 if (_str[i] < oth._str[i]) return true;
                 if (_str[i] > oth._str[i]) return false;
@@ -44,108 +56,159 @@ namespace sjtu {
             return _length < oth._length;
         }
 
-        bool operator > (const string &oth) const {
+        bool operator > (const String &oth) const {
             return oth < *this;
         }
 
-        bool operator == (const string &oth) const {
+        bool operator == (const String &oth) const {
             if (_length != oth._length) return false;
             for (int i = 0; i < _length; ++i)
                 if (_str[i] != oth._str[i]) return false;
             return true;
         }
 
-        int length() const {
+        bool operator != (const String &oth) const {
+            return !(*this == oth);
+        }
+
+        int Length() const {
             return _length;
         }
 
-        const char *c_str() const {
+        const char *Str() const {
             return _str;
+        }
+
+        void Read() {
+            scanf("%s", _str);
+            _length = strlen(_str);
+        }
+
+        static String Int(int x) {
+            String res;
+            sprintf(res._str, "%d", x);
+            res._length = strlen(res._str);
+            return res;
+        }
+
+        static String Float(double x) {
+            String res;
+            sprintf(res._str, "%f", x);
+            res._length = strlen(res._str);
+            return res;
+        }
+
+        int ToInt() const {
+            static int x;
+            sscanf(_str, "%d", &x);
+            return x;
+        }
+
+        double ToFloat() const {
+            static double x;
+            sscanf(_str, "%lf", &x);
+            return x;
+        }
+
+        operator std::string() const {
+            return std::string(_str);
         }
     };
 
-class time
-{
-public:
-    int hour;
-    int minute;
-    time(int a = 0, int b = 0): hour(a), minute(b) {}
-    time(const char*s)
-	{
-    	int X;
-    	sscanf(s,"%d-%d-%d %d:%d",&X,&X,&X,&hour,&minute);
-	}
-	bool operator <(time o)
-    {
-        if(hour < o.hour) return true;
-        if(hour > o.hour) return false;
-        if(minute < o.minute) return true;
-        return false;
-    }
-    const char *ToString() const {
-        static char res[15];
-        sprintf(res, "%02d:%02d", hour, minute);
-        return res;
-    }
-    time& operator +=(int x)
-    {
-        hour = hour + x;
-        return *this;
-    }
-    time& operator -=(int x)
-    {
-        hour = hour - x;
-        return *this;
-    }
-    time operator +(int x)
-    {
-        return time(hour + x, minute);
-    }
-    time operator -(int x)
-    {
-        return time(hour - x, minute);
-    }
-};
-class date
-{
-public:
-    int year;
-    int month;
-    int day;
-    string catalog;
-    date():year(), month(), day(), catalog(){}
-    date(int a, int b, int c, const char* d): year(a), month(b), day(c), catalog(d) {}
-    date(int a, int b, int c, string d): year(a), month(b), day(c), catalog(d) {}
-    date(const char*s1,const char*s2) : catalog(s2)
-	{
-    	int X;
-    	sscanf(s1,"%d-%d-%d %d:%d",&year,&month,&day,&X,&X);
-	}
-    const char *ToString() const {
-        static char res[15];
-        sprintf(res, "%04d-%02d-%02d", year, month, day);
-        return res;
-    }
-    bool operator < (const date o)const
-    {
-        if(year < o.year) return true;
-        if(year > o.year) return false;
-        if(month < o.month) return true;
-        if(month > o.month) return false;
-        if(day < o.day) return true;
-        if(day > o.day) return false;
-        if(catalog < o.catalog) return true;
-        return false;
-    }
-    bool operator =(const date& o)
-    {
-        if(year == o.year && month == o.month && day == o.day && catalog == o.catalog) return true;
-        return false;
-    }
-    bool operator ==(const date& o)const
-    {
-        if(year == o.year && month == o.month && day == o.day && catalog == o.catalog) return true;
-        return false;
-    }
-};
+    struct Time {
+        int hour, minute;
+
+        Time(int h = 0, int m = 0): hour(h), minute(m) {
+            Stdize();
+        }
+
+        Time(const char *s) {
+            sscanf(s, "%d:%d", &hour, &minute);
+            Stdize();
+        }
+
+        bool operator < (const Time &oth) const {
+            return hour == oth.hour ? minute < oth.minute : hour < oth.hour;
+        }
+        
+        bool operator == (const Time &oth) const {
+            return hour == oth.hour && minute == oth.minute;
+        }
+
+        Time operator + (const Time &oth) const {
+            return Time(hour + oth.hour, minute + oth.minute);
+        }
+
+        Time operator - (const Time &oth) const {
+            Time tmp(*this);
+            if (tmp < oth) tmp.hour += 24;
+            if (tmp.minute < oth.minute) {
+                --tmp.hour; tmp.minute += 60;
+            }
+            return Time(tmp.hour - oth.hour, tmp.minute - oth.minute);
+        }
+
+        void Stdize() {
+            hour = (hour + minute / 60) % 24;
+            minute %= 60;
+        }
+
+        const char *ToString() const {
+            static char res[45];
+            sprintf(res, "%02d:%02d", hour, minute);
+            return res;
+        }
+    };
+
+    struct Date {
+        int year, month, day;
+
+        Date(int y = 0, int m = 0, int d = 0): year(y), month(m), day(d) {
+            Stdize();
+        }
+
+        Date(const char *s) {
+            sscanf(s, "%d-%d-%d", &year, &month, &day);
+            Stdize();
+        }
+
+        Date operator + (int t) const {
+            return Date(year, month, day + t);
+        }
+
+        bool operator < (const Date &oth) const {
+            return year == oth.year ? (month == oth.month ? day < oth.day : month < oth.month) : year < oth.year;
+        }
+        
+        bool operator == (const Date &oth) const {
+            return year == oth.year && month == oth.month && day == oth.day;
+        }
+
+        bool IsLeap() const {
+            return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+        }
+
+        void Stdize() {
+            static constexpr int days[2][13] = {{
+                0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+            }, {
+                0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+            }};
+            
+            year += (month - 1) / 12;
+            month = (month - 1) % 12 + 1;
+            while (day > days[IsLeap()][month]) {
+                day -= days[IsLeap()][month++];
+                if (month == 13) {
+                    ++year; month = 1;
+                }
+            }
+        }
+
+        const char *ToString() const {
+            static char res[45];
+            sprintf(res, "%04d-%02d-%02d", year, month, day);
+            return res;
+        }
+    };
 }

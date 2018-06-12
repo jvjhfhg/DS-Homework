@@ -1,13 +1,10 @@
-#ifndef SJTU_VECTOR_HPP
-#define SJTU_VECTOR_HPP
+#pragma once
 
 #include "exceptions.hpp"
 
 #include <climits>
 #include <cstddef>
 #include <iostream>
-
-using namespace std;
 
 namespace sjtu {
 /**
@@ -641,5 +638,3 @@ public:
 
 
 }
-
-#endif

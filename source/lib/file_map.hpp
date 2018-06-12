@@ -1,20 +1,20 @@
 #pragma once
 
 #include <fstream>
-#include <map>
+#include "map.hpp"
 #include "utility.hpp"
 #include "vector.hpp"
 
 namespace sjtu {
     template <class Key, class T, class Compare = std::less<Key>>
-    class BPTree {
+    class FileMap {
         const char *filename;
         // std::map<Key, T, Compare> Tree;
-        std::map<Key, T, Compare> Tree;
+        map<Key, T, Compare> Tree;
         std::fstream io;
 
     public:
-        BPTree(const char *f): filename(f) {
+        FileMap(const char *f): filename(f) {
             io.open(filename, std::fstream::in);
             if (!io) {
                 io.open(filename, std::fstream::out | std::fstream::binary);
@@ -30,12 +30,12 @@ namespace sjtu {
             for (int i = 0; i < cnt; ++i) {
                 io.read((char *)(&key), sizeof key);
                 io.read((char *)(&val), sizeof val);
-                Tree.insert(std::make_pair(key, val));
+                Tree.insert(make_pair(key, val));
             }
             io.close();
         }
 
-        ~BPTree() {
+        ~FileMap() {
             io.open(filename, std::fstream::out | std::fstream::binary);
             int cnt = Tree.size();
             io.write((const char *)(&cnt), sizeof cnt);
@@ -47,7 +47,7 @@ namespace sjtu {
         }
 
         void insert(const Key &key, const T &val) {
-            Tree.insert(std::make_pair(key, val));
+            Tree.insert(make_pair(key, val));
         }
 
         pair<T, bool> query(const Key &key) {
@@ -67,7 +67,7 @@ namespace sjtu {
         vector<pair<Key, T>> traverse() {
             vector<pair<Key, T>> res;
             for (auto i = Tree.begin(); i != Tree.end(); ++i)
-                res.push_back(make_pair(i->first, i->second));
+                res.push_back(*i);
             return res;
         }
         

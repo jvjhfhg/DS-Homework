@@ -1,387 +1,531 @@
 #pragma once
 
-#include"lib/utility.hpp"
-#include"User.hpp"
-#include"Train.hpp"
-#include"Order_user.hpp"
-#include"lib/exceptions.hpp"
-#include"Ticket.hpp"
-#include"Order_time.hpp"
-#include<fstream>
-#include"lib/map.hpp"
-#include<cmath>
+#include <algorithm>
 
-namespace sjtu
-{
-class Database
-{
-private:
-    user _User;
-    train _Train;
-    ticket _Ticket;
-    order_user _Order_User;
-    order_time _Order_Time;
-    BPTree<string, string> _Station;
-public:
-    friend class Interactor;
-    Database(): _Station("stations")
-    {
-        std::fstream _Iofile;
-        _Iofile.open("stations");
-        //user::_Cur_Id = 2018;
-        //order_map::_Num_Of_File = -1;
-        //ticket_map::_Num_Of_File = 1;
-    }
-};
-class Interactor
-{
-private:
-    Database _Data_Base;
-public:
-    int Register(const char* a, const char* b, const char* c, const char* d)
-    {
-        return _Data_Base._User.Register(a, b, c, d);
-    }
-    bool Login(int id, const char* name)
-    {
-        return _Data_Base._User.login(id, name);
-    }
-    pair<user_data, bool> QueryProfile(int id)
-    {
-        return _Data_Base._User.query_profile(id);
-    }
-    bool ModifyProfile(int id, const char* a, const char* b, const char* c, const char* d)
-    {
-        return _Data_Base._User.modify_profile(id, a, b, c, d);
-    }
-    bool ModifyPrivilege(int id1, int id2, int privilege)
-    {
-        return _Data_Base._User.modify_privilege(id1, id2, privilege);
-    }
-    bool AddTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
-    {
-        return _Data_Base._Train.add_train(a, b, c, d, e, f, g);
-    }
-    pair<const char*, train_data> QueryTrain(const char* id)
-    {
-        return _Data_Base._Train.query_train(id);
-    }
-    bool DeleteTrain(const char* id)
-    {
-        if(_Data_Base._Train.query_train(id).second._Published) return false;
-        return _Data_Base._Train.delete_train(id);
-    }
-    bool ModifyTrain(const char* a,const char* b,const char* c,int d,int e,const char** f,train_station* g)
-    {
-        if(_Data_Base._Train.query_train(a).second._Published) return false;
-        return _Data_Base._Train.modify_train(a, b, c, d, e, f, g);
-    }
-    bool SaleTrain(const char* id)
-    {
-        train_data d = _Data_Base._Train.query_train(id).second;
-        for(int i = 0;i < d._Num_Station - 1;i++)
-        {
-            if(!_Data_Base._Station.query(d._Station[i]._Name).second) _Data_Base._Station.insert(d._Station[i]._Name, d._Catalog);
-            for(int j = i + 1;j < d._Num_Station;j++)
-            {
-                ticket_key aaa(d._Station[i]._Name, d._Station[j]._Name, d._Catalog);
-                pair<string, double> p[7];
-                for(int l = 0;l < d._Num_Price;l++)
-                {
-                    p[l].first = d._Name_Price[l];
-                    double money = 0;
-                    for(int h = i + 1;h <= j;h++) money += d._Station[h]._Price[l];
-                    p[l].second = money;
-                }
-                ticket_data ccc(d._Station[i]._Arrive, d._Station[j]._Arrive, d._Num_Price, p);
-                string bbb(id);
-                _Data_Base._Ticket.add_ticket(aaa, bbb, ccc);
-            }
+#include "lib/algorithm.hpp"
+#include "lib/utility.hpp"
+#include "lib/vector.hpp"
+
+#include "User.hpp"
+#include "Train.hpp"
+#include "Ticket.hpp"
+#include "Place.hpp"
+
+namespace sjtu {
+    Places places;
+    
+    Users users;
+    Trains trains;
+
+    OrderTime orderTime;
+    OrderUser orderUser;
+
+    class Interactor {
+    public:
+        /* 
+         * User related
+         */
+
+        static int Register(const char *name, const char *password, const char *email, const char *phone) {
+            return users.Register(name, password, email, phone);
         }
-        _Data_Base._Train.publish(id);
-    }
-    int Clean()
-    {
-        _Data_Base._User._Root.clear();
-        _Data_Base._Train._Root.clear();
-        _Data_Base._Ticket._Root.clear();
-        _Data_Base._Order_User._Root.clear();
-        _Data_Base._Order_Time._Root.clear();
-        return 1;
-    }
-    vector<vector<string> > QueryTicket(const char* loc1, const char* loc2, const char* Date, const char* catalog)
-    {
-        ///listnum = length of vector;
-        ///if(0) return;
-        vector<pair<date, date>> vpdd;
-        ticket_key t(loc1, loc2, catalog);
-        vector<pair<string, ticket_data>> vpstd(_Data_Base._Ticket.query_ticket(t));
-        date dx(Date, catalog);
-        pair<date, date> pdd(dx, dx);
-        for(int j = 0;j < vpstd.size();j++) vpdd.push_back(pdd);
-        {
-            for(int i = 0;i < vpstd.size();i++)
-            {
-                ticket_data td = vpstd[i].second;
-                while(td._Time_From.hour > 24)
-                {
-                    td._Time_From.hour -= 24;
-                    vpdd[i].first.day += 1;
-                }
-                while(td._Time_To.hour > 24)
-                {
-                    td._Time_To.hour -= 24;
-                    vpdd[i].second.day += 1;
+
+        static bool Login(int id, const char *password) {
+            return users.Login(id, password);
+        }
+
+        // If second is false, the user doesn't exist. 
+        static vector<String> QueryProfile(int id) {
+            vector<String> res;
+            auto t = users.Query(id);
+            if (t.second == false)
+                res.push_back("0");
+            else {
+                res.push_back(t.first.name);
+                res.push_back(t.first.email);
+                res.push_back(t.first.phone);
+                res.push_back(String::Int((int)t.first.priv));
+            }
+            return res;
+        }
+
+        static bool ModifyProfile(int id, const char *name, const char *password, const char *email, const char *phone) {
+            return users.Modify(id, name, password, email, phone);
+        }
+
+        static bool ModifyPrivilege(int id1, int id2, int priv) {
+            return users.ModifyPrivilege(id1, id2, (User::Privilege)priv);
+        }
+
+        /* 
+         * Ticket related
+         */
+
+        static vector<vector<String>> _QueryTicket(const String &loc1, const String &loc2, const Date &date, char catalog) {
+            int l1 = places.Query(loc1), l2 = places.Query(loc2);
+            auto t = trains.tickets.Query(l1, l2, catalog);
+            vector<vector<String>> res;
+            if (t.second == false || l1 == 0 || l2 == 0) {
+                return res;
+            }
+            for (int i = 0; i < (int)t.first.size(); ++i) {
+                String tid = t.first[i];
+                Train train = trains.Query(tid).first;
+                res.push_back(vector<String>());
+                vector<String> &vec = res[res.size() - 1];
+                vec.push_back(tid);
+
+                for (int j = 0; j < train.stationCnt; ++j) if (train.stations[j].name == l1) {
+                    vec.push_back(loc1);
+                    vec.push_back(date.ToString());
+                    vec.push_back(train.stations[j].startTime.ToString());
+
+                    int deltaDay = 0;
+                    for (int k = j + 1; k < train.stationCnt; ++k) {
+                        if (train.stations[k].name == l2) {
+                            if (train.stations[k].arriveTime < train.stations[k - 1].startTime) ++deltaDay;
+
+                            vec.push_back(loc2);
+                            // vec.push_back((date + deltaDay).ToString());
+                            vec.push_back(date.ToString());
+                            vec.push_back(train.stations[k].arriveTime.ToString());
+
+                            for (int tk = 0; tk < train.ticketKindCnt; ++tk) {
+                                vec.push_back(train.tickets[tk]);
+
+                                int ticketLeft = 2000;
+                                double price = 0;
+                                deltaDay = 0;
+                                for (int sta = j + 1; sta <= k; ++sta) {
+                                    if ((sta != k && train.stations[sta].startTime < train.stations[sta - 1].startTime) || 
+                                        (sta == k && train.stations[sta].arriveTime < train.stations[sta - 1].startTime)) ++deltaDay;
+                                    // ticketLeft = std::min(ticketLeft, 2000 - orderTime.Query(tid, tk, sta, date + deltaDay));
+                                    ticketLeft = std::min(ticketLeft, 2000 - orderTime.Query(tid, tk, sta, date));
+                                    price += train.stations[sta].price[tk];
+                                }
+                                
+                                vec.push_back(String::Int(ticketLeft));
+                                static char tmp[45];
+                                // sprintf(tmp, "%s%f", train.stations[k].currency[tk].Str(), price);
+                                sprintf(tmp, "%f", price);
+                                // vec.push_back(train.stations[sta].currency[tk]);
+                                // vec.push_back(String::Float(price));
+                                vec.push_back(tmp);
+                            }
+
+                            break;
+                        } else if (train.stations[k].startTime < train.stations[k - 1].startTime) ++deltaDay;
+                    }
+
+                    break;
                 }
             }
+            return res;
         }
-        vector<pair<pair<const char*, train_data>, pair<pair<string, ticket_data>, pair<date, date>>>> vppstpdd;
-        for(int j = 0;j < vpstd.size();j++)
-        {
-            vppstpdd[j].second = pair<pair<string, ticket_data>, pair<date, date>>(vpstd[j], vpdd[j]);
-            vppstpdd[j].first = _Data_Base._Train.query_train(vpstd[j].first._str);
-        }
-        vector<vector<string>> _ret;
-        for(int i = 0;i < vppstpdd.size();i++)
-        {
-            vector<string> tmp;
-            tmp.push_back(vppstpdd[i].first.first);
-            tmp.push_back(loc1);
 
-            char* s1;
-            date dx1(vppstpdd[i].second.second.first);
-            sprintf(s1, "%d-%d-%d", dx1.year, dx1.month, dx1.day);
-            tmp.push_back((const char*)s1);
-
-            char* s3;
-            time tx(vppstpdd[i].second.first.second._Time_From);
-            sprintf(s3, "%d:%d", tx.hour, tx.minute);
-            tmp.push_back((const char*)s3);
-            tmp.push_back(loc2);
-
-            char* s2;
-            date dx2(vppstpdd[i].second.second.second);
-            sprintf(s2, "%d-%d-%d", dx2.year, dx2.month, dx2.day);
-            tmp.push_back((const char*)s2);
-
-            char* s4;
-            time ty(vppstpdd[i].second.first.second._Time_To);
-            sprintf(s4, "%d:%d", ty.hour, ty.minute);
-            tmp.push_back((const char*)s4);
-
-            int num = vppstpdd[i].first.second._Num_Price;
-            for(int j = 0;j < num;j++)
-            {
-                tmp.push_back(vppstpdd[i].first.second._Name_Price[j]);
-                remain_data rd1(vppstpdd[i].first.first, loc1, loc2, dx);
-                remain_data rd2(vppstpdd[i].first.first, loc2, loc1, dx);
-                int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
-                char* csc1;
-                sprintf(csc1, "%d", lft);
-                tmp.push_back((const char*)csc1);
-                double price;
-                for(int k = 0;k < vppstpdd[i].first.second._Num_Station; k++)
-                {
-                    train_station ts(vppstpdd[i].first.second._Station[k]);
-                    if(ts._Name == loc1) price += ts._Price[j];
-                    if(ts._Name == loc2) price -= ts._Price[j];
-                }
-                char* csc2;
-                sprintf(csc2, "%lf", price);
-                tmp.push_back((const char*)csc2);
+        static vector<vector<String>> QueryTicket(const String &loc1, const String &loc2, const Date &date, const char *catalogs) {
+            vector<vector<String>> res;
+            /* vector<vector<vector<String>>> tmp;
+            vector<int> idxs;
+            int totSize = 0;
+            for (int i = 0, len = strlen(catalogs); i < len; ++i) {
+                char catalog = catalogs[i];
+                tmp.push_back(_QueryTicket(loc1, loc2, date, catalog));
+                idxs.push_back(0);
+                totSize += tmp.back().size();
             }
-            _ret.push_back(tmp);
+            while (totSize--) {
+                int mn = -1;
+                for (int i = 0; i < tmp.size(); ++i) if (idxs[i] < tmp[i].size()) {
+                    if (mn == -1 || tmp[i][idxs[i]].front() < tmp[mn][idxs[mn]].front())
+                        mn = i;
+                }
+                res.push_back(tmp[mn][idxs[mn]++]);
+            } */
+            for (int i = 0, len = strlen(catalogs); i < len; ++i) {
+                char catalog = catalogs[i];
+                auto tmp = _QueryTicket(loc1, loc2, date, catalog);
+                for (int i = 0; i < (int)tmp.size(); ++i)
+                    res.push_back(tmp[i]);
+            }
+            return res;
         }
-        return _ret;
-    }
-    bool BuyTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
-    {
-        string c = _Data_Base._Train._Root.query(train_id).first._Catalog;
-        date d(Date, c._str);
-        order_map m;
-        ticket_key tk(loc1, loc2, c);
-        ticket_map tm = _Data_Base._Ticket._Root.query(tk).first;
-        order_key ok(id, d);
-        bool b = _Data_Base._Order_User._Root.query(ok).second;
-        if(b)
-        {
-            m = _Data_Base._Order_User._Root.query(ok).first;
-            ticket_order o = m._Sub_Root.query(train_id).first;
-            o._Num_Of_Ticket += num;
-            m._Sub_Root.modify(train_id, o);
-            remain_data r(train_id, loc1, loc2, d);
-            _Data_Base._Order_Time.alter_remain(r, num);
-            return 1;
+
+        static pair<int, Time> Calc(const Time &t1, const Time &t2, const Time &t3, const Time &t4) {
+            pair<int, Time> res;
+            
+            if (t2 < t1) ++res.first;
+            res.second = res.second + (t2 - t1);
+            if (res.second < t2 - t1) ++res.first;
+
+            if (t3 < t2) ++res.first;
+            res.second = res.second + (t3 - t2);
+            if (res.second < t3 - t2) ++res.first;
+
+            if (t4 < t3) ++res.first;
+            res.second = res.second + (t4 - t3);
+            if (res.second < t4 - t3) ++res.first;
+
+            return res;
         }
-        else
-        {
-            ticket_data td = tm._Sub_Root.query(train_id).first;
-            ticket_order o(loc1, loc2, td, num);
-            m._Sub_Root.insert(train_id, o);
-            _Data_Base._Order_User._Root.insert(ok ,m);
-             remain_data r(train_id, loc1, loc2, d);
-            _Data_Base._Order_Time.alter_remain(r, num);
-            return 1;
-        }
-    }
-    bool RefundTicket(int id, int num, const char* train_id, const char* loc1, const char* loc2, const char* Date, const char* kind)
-    {
-        return BuyTicket(id, -num, train_id, loc1, loc2, Date, kind);
-    }
-    vector<pair<string, ticket_order> > QueryOrder(int id, date t)
-    {
-        ///listnum = length of vector;
-        return _Data_Base._Order_User.query_order(id, t);
-    }
-    pair<vector<string>, vector<string> > QueryTransfer(const char* Loc1, const char* Loc2, const char* Date, const char* Catalog)
-    {
-        date d(Date, Catalog);
-        time mint(233333, 233333);
-        pair<string, ticket_data> pst1;
-        pair<const char*, train_data> pcc1;
-        pair<string, ticket_data> pst2;
-        pair<const char*, train_data> pcc2;
-        vector<pair<string, string>> vss(_Data_Base._Station.traverse());
-        string minloc;
-        for(int k = 0;k < vss.size();k++)
-        {
-            string Loc3 = vss[k].first;
-            ticket_key tk1(Loc1, Loc3, d.catalog);
-            ticket_key tk2(Loc3, Loc1, d.catalog);
-            ticket_key tk3(Loc2, Loc3, d.catalog);
-            ticket_key tk4(Loc3, Loc2, d.catalog);
-            vector<pair<string, ticket_data>> vpstd1;
-            vector<pair<string, ticket_data>> vpstd2;
-            ;
-            if(_Data_Base._Ticket.query_ticket(tk1).size() != 0 && _Data_Base._Ticket.query_ticket(tk3).size() != 0)
-            {
-                time t;
-                vpstd1 = _Data_Base._Ticket.query_ticket(tk1);
-                vpstd2 = _Data_Base._Ticket.query_ticket(tk3);
-                for(int i = 0;i < vpstd1.size();i++)
-                {
-                    for(int j = 0;j < vpstd2.size();j++)
-                    {
-                        t.hour = abs(vpstd1[i].second._Time_To.hour - vpstd1[i].second._Time_From.hour) + abs(vpstd2[j].second._Time_To.hour - vpstd2[j].second._Time_From.hour);
-                        t.minute = abs(vpstd1[i].second._Time_To.minute - vpstd1[i].second._Time_From.minute) + abs(vpstd2[j].second._Time_To.minute - vpstd2[j].second._Time_From.minute);
-                        if(t < mint)
-                        {
-                            mint = t;
-                            string id1 = _Data_Base._Ticket.query_ticket(tk1)[i].first;
-                            string id3 = _Data_Base._Ticket.query_ticket(tk1)[j].first;
-                            pst1 = pair<string, ticket_data>(id1 ,vpstd1[i].second);
-                            pcc1 = pair<const char*, train_data>(id1._str, _Data_Base._Train.query_train(id1._str).second);
-                            pst2 = pair<string, ticket_data>(id3 ,vpstd2[i].second);
-                            pcc2 = pair<const char*, train_data>(id3._str, _Data_Base._Train.query_train(id3._str).second);
-                            minloc = Loc3;
+
+        static pair<vector<String>, vector<String>> QueryTransfer(const String &loc1, const String &loc2, const Date &date, const char *catalogs) {
+            pair<vector<String>, vector<String>> res;
+            pair<int, Time> duringTime(10000, "23:59");
+            int l1 = places.Query(loc1), l2 = places.Query(loc2);
+            int placeCnt = places.Size();
+            for (int i = 0, len = strlen(catalogs); i < len; ++i) {
+                char catalog = catalogs[i];
+                for (int mid = 1; mid <= placeCnt; ++mid) if (mid != l1 && mid != l2) {
+                    String midName = places.QueryName(mid);
+                    auto t1 = trains.tickets.Query(l1, mid, catalog);
+                    auto t2 = trains.tickets.Query(mid, l2, catalog);
+                    if (t1.second == false || t2.second == false) continue;
+
+                    for (int i1 = 0; i1 < (int)t1.first.size(); ++i1)
+                        for (int i2 = 0; i2 < (int)t2.first.size(); ++i2) {
+                            Train tr1 = trains.Query(t1.first[i1]).first;
+                            Train tr2 = trains.Query(t2.first[i2]).first;
+
+                            int S1, T1, S2, T2;
+                            for (int i = 0; i < tr1.stationCnt; ++i) {
+                                if (tr1.stations[i].name == l1) S1 = i;
+                                if (tr1.stations[i].name == mid) T1 = i;
+                            }
+                            for (int i = 0; i < tr2.stationCnt; ++i) {
+                                if (tr2.stations[i].name == mid) S2 = i;
+                                if (tr2.stations[i].name == l2) T2 = i;
+                            }
+
+                            int deltaDay1 = 0, deltaDay2 = 0;
+                            for (int sta = S1 + 1; sta <= T1; ++sta) {
+                                if ((sta != T1 && tr1.stations[sta].startTime < tr1.stations[sta - 1].startTime) ||
+                                    (sta == T1 && tr1.stations[sta].arriveTime < tr1.stations[sta - 1].startTime)) ++deltaDay1;
+                            }
+                            for (int sta = S2 + 1; sta <= T2; ++sta) {
+                                if ((sta != T2 && tr2.stations[sta].startTime < tr2.stations[sta - 1].startTime) ||
+                                    (sta == T2 && tr2.stations[sta].arriveTime < tr2.stations[sta - 1].startTime)) ++deltaDay2;
+                            }
+
+                            auto tt = Calc(tr1.stations[S1].startTime, tr1.stations[T1].arriveTime, tr2.stations[S2].startTime, tr2.stations[T2].arriveTime);
+                            int deltaDay = tt.first;
+                            tt.first += deltaDay1 + deltaDay2;
+
+                            if (tt < duringTime) {
+                                duringTime = tt;
+                                res.first.clear();
+                                res.second.clear();
+
+                                res.first.push_back(tr1.id);
+                                res.first.push_back(loc1);
+                                res.first.push_back(date.ToString());
+                                res.first.push_back(tr1.stations[S1].startTime.ToString());
+                                res.first.push_back(midName);
+                                // res.first.push_back((date + deltaDay1).ToString());
+                                res.first.push_back(date.ToString());
+                                res.first.push_back(tr1.stations[T1].arriveTime.ToString());
+                                for (int tk = 0; tk < tr1.ticketKindCnt; ++tk) {
+                                    int ticCnt = 2000, tdel = 0;
+                                    double price = 0;
+                                    for (int sta = S1 + 1; sta <= T1; ++sta) {
+                                        if ((sta != T1 && tr1.stations[sta].startTime < tr1.stations[sta - 1].startTime) ||
+                                            (sta == T1 && tr1.stations[sta].arriveTime < tr1.stations[sta - 1].startTime)) ++tdel;
+                                        // ticCnt = std::min(ticCnt, 2000 - orderTime.Query(tr1.id, tk, sta, (date + tdel).ToString()));
+                                        ticCnt = std::min(ticCnt, 2000 - orderTime.Query(tr1.id, tk, sta, date.ToString()));
+                                        price += tr1.stations[sta].price[tk];
+                                    }
+                                    res.first.push_back(tr1.tickets[tk]);
+                                    res.first.push_back(String::Int(ticCnt));
+                                    static char tmp[45];
+                                    // sprintf(tmp, "%s%f", tr1.stations[T1].currency[tk].Str(), price);
+                                    sprintf(tmp, "%f", price);
+                                    res.first.push_back(tmp);
+                                }
+
+                                res.second.push_back(tr2.id);
+                                res.second.push_back(midName);
+                                // res.second.push_back((date + deltaDay1 + deltaDay).ToString());
+                                res.second.push_back(date.ToString());
+                                res.second.push_back(tr2.stations[S2].startTime.ToString());
+                                res.second.push_back(loc2);
+                                // res.second.push_back((date + deltaDay1 + deltaDay + deltaDay2).ToString());
+                                res.second.push_back(date.ToString());
+                                res.second.push_back(tr2.stations[T2].arriveTime.ToString());
+                                for (int tk = 0; tk < tr2.ticketKindCnt; ++tk) {
+                                    int ticCnt = 2000, tdel = 0;
+                                    double price = 0;
+                                    for (int sta = S2 + 1; sta <= T2; ++sta) {
+                                        if ((sta != T2 && tr2.stations[sta].startTime < tr2.stations[sta - 1].startTime) ||
+                                            (sta == T2 && tr2.stations[sta].arriveTime < tr2.stations[sta - 1].startTime)) ++tdel;
+                                        // ticCnt = std::min(ticCnt, 2000 - orderTime.Query(tr2.id, tk, sta, (date + deltaDay1 + deltaDay + tdel).ToString()));
+                                        ticCnt = std::min(ticCnt, 2000 - orderTime.Query(tr2.id, tk, sta, date.ToString()));
+                                        price += tr2.stations[sta].price[tk];
+                                    }
+                                    res.second.push_back(tr2.tickets[tk]);
+                                    res.second.push_back(String::Int(ticCnt));
+                                    static char tmp[45];
+                                    // sprintf(tmp, "%s%f", tr2.stations[T2].currency[tk].Str(), price);
+                                    sprintf(tmp, "%f", price);
+                                    res.second.push_back(tmp);
+                                }
+                            }
                         }
+                }
+            }
+            return res;
+        }
+
+        static bool BuyTicket(int id, int num, const String &tid, const String &loc1, const String &loc2, const Date &date, const String &ticketKind) {
+            int l1 = places.Query(loc1), l2 = places.Query(loc2);
+            auto t = trains.Query(tid);
+            if (t.second == false || l1 == 0 || l2 == 0) return false;
+            Train train = t.first;
+            int tk = -1;
+            for (int i = 0; i < train.ticketKindCnt; ++i)
+                if (ticketKind == train.tickets[i]) {
+                    tk = i; break;
+                }
+            if (tk == -1) return false;
+            for (int i = 0; i < train.stationCnt; ++i) if (train.stations[i].name == l1) {
+                for (int j = i + 1; j < train.stationCnt; ++j) if (train.stations[j].name == l2) {
+                    int ticketLeft = 2000, deltaDay = 0;
+                    for (int sta = i + 1; sta <= j; ++sta) {
+                        if ((sta != j && train.stations[sta].startTime < train.stations[sta - 1].startTime) ||
+                            (sta == j && train.stations[sta].arriveTime < train.stations[sta - 1].startTime)) ++deltaDay;
+                        // ticketLeft = std::min(ticketLeft, 2000 - orderTime.Query(tid, tk, sta, date + deltaDay));
+                        ticketLeft = std::min(ticketLeft, 2000 - orderTime.Query(tid, tk, sta, date));
+                    }
+                    if (ticketLeft < num) return false;
+                    deltaDay = 0;
+                    for (int sta = i + 1; sta <= j; ++sta) {
+                        if ((sta != j && train.stations[sta].startTime < train.stations[sta - 1].startTime) ||
+                            (sta == j && train.stations[sta].arriveTime < train.stations[sta - 1].startTime)) ++deltaDay;
+                        // orderTime.Add(tid, tk, sta, date + deltaDay, num);
+                        orderTime.Add(tid, tk, sta, date, num);
+                    }
+
+                    int tmp[] = {0, 0, 0, 0, 0};
+                    tmp[tk] = num;
+
+                    // orderUser.Add(id, tid, train.catalog, l1, date, train.stations[i].startTime, l2, date + deltaDay, train.stations[j].arriveTime, tmp);
+                    orderUser.Add(id, tid, train.catalog, l1, date, train.stations[i].startTime, l2, date, train.stations[j].arriveTime, tmp);
+
+                    return true;
+                }
+                break;
+            }
+            return false;
+        }
+
+        static vector<vector<String>> _QueryOrder(int id, const Date &date, char catalog) {
+            auto t = orderUser.Query(id, date, catalog);
+            vector<vector<String>> res;
+            for (int i = 0; i < (int)t.size(); ++i) {
+                res.push_back(vector<String>());
+                vector<String> &vec = res[res.size() - 1];
+                String tid = t[i].first;
+                Train train = trains.Query(tid).first;
+                vec.push_back(tid);
+                vec.push_back(places.QueryName(t[i].second.loc1));
+                vec.push_back(t[i].second.date1.ToString());
+                vec.push_back(t[i].second.time1.ToString());
+                vec.push_back(places.QueryName(t[i].second.loc2));
+                vec.push_back(t[i].second.date2.ToString());
+                vec.push_back(t[i].second.time2.ToString());
+                for (int j = 0; j < train.ticketKindCnt; ++j) {
+                    vec.push_back(train.tickets[j]);
+                    vec.push_back(String::Int(t[i].second.cnt[j]));
+                    for (int st1 = 0; st1 < train.stationCnt; ++st1) if (train.stations[st1].name == t[i].second.loc1) {
+                        for (int st2 = st1 + 1; st2 < train.stationCnt; ++st2) if (train.stations[st2].name == t[i].second.loc2) {
+                            double price = 0;
+                            for (int sta = st1 + 1; sta <= st2; ++sta)
+                                price += train.stations[sta].price[j];
+                            static char tmp[45];
+                            // sprintf(tmp, "%s%f", train.stations[st2].currency[j].Str(), price);
+                            sprintf(tmp, "%f", price);
+                            // vec.push_back(train.stations[sta].currency[tk]);
+                            // vec.push_back(String::Float(price));
+                            vec.push_back(tmp);
+                            break;
+                        }
+                        break;
                     }
                 }
-                continue;
+            }
+            return res;
+        }
+
+        static vector<vector<String>> QueryOrder(int id, const Date &date, const char *catalogs) {
+            vector<vector<String>> res;
+            for (int i = 0, len = strlen(catalogs); i < len; ++i) {
+                char catalog = catalogs[i];
+                auto tmp = _QueryOrder(id, date, catalog);
+                for (int i = 0; i < (int)tmp.size(); ++i)
+                    res.push_back(tmp[i]);
+            }
+            return res;
+        }
+
+        static bool RefundTicket(int id, int num, const String &tid, const String &loc1, const String &loc2, const Date &date, const String &ticketKind) {
+            int l1 = places.Query(loc1), l2 = places.Query(loc2);
+            auto t = trains.Query(tid);
+            if (t.second == false || l1 == 0 || l2 == 0) return false;
+            Train train = t.first;
+            int tk = -1;
+            for (int i = 0; i < train.ticketKindCnt; ++i)
+                if (ticketKind == train.tickets[i]) {
+                    tk = i; break;
+                }
+            if (tk == -1) return false;
+            for (int i = 0; i < train.stationCnt; ++i) if (train.stations[i].name == l1) {
+                for (int j = i + 1; j < train.stationCnt; ++j) if (train.stations[j].name == l2) {
+                    const int *ticketBought = orderUser.QueryActualTicket(id, tid, date, train.catalog, l1, l2);
+                    if (ticketBought[tk] < num) return false;
+                    int deltaDay = 0;
+                    for (int sta = i + 1; sta <= j; ++sta) {
+                        if ((sta != j && train.stations[sta].startTime < train.stations[sta - 1].startTime) ||
+                            (sta == j && train.stations[sta].arriveTime < train.stations[sta - 1].startTime)) ++deltaDay;
+                        // orderTime.Add(tid, tk, sta, date + deltaDay, -num);
+                        orderTime.Add(tid, tk, sta, date, -num);
+                    }
+
+                    int tmp[] = {0, 0, 0, 0, 0};
+                    tmp[tk] = -num;
+
+                    // orderUser.Add(id, tid, train.catalog, l1, date, train.stations[i].startTime, l2, date + deltaDay, train.stations[j].arriveTime, tmp);
+                    orderUser.Add(id, tid, train.catalog, l1, date, train.stations[i].startTime, l2, date, train.stations[j].arriveTime, tmp);
+
+                    return true;
+                }
+                break;
+            }
+            return false;
+        }
+        
+        /* 
+         * Train related
+         */
+
+        static void Read(const char *s, char *a, double &b) {
+            for (int i = 0; s[i]; ++i) {
+                if (s[i] >= '0' && s[i] <= '9') {
+                    sscanf(s + i, "%lf", &b);
+                    a[i] = '\0';
+                    return;
+                }
+                a[i] = s[i];
             }
         }
-        pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp1(pst1, pcc1);
-        pair<pair<string, ticket_data>,pair<const char*, train_data>> ppsp2(pst2, pcc2);
-        pair<pair<pair<string, ticket_data>,pair<const char*, train_data>>, pair<pair<string, ticket_data>,pair<const char*, train_data>>> wtf(ppsp1, ppsp2);
-        pair<vector<string>, vector<string>> _ret;
-        vector<string> tmp;
-        tmp.push_back(wtf.first.first.first);
-        tmp.push_back(Loc1);
 
-        char* s1;
-        date dx1(Date, Catalog);
-        sprintf(s1, "%d-%d-%d", dx1.year, dx1.month, dx1.day);
-        tmp.push_back((const char*)s1);
-
-        char* s3;
-        time tx(wtf.first.first.second._Time_From);
-        sprintf(s3, "%d:%d", tx.hour, tx.minute);
-        tmp.push_back((const char*)s3);
-        tmp.push_back(minloc);
-
-        char* s2;
-        date dx2(Date, Catalog);
-        sprintf(s2, "%d-%d-%d", dx2.year, dx2.month, dx2.day);
-        tmp.push_back((const char*)s2);
-
-        char* s4;
-        time ty(wtf.first.first.second._Time_To);
-        sprintf(s4, "%d:%d", ty.hour, ty.minute);
-        tmp.push_back((const char*)s4);
-
-        int num = wtf.first.second.second._Num_Price;
-        for(int j = 0;j < num;j++)
-        {
-            tmp.push_back(wtf.first.second.second._Name_Price[j]);
-            remain_data rd1(wtf.first.first.first._str, Loc1, Loc2, d);
-            remain_data rd2(wtf.first.first.first._str, Loc2, Loc1, d);
-            int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
-            char* csc1;
-            sprintf(csc1, "%d", lft);
-            tmp.push_back((const char*)csc1);
-            double price;
-            for(int k = 0;k < wtf.first.second.second._Num_Station; k++)
-            {
-                train_station ts(wtf.first.second.second._Station[k]);
-                if(ts._Name == Loc1) price += ts._Price[j];
-                if(ts._Name == Loc2) price -= ts._Price[j];
+        static bool AddTrain(const vector<String> &commands) {
+            int idx = 0;
+            String tid = commands[idx++];
+            String name = commands[idx++];
+            char catalog = *commands[idx++].Str();
+            int stationCnt = commands[idx++].ToInt();
+            int ticKindCnt = commands[idx++].ToInt();
+            String tickets[5];
+            for (int i = 0; i < ticKindCnt; ++i)
+                tickets[i] = commands[idx++];
+            Station stations[60];
+            for (int i = 0; i < stationCnt; ++i) {
+                if (places.Query(commands[idx]) == 0)
+                    places.Insert(commands[idx]);
+                stations[i].name = places.Query(commands[idx++]);
+                stations[i].arriveTime = (i == 0 ? Time("00:00") : Time(commands[idx].Str())); ++idx;
+                stations[i].startTime = (i == stationCnt - 1 ? Time("00:00") : Time(commands[idx].Str())); ++idx;
+                ++idx;
+                for (int j = 0; j < ticKindCnt; ++j) {
+                    static char tmp[45];
+                    Read(commands[idx++].Str(), tmp, stations[i].price[j]);
+                    stations[i].currency[j] = tmp;
+                }
             }
-            char* csc2;
-            sprintf(csc2, "%lf", price);
-            tmp.push_back((const char*)csc2);
+            return trains.Insert(tid, name, catalog, stationCnt, ticKindCnt, tickets, stations);
         }
-        _ret.first = tmp;
-
-
-        tmp.clear();
-        tmp.push_back(wtf.second.first.first);
-        tmp.push_back(minloc);
-
-        char* s5;
-        date dx3(Date, Catalog);
-        sprintf(s5, "%d-%d-%d", dx3.year, dx3.month, dx3.day);
-        tmp.push_back((const char*)s5);
-
-        char* s7;
-        time tu(wtf.second.first.second._Time_From);
-        sprintf(s7, "%d:%d", tu.hour, tu.minute);
-        tmp.push_back((const char*)s7);
-        tmp.push_back(Loc2);
-
-        char* s6;
-        date dx4(Date, Catalog);
-        sprintf(s6, "%d-%d-%d", dx4.year, dx4.month, dx4.day);
-        tmp.push_back((const char*)s6);
-
-        char* s8;
-        time tv(wtf.second.first.second._Time_To);
-        sprintf(s8, "%d:%d", tv.hour, tv.minute);
-        tmp.push_back((const char*)s8);
-
-        num = wtf.second.second.second._Num_Price;
-        for(int j = 0;j < num;j++)
-        {
-            tmp.push_back(wtf.second.second.second._Name_Price[j]);
-            remain_data rd1(wtf.second.first.first._str, Loc1, Loc2, d);
-            remain_data rd2(wtf.second.first.first._str, Loc2, Loc1, d);
-            int lft = _Data_Base._Order_Time.query_remain(rd1) + _Data_Base._Order_Time.query_remain(rd2);
-            char* csc1;
-            sprintf(csc1, "%d", lft);
-            tmp.push_back((const char*)csc1);
-            double price;
-            for(int k = 0;k < wtf.second.second.second._Num_Station; k++)
-            {
-                train_station ts(wtf.second.second.second._Station[k]);
-                if(ts._Name == Loc1) price += ts._Price[j];
-                if(ts._Name == Loc2) price -= ts._Price[j];
+        
+        static bool SaleTrain(const String &tid) {
+            return trains.Sale(tid);
+        }
+        
+        static vector<String> QueryTrain(const String &tid) {
+            vector<String> res;
+            auto t = trains.Query(tid);
+            if (t.second == false || t.first.status == Train::Status::Private)
+                res.push_back("0");
+            else {
+                res.push_back(t.first.id);
+                res.push_back(t.first.name);
+                char tmp[45]; tmp[0] = t.first.catalog; tmp[1] = '\0';
+                res.push_back(tmp);
+                res.push_back(String::Int(t.first.stationCnt));
+                res.push_back(String::Int(t.first.ticketKindCnt));
+                for (int i = 0; i < t.first.ticketKindCnt; ++i)
+                    res.push_back(t.first.tickets[i]);
+                for (int i = 0; i < t.first.stationCnt; ++i) {
+                    String str = places.QueryName(t.first.stations[i].name);
+                    tmp[0] = '\n';
+                    sprintf(tmp + 1, "%s", str.Str());
+                    res.push_back(tmp);
+                    if (i == 0) res.push_back("xx:xx");
+                    else res.push_back(t.first.stations[i].arriveTime.ToString());
+                    if (i == t.first.stationCnt - 1) res.push_back(t.first.stations[i].arriveTime.ToString());
+                    else res.push_back(t.first.stations[i].startTime.ToString());
+                    if (i == 0 || i == t.first.stationCnt - 1) res.push_back("xx:xx");
+                    else res.push_back((t.first.stations[i].startTime - t.first.stations[i].arriveTime).ToString());
+                    for (int j = 0; j < t.first.ticketKindCnt; ++j) {
+                        static char tmp[45];
+                        sprintf(tmp, "%s%f", t.first.stations[i].currency[j].Str(), t.first.stations[i].price[j]);
+                        // sprintf(tmp, "%f", t.first.stations[i].price[j]);
+                        res.push_back(tmp);
+                        // res.push_back(String::Float());
+                    }
+                }
             }
-            char* csc2;
-            sprintf(csc2, "%lf", price);
-            tmp.push_back((const char*)csc2);
+            return res;
         }
-        _ret.second = tmp;
-        return _ret;
-    }
-};
+        
+        static bool DeleteTrain(const String &tid) {
+            return trains.Delete(tid);
+        }
+        
+        static bool ModifyTrain(const vector<String> &commands) {
+            int idx = 0;
+            String tid = commands[idx++];
+            String name = commands[idx++];
+            char catalog = *commands[idx++].Str();
+            int stationCnt = commands[idx++].ToInt();
+            int ticKindCnt = commands[idx++].ToInt();
+            String tickets[5];
+            for (int i = 0; i < ticKindCnt; ++i)
+                tickets[i] = commands[idx++];
+            Station stations[60];
+            for (int i = 0; i < stationCnt; ++i) {
+                if (places.Query(commands[idx]) == 0)
+                    places.Insert(commands[idx]);
+                stations[i].name = places.Query(commands[idx++]);
+                stations[i].arriveTime = (i == 0 ? Time("00:00") : Time(commands[idx].Str())); ++idx;
+                stations[i].startTime = (i == stationCnt - 1 ? Time("00:00") : Time(commands[idx].Str())); ++idx;
+                ++idx;
+                for (int j = 0; j < ticKindCnt; ++j) {
+                    static char tmp[45];
+                    Read(commands[idx++].Str(), tmp, stations[i].price[j]);
+                    stations[i].currency[j] = tmp;
+                }
+            }
+            return trains.Modify(tid, name, catalog, stationCnt, ticKindCnt, tickets, stations);
+        }
+        
+        /* 
+         * System related
+         */
 
+        static void Clean() {
+            places.Clear();
+            users.Clear();
+            trains.Clear();
+            orderTime.Clear();
+            orderUser.Clear();
+        }
+    };
 }

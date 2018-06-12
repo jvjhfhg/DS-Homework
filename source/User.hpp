@@ -1,80 +1,105 @@
 #pragma once
-#include<fstream>
-#include<iostream>
-#include"lib/b_plus_tree.hpp"
-#include"lib/algorithm.hpp"
-#include"lib/utility.hpp"
-namespace sjtu
-{
-class user_data
-{
-public:
-    string _User_Name;
-    string _Password;
-    string _Email;
-    string _Phone;
-    int _Privilege;
-    user_data() = default;
-    user_data(const char* a, const char* b, const char* c, const char* d, int e = 1)
-    : _User_Name(a), _Password(b), _Email(c), _Phone(d), _Privilege(e) {}
-    user_data(const user_data& o): _User_Name(o._User_Name), _Password(o._Password), _Email(o._Email), _Phone(o._Phone), _Privilege(o._Privilege) {}
-    user_data operator = (const user_data& o)
-    {
-        _User_Name = o._User_Name;
-        _Password = o._Password;
-        _Email = o._Email;
-        _Phone = o._Phone;
-        _Privilege = o._Privilege;
-        return *this;
-    }
-};
-class user
-{
-private:
-    BPTree<int, user_data> _Root;
-    int _Cur_Id;
-public:
-    friend class Database;
-    friend class Interactor;
-    user(): _Root("_User_Data"), _Cur_Id(2018) 
-    {
-        std::fstream _Iofile;
-        _Iofile.open("_User_Data");
-    }
-    int Register(const char* a, const char* b, const char* c, const char* d)
-    {
-        user_data u(a, b, c, d);
-        if(_Cur_Id == 2018)u._Privilege = 2;
-        _Root.insert(_Cur_Id, u);
-        return _Cur_Id++;
-    }
-    bool login(int id, const char* name)
-    {
-    	auto cur = _Root.query(id);
-        if(cur.second == true && cur.first._Password == name) return true;
-        return false;
-    }
-    pair<user_data, bool> query_profile(int id)
-    {
-        return _Root.query(id);
-    }
-    bool modify_profile(int id, const char* a, const char* b, const char* c, const char* d)
-    {
-        user_data u(a, b, c, d, _Root.query(id).first._Privilege);
-        auto cur = _Root.query(id);
-        if(cur.second == false)return 0;
-        _Root.modify(id, u);
-        return true;
-    }
-    bool modify_privilege(int id1, int id2, int privilege)
-    {
-        user_data now(_Root.query(id1).first);
-        if(now._Privilege == 1)return 0;
-        user_data u(_Root.query(id2).first);
-        if(u._Privilege == 2 && privilege == 1)return 0;
-        u._Privilege = privilege;
-        _Root.modify(id2, u);
-        return true;
-    }
-};
+
+#include <cstdio>
+#include <iostream>
+#include <fstream>
+
+#include "lib/algorithm.hpp"
+#include "lib/b_plus_tree.hpp"
+#include "lib/utility.hpp"
+
+namespace sjtu {
+    class User {
+    public:
+        enum Privilege {
+            Unregistered = 0, Normal = 1, Admin = 2
+        };
+
+        String name;
+        String password;
+        String email;
+        String phone;
+        Privilege priv;
+        int id;
+
+        User() = default;
+
+        User(const char *_name, const char *_password, const char *_email, const char *_phone, int _id):
+            name(_name), password(_password), email(_email), phone(_phone), id(_id) {
+            if (id == 2018) priv = Privilege::Admin;
+            else priv = Privilege::Normal;
+        }
+
+        void Modify(const char *_name, const char *_password, const char *_email, const char *_phone) {
+            name = _name;
+            password = _password;
+            email = _email;
+            phone = _phone;
+        }
+    };
+
+    class Users {
+    private:
+        BPTree<int, User> T;
+        int currentID;
+        
+    public:
+        Users(): T("data_users") {
+            std::fstream file("data_users_id", std::fstream::in);
+            if (!file)
+                currentID = 2018;
+            else
+                file >> currentID;
+            file.close();
+        }
+
+        ~Users() {
+            std::fstream idFile("data_users_id", std::fstream::out);
+            idFile << currentID << std::endl;
+            // std::cerr << currentID << std::endl;
+            idFile.close();
+        }
+        
+        int Register(const char *name, const char *password, const char *email, const char *phone) {
+            // std::cerr << "in" << std::endl;
+            T.insert(currentID, User(name, password, email, phone, currentID));
+            // std::cerr << "out" << std::endl;
+            return currentID++;
+        }
+
+        bool Login(int id, const String &password) {
+            // std::cerr << "xixi" << std::endl;
+            auto user = T.query(id);
+            // std::cerr << "cnbb" << std::endl;
+            if (user.second == false) return false;
+            return user.first.password == password;
+        }
+
+        pair<User, bool> Query(int id) {
+            return T.query(id);
+        }
+
+        bool Modify(int id, const char *name, const char *password, const char *email, const char *phone) {
+            auto user = T.query(id);
+            if (user.second == false) return false;
+            user.first.Modify(name, password, email, phone);
+            T.modify(id, user.first);
+            return true;
+        }
+
+        bool ModifyPrivilege(int id1, int id2, User::Privilege priv) {
+            auto user = T.query(id1);
+            if (user.second == false || user.first.priv != User::Privilege::Admin) return false;
+            user = T.query(id2);
+            if (user.second == false || (user.first.priv == User::Privilege::Admin && priv == User::Privilege::Normal)) return false;
+            user.first.priv = priv;
+            T.modify(id2, user.first);
+            return true;
+        }
+
+        void Clear() {
+            T.clear();
+            currentID = 2018;
+        }
+    };
 }
