@@ -112,7 +112,7 @@ namespace sjtu {
     public:
         OrderTime(): T("data_order_time") {}
         
-        void Add(const String &tid, int ticKind, int stationIdx, Date date, int ticCnt) {
+        void Add(const String &tid, int ticKind, int stationIdx, const Date &date, int ticCnt) {
             KeyData key(tid, ticKind, stationIdx, date);
             auto t = T.query(key);
             int cnt = t.first;
@@ -124,7 +124,7 @@ namespace sjtu {
             T.modify(key, cnt);
         }
         
-        int Query(const String &tid, int ticKind, int stationIdx, Date date) {
+        int Query(const String &tid, int ticKind, int stationIdx, const Date &date) {
             auto t = T.query(KeyData(tid, ticKind, stationIdx, date));
             return t.second == false ? 0 : t.first;
         }

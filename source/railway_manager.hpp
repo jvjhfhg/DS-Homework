@@ -448,36 +448,41 @@ namespace sjtu {
             return trains.Sale(tid);
         }
         
-        static vector<String> QueryTrain(const String &tid) {
-            vector<String> res;
+        static vector<vector<String>> QueryTrain(const String &tid) {
+            vector<vector<String>> res;
+            res.push_back(vector<String>());
+            vector<String> &vec = res[res.size() - 1];
             auto t = trains.Query(tid);
             if (t.second == false || t.first.status == Train::Status::Private)
-                res.push_back("0");
+                vec.push_back("0");
             else {
-                res.push_back(t.first.id);
-                res.push_back(t.first.name);
+                vec.push_back(t.first.id);
+                vec.push_back(t.first.name);
                 char tmp[45]; tmp[0] = t.first.catalog; tmp[1] = '\0';
-                res.push_back(tmp);
-                res.push_back(String::Int(t.first.stationCnt));
-                res.push_back(String::Int(t.first.ticketKindCnt));
+                vec.push_back(tmp);
+                vec.push_back(String::Int(t.first.stationCnt));
+                vec.push_back(String::Int(t.first.ticketKindCnt));
                 for (int i = 0; i < t.first.ticketKindCnt; ++i)
-                    res.push_back(t.first.tickets[i]);
+                    vec.push_back(t.first.tickets[i]);
                 for (int i = 0; i < t.first.stationCnt; ++i) {
-                    String str = places.QueryName(t.first.stations[i].name);
-                    tmp[0] = '\n';
-                    sprintf(tmp + 1, "%s", str.Str());
-                    res.push_back(tmp);
-                    if (i == 0) res.push_back("xx:xx");
-                    else res.push_back(t.first.stations[i].arriveTime.ToString());
-                    if (i == t.first.stationCnt - 1) res.push_back(t.first.stations[i].arriveTime.ToString());
-                    else res.push_back(t.first.stations[i].startTime.ToString());
-                    if (i == 0 || i == t.first.stationCnt - 1) res.push_back("xx:xx");
-                    else res.push_back((t.first.stations[i].startTime - t.first.stations[i].arriveTime).ToString());
+                    res.push_back(vector<String>());
+                    vec = res[res.size() - 1];
+                    // String str = places.QueryName(t.first.stations[i].name);
+                    // tmp[0] = '\n';
+                    // sprintf(tmp + 1, "%s", str.Str());
+                    // sprintf(tmp, "%s", str.Str());
+                    vec.push_back(places.QueryName(t.first.stations[i].name));
+                    if (i == 0) vec.push_back("xx:xx");
+                    else vec.push_back(t.first.stations[i].arriveTime.ToString());
+                    if (i == t.first.stationCnt - 1) vec.push_back(t.first.stations[i].arriveTime.ToString());
+                    else vec.push_back(t.first.stations[i].startTime.ToString());
+                    if (i == 0 || i == t.first.stationCnt - 1) vec.push_back("xx:xx");
+                    else vec.push_back((t.first.stations[i].startTime - t.first.stations[i].arriveTime).ToString());
                     for (int j = 0; j < t.first.ticketKindCnt; ++j) {
                         static char tmp[45];
                         sprintf(tmp, "%s%f", t.first.stations[i].currency[j].Str(), t.first.stations[i].price[j]);
                         // sprintf(tmp, "%f", t.first.stations[i].price[j]);
-                        res.push_back(tmp);
+                        vec.push_back(tmp);
                         // res.push_back(String::Float());
                     }
                 }
