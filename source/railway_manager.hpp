@@ -451,22 +451,21 @@ namespace sjtu {
         static vector<vector<String>> QueryTrain(const String &tid) {
             vector<vector<String>> res;
             res.push_back(vector<String>());
-            vector<String> &vec = res[res.size() - 1];
             auto t = trains.Query(tid);
             if (t.second == false || t.first.status == Train::Status::Private)
-                vec.push_back("0");
+                res[0].push_back("0");
             else {
-                vec.push_back(t.first.id);
-                vec.push_back(t.first.name);
+                res[0].push_back(t.first.id);
+                res[0].push_back(t.first.name);
                 char tmp[45]; tmp[0] = t.first.catalog; tmp[1] = '\0';
-                vec.push_back(tmp);
-                vec.push_back(String::Int(t.first.stationCnt));
-                vec.push_back(String::Int(t.first.ticketKindCnt));
+                res[0].push_back(tmp);
+                res[0].push_back(String::Int(t.first.stationCnt));
+                res[0].push_back(String::Int(t.first.ticketKindCnt));
                 for (int i = 0; i < t.first.ticketKindCnt; ++i)
-                    vec.push_back(t.first.tickets[i]);
+                    res[0].push_back(t.first.tickets[i]);
                 for (int i = 0; i < t.first.stationCnt; ++i) {
                     res.push_back(vector<String>());
-                    vec = res[res.size() - 1];
+                    vector<String> &vec = res[res.size() - 1];
                     // String str = places.QueryName(t.first.stations[i].name);
                     // tmp[0] = '\n';
                     // sprintf(tmp + 1, "%s", str.Str());
