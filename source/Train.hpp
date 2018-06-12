@@ -7,7 +7,7 @@
 #include "lib/utility.hpp"
 #include "lib/vector.hpp"
 
-#include "Ticket.hpp"
+#include "ticket.hpp"
 
 namespace sjtu {
     class Station {

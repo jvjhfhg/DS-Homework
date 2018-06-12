@@ -6,10 +6,10 @@
 #include "lib/utility.hpp"
 #include "lib/vector.hpp"
 
-#include "User.hpp"
-#include "Train.hpp"
-#include "Ticket.hpp"
-#include "Place.hpp"
+#include "user.hpp"
+#include "train.hpp"
+#include "ticket.hpp"
+#include "place.hpp"
 
 namespace sjtu {
     Places places;

@@ -22,12 +22,12 @@ namespace sjtu {
         
         void Insert(const String &name) {
             if (T.count(name)) return;
-            T2.insert(T.Size() + 1, name);
-            T.insert(name, T.Size() + 1);
+            T2.insert(T.size() + 1, name);
+            T.insert(name, T.size() + 1);
         }
 
         int Size() const {
-            return T.Size();
+            return T.size();
         }
 
         void Clear() {
