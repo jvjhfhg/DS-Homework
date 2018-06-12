@@ -2,8 +2,6 @@
 
 2018数据结构大作业_火车票管理系统
 
-> 成员：Zhiqi Zhang, Erzhi Liu, Zihua Zhao, Maosheng Zhu
-
 *不断更新中……*
 
 后端文件请放入`/source`文件夹中。
