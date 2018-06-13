@@ -32,7 +32,7 @@ namespace sjtu {
         BPTree<KeyData, String> T;
         
     public:
-        Tickets(): T("data_tickets") {}
+        Tickets(): T("data_tickets.rwdb") {}
         
         pair<vector<String>, bool> Query(int loc1, int loc2, char catalog) {
             auto t = T.query(KeyData(loc1, loc2, catalog));
@@ -57,7 +57,7 @@ namespace sjtu {
             String file;
             if (t.second == false) {
                 static char tmp[45];
-                sprintf(tmp, "data_tickets_%d_%d_%c", loc1, loc2, catalog);
+                sprintf(tmp, "data_tickets_%d_%d_%c.rwdb", loc1, loc2, catalog);
                 file = tmp;
                 T.insert(key, file);
             } else {
@@ -110,7 +110,7 @@ namespace sjtu {
         BPTree<KeyData, int> T;
         
     public:
-        OrderTime(): T("data_order_time") {}
+        OrderTime(): T("data_order_time.rwdb") {}
         
         void Add(const String &tid, int ticKind, int stationIdx, const Date &date, int ticCnt) {
             KeyData key(tid, ticKind, stationIdx, date);
@@ -193,7 +193,7 @@ namespace sjtu {
         };
 
     public:
-        OrderUser(): T("data_order_user") {}
+        OrderUser(): T("data_order_user.rwdb") {}
 
         vector<pair<String, Order>> Query(int id, const Date &date, char catalog) {
             auto t = T.query(KeyData(id, date, catalog));
@@ -227,7 +227,7 @@ namespace sjtu {
             String file;
             if (t.second == false) {
                 static char tmp[45];
-                sprintf(tmp, "data_orders_%d_%s_%c", id, d1.ToString(), catalog);
+                sprintf(tmp, "data_orders_%d_%s_%c.rwdb", id, d1.ToString(), catalog);
                 file = tmp;
                 T.insert(KeyData(id, d1, catalog), file);
             } else {

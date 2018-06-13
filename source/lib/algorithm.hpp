@@ -113,6 +113,14 @@ namespace sjtu {
         operator std::string() const {
             return std::string(_str);
         }
+        
+        char &operator [] (int x) {
+            return _str[x];
+        }
+        
+        const char operator [] (int x) const {
+            return _str[x];
+        }
     };
 
     struct Time {

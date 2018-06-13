@@ -10,7 +10,7 @@ namespace sjtu {
         FileMap<int, String> T2;
         
     public:
-        Places(): T("data_name_places"), T2("data_id_places") {}
+        Places(): T("data_name_places.rwdb"), T2("data_id_places.rwdb") {}
         
         int Query(const String &name) {
             return T.query(name).first;
