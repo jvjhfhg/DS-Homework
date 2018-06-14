@@ -110,7 +110,6 @@
 #### `user.hpp`
 
 -   **简述**：Users类，实现用户相关操作。内部实现的User类为用户信息类，请不要调用。
--   **`enum User::Privilege`**：权限的枚举类，可用值有`Unregistered = 0, Normal = 1, Admin = 2`。
 -   **接口**：
     -   `int Register(const char *name, const char *password, const char *email, const char *phone)`：注册一个新用户，返回id。
     -   `bool Login(int id, const char *password)`：登录用户，返回是否成功。
@@ -122,7 +121,6 @@
 #### `train.hpp`
 
 -   **简述**：Trains类，实现车次相关操作。内部实现的Station类和Train类分别为车站类和车次类，请不要调用。
--   **`enum Train::Status`**：车次发布状态的枚举类，可用值有`Private = 0, Public = 1`。
 -   **接口**：
     -   `bool Insert(String tid, String name, char catalog, int stationCnt, int ticKindCnt, String *tickets, Station *stations)`：添加一个新车次，其train_id为tid，返回是否成功。
     -   `bool Sale(String tid)`：发布train_id为tid的车次，返回是否成功。
