@@ -497,6 +497,7 @@ namespace sjtu
             res.push_back(vector<String>());
             auto t = trains.Query(tid);
             if (t.second == false || t.first.status == 0)
+            // if (t.second == false)
                 res[0].push_back("0");
             else
             {
