@@ -8,29 +8,29 @@
 #include "lib/b_plus_tree.hpp"
 #include "lib/utility.hpp"
 
-namespace sjtu
-{
-    class User
-    {
+namespace sjtu {
+    class User {
     public:
+        enum Privilege {
+            Unregistered = 0, Normal = 1, Admin = 2
+        };
+
         String name;
         String password;
         String email;
         String phone;
-        int priv;
+        Privilege priv;
         int id;
 
         User() = default;
 
         User(const char *_name, const char *_password, const char *_email, const char *_phone, int _id):
-            name(_name), password(_password), email(_email), phone(_phone), id(_id)
-        {
-            if (id == 2018) priv = 2;
-            else priv = 1;
+            name(_name), password(_password), email(_email), phone(_phone), id(_id) {
+            if (id == 2018) priv = Privilege::Admin;
+            else priv = Privilege::Normal;
         }
 
-        void Modify(const char *_name, const char *_password, const char *_email, const char *_phone)
-        {
+        void Modify(const char *_name, const char *_password, const char *_email, const char *_phone) {
             name = _name;
             password = _password;
             email = _email;
@@ -38,38 +38,36 @@ namespace sjtu
         }
     };
 
-    class Users
-    {
+    class Users {
     private:
         BPTree<int, User> T;
-        int curid;
-
+        int currentID;
+        
     public:
-        Users(): T("data_users.rwdb")
-        {
+        Users(): T("data_users.rwdb") {
             std::fstream file("data_users_id.rwdb", std::fstream::in);
             if (!file)
-                curid = 2018;
+                currentID = 2018;
             else
-                file >> curid;
+                file >> currentID;
             file.close();
         }
 
-        ~Users()
-        {
+        ~Users() {
             std::fstream idFile("data_users_id.rwdb", std::fstream::out);
-            idFile << curid << std::endl;
+            idFile << currentID << std::endl;
+            // std::cerr << currentID << std::endl;
             idFile.close();
         }
-
-        int Register(const char *name, const char *password, const char *email, const char *phone)
-        {
-            T.insert(curid, User(name, password, email, phone, curid));
-            return curid++;
+        
+        int Register(const char *name, const char *password, const char *email, const char *phone) {
+            // std::cerr << "in" << std::endl;
+            T.insert(currentID, User(name, password, email, phone, currentID));
+            // std::cerr << "out" << std::endl;
+            return currentID++;
         }
 
-        bool Login(int id, const String &password)
-        {
+        bool Login(int id, const String &password) {
             // std::cerr << "xixi" << std::endl;
             auto user = T.query(id);
             // std::cerr << "cnbb" << std::endl;
@@ -77,13 +75,11 @@ namespace sjtu
             return user.first.password == password;
         }
 
-        pair<User, bool> Query(int id)
-        {
+        pair<User, bool> Query(int id) {
             return T.query(id);
         }
 
-        bool Modify(int id, const char *name, const char *password, const char *email, const char *phone)
-        {
+        bool Modify(int id, const char *name, const char *password, const char *email, const char *phone) {
             auto user = T.query(id);
             if (user.second == false) return false;
             user.first.Modify(name, password, email, phone);
@@ -91,21 +87,19 @@ namespace sjtu
             return true;
         }
 
-        bool ModifyPrivilege(int id1, int id2, int priv)
-        {
+        bool ModifyPrivilege(int id1, int id2, User::Privilege priv) {
             auto user = T.query(id1);
-            if (user.second == false || user.first.priv != 2) return false;
+            if (user.second == false || user.first.priv != User::Privilege::Admin) return false;
             user = T.query(id2);
-            if (user.second == false || (user.first.priv == 2 && priv == 1)) return false;
+            if (user.second == false || (user.first.priv == User::Privilege::Admin && priv == User::Privilege::Normal)) return false;
             user.first.priv = priv;
             T.modify(id2, user.first);
             return true;
         }
 
-        void Clear()
-        {
+        void Clear() {
             T.clear();
-            curid = 2018;
+            currentID = 2018;
         }
     };
 }
