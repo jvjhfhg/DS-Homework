@@ -70,17 +70,13 @@ namespace sjtu
 
         int Register(const char *name, const char *password, const char *email, const char *phone)
         {
-            // std::cerr << "in" << std::endl;
             T.insert(currentID, User(name, password, email, phone, currentID));
-            // std::cerr << "out" << std::endl;
             return currentID++;
         }
 
         bool Login(int id, const String &password)
         {
-            // std::cerr << "xixi" << std::endl;
             auto user = T.query(id);
-            // std::cerr << "cnbb" << std::endl;
             if (user.second == false) return false;
             return user.first.password == password;
         }
