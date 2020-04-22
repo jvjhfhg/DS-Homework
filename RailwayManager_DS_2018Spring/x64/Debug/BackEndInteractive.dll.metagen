@@ -1,0 +1,43 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly BackEndInteractive, Version=0.0.*, Culture=固定语言(固定国家/地区): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class RailwayManager_DS_2018Spring.User: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.String, System.String, System.String, System.String, Int32, System.Enum): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String name : Public
+    System.String password : Public
+    System.String email : Public
+    System.String phone : Public
+    Int32 id : Public
+    System.Enum priv UserPrivilege IsBoxed : Public
+Class RailwayManager_DS_2018Spring.Database: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Login(Int32, String): PrivateScope, Public, Static, HideBySig
+    Register(String, String, String, String): PrivateScope, Public, Static, HideBySig
+    QueryProfile(Int32): PrivateScope, Public, Static, HideBySig
+    ModifyPrifile(Int32, String, String, String, String): PrivateScope, Public, Static, HideBySig
+    ModifyPrivilege(Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig
+    QueryTicket(String, String, String, String): PrivateScope, Public, Static, HideBySig
+    QueryTransfer(String, String, String, String): PrivateScope, Public, Static, HideBySig
+    BuyTicket(Int32, Int32, String, String, String, String, String): PrivateScope, Public, Static, HideBySig
+    QueryOrder(Int32, String, String): PrivateScope, Public, Static, HideBySig
+    RefundTicket(Int32, Int32, String, String, String, String, String): PrivateScope, Public, Static, HideBySig
+    AddTrain(List`1): PrivateScope, Public, Static, HideBySig
+    SaleTrain(String): PrivateScope, Public, Static, HideBySig
+    QueryTrain(String): PrivateScope, Public, Static, HideBySig
+    DeleteTrain(String): PrivateScope, Public, Static, HideBySig
+    ModifyTrain(List`1): PrivateScope, Public, Static, HideBySig
+    Clean(): PrivateScope, Public, Static, HideBySig
+Struct RailwayManager_DS_2018Spring.UserPrivilege: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    RailwayManager_DS_2018Spring.UserPrivilege Unregistered = 0 : Public, Static, Literal, HasDefault
+    RailwayManager_DS_2018Spring.UserPrivilege Normal = 1 : Public, Static, Literal, HasDefault
+    RailwayManager_DS_2018Spring.UserPrivilege Admin = 2 : Public, Static, Literal, HasDefault

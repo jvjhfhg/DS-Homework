@@ -1,0 +1,691 @@
+﻿  BackEnd.cpp
+c1xx : warning C4199: C++/CLI、C++/CX 或 OpenMP 不支持两阶段名称查找；请使用 /Zc:twoPhase-
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\algorithm.hpp(21): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\algorithm.hpp(35): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\algorithm.hpp(84): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\algorithm.hpp(90): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\algorithm.hpp(97): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\railway_manager.hpp(164): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\railway_manager.hpp(199): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\railway_manager.hpp(407): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(40): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(38): note: 编译 类 模板 成员函数 "sjtu::FileMap<int,sjtu::String,std::less<int>>::~FileMap(void)" 时
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(15): note: 参见对正在编译的函数 模板 实例化“sjtu::FileMap<int,sjtu::String,std::less<int>>::~FileMap(void)”的引用
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(12): note: 参见对正在编译的 类 模板 实例化 "sjtu::FileMap<int,sjtu::String,std::less<int>>" 的引用
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(79): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(78): note: 编译 类 模板 成员函数 "int sjtu::FileMap<sjtu::String,int,std::less<Key>>::size(void) const" 时
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(30): note: 参见对正在编译的函数 模板 实例化“int sjtu::FileMap<sjtu::String,int,std::less<Key>>::size(void) const”的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(11): note: 参见对正在编译的 类 模板 实例化 "sjtu::FileMap<sjtu::String,int,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(75): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(74): note: 编译 类 模板 成员函数 "int sjtu::FileMap<sjtu::String,int,std::less<Key>>::count(const Key &)" 时
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(29): note: 参见对正在编译的函数 模板 实例化“int sjtu::FileMap<sjtu::String,int,std::less<Key>>::count(const Key &)”的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(791): warning C4244: “初始化”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“int”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(783): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::erase(const Key &)" 时
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\train.hpp(139): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::erase(const Key &)”的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\train.hpp(97): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(793): warning C4244: “=”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“int”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(456): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(446): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::modify(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::String,
+              T=sjtu::Train
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\train.hpp(125): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::modify(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::String,
+              T=sjtu::Train
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::String,
+              T=sjtu::Train
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\train.hpp(111): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::String,
+              T=sjtu::Train
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(344): warning C4101: “nn”: 未引用的局部变量
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<sjtu::String,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::Train,
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\train.hpp(110): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<sjtu::String,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::Train,
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(456): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(446): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::modify(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(282): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::modify(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(234): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(277): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderUser::Key2,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::OrderUser::Order,
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(251): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderUser::Key2,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::OrderUser::Order,
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::OrderUser::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(267): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(202): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderUser::KeyData,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::String,
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(230): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderUser::KeyData,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::String,
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(456): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(446): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::modify(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::OrderTime::KeyData,
+              T=int
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(143): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::modify(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::OrderTime::KeyData,
+              T=int
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(127): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::OrderTime::KeyData,
+              T=int
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(140): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::OrderTime::KeyData,
+              T=int
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderTime::KeyData,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=int,
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(135): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<sjtu::OrderTime::KeyData,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=int,
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=sjtu::Tickets::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(71): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=sjtu::Tickets::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(37): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>" 的引用
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<sjtu::Tickets::KeyData,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::String,
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\ticket.hpp(44): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<sjtu::Tickets::KeyData,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::String,
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(456): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(446): note: 编译 类 模板 成员函数 "void sjtu::BPTree<int,sjtu::User,std::less<int>>::modify(const Key &,const T &)" 时
+          with
+          [
+              Key=int,
+              T=sjtu::User
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\user.hpp(94): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<int,sjtu::User,std::less<int>>::modify(const Key &,const T &)”的引用
+          with
+          [
+              Key=int,
+              T=sjtu::User
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\user.hpp(49): note: 参见对正在编译的 类 模板 实例化 "sjtu::BPTree<int,sjtu::User,std::less<int>>" 的引用
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(357): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(342): note: 编译 类 模板 成员函数 "bool sjtu::BPTree<int,sjtu::User,std::less<int>>::insert(const Key &,const T &)" 时
+          with
+          [
+              Key=int,
+              T=sjtu::User
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\user.hpp(73): note: 参见对正在编译的函数 模板 实例化“bool sjtu::BPTree<int,sjtu::User,std::less<int>>::insert(const Key &,const T &)”的引用
+          with
+          [
+              Key=int,
+              T=sjtu::User
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(366): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(387): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(408): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(169): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(156): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::BPTree<int,T,std::less<int>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::User,
+              Key=int
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\user.hpp(79): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::BPTree<int,T,std::less<int>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::User,
+              Key=int
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(175): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(291): warning C4297: “sjtu::map<Key,T,Compare>::iterator::operator ->”: 假定函数不引发异常，但确实发生了
+          with
+          [
+              Key=int,
+              T=sjtu::String,
+              Compare=std::less<int>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(291): note: 在函数上指定了 __declspec(nothrow)、throw()、noexcept(true)或 noexcept
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(289): note: 编译 类 模板 成员函数 "sjtu::pair<const KeyType,Type> *sjtu::map<KeyType,Type,Compare>::iterator::operator ->(void) noexcept const" 时
+          with
+          [
+              KeyType=int,
+              Type=sjtu::String,
+              Compare=std::less<int>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(56): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<const KeyType,Type> *sjtu::map<KeyType,Type,Compare>::iterator::operator ->(void) noexcept const”的引用
+          with
+          [
+              KeyType=int,
+              Type=sjtu::String,
+              Compare=std::less<int>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(56): note: 参见对正在编译的 类 模板 实例化 "sjtu::map<Key,T,Compare>::iterator" 的引用
+          with
+          [
+              Key=int,
+              T=sjtu::String,
+              Compare=std::less<int>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(53): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::FileMap<int,T,std::less<int>>::query(const Key &)" 时
+          with
+          [
+              T=sjtu::String,
+              Key=int
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(24): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::FileMap<int,T,std::less<int>>::query(const Key &)”的引用
+          with
+          [
+              T=sjtu::String,
+              Key=int
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(291): warning C4297: “sjtu::map<Key,T,Compare>::iterator::operator ->”: 假定函数不引发异常，但确实发生了
+          with
+          [
+              Key=sjtu::String,
+              T=int,
+              Compare=std::less<sjtu::String>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(291): note: 在函数上指定了 __declspec(nothrow)、throw()、noexcept(true)或 noexcept
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(289): note: 编译 类 模板 成员函数 "sjtu::pair<const KeyType,Type> *sjtu::map<KeyType,Type,Compare>::iterator::operator ->(void) noexcept const" 时
+          with
+          [
+              KeyType=sjtu::String,
+              Type=int,
+              Compare=std::less<sjtu::String>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(56): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<const KeyType,Type> *sjtu::map<KeyType,Type,Compare>::iterator::operator ->(void) noexcept const”的引用
+          with
+          [
+              KeyType=sjtu::String,
+              Type=int,
+              Compare=std::less<sjtu::String>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(56): note: 参见对正在编译的 类 模板 实例化 "sjtu::map<Key,T,Compare>::iterator" 的引用
+          with
+          [
+              Key=sjtu::String,
+              T=int,
+              Compare=std::less<sjtu::String>
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(53): note: 编译 类 模板 成员函数 "sjtu::pair<T,bool> sjtu::FileMap<sjtu::String,T,std::less<Key>>::query(const Key &)" 时
+          with
+          [
+              T=int,
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\place.hpp(19): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<T,bool> sjtu::FileMap<sjtu::String,T,std::less<Key>>::query(const Key &)”的引用
+          with
+          [
+              T=int,
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::Train,std::less<Key>>::ll)" 时
+          with
+          [
+              Key=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(787): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::String,sjtu::Train,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::Train,std::less<Key>>::ll)”的引用
+          with
+          [
+              Key=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(192): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(187): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::OrderUser::Order,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)" 时
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(216): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::OrderUser::Order,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::Key2,
+              T=sjtu::OrderUser::Order
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(188): warning C4101: “tmp”: 未引用的局部变量
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::OrderUser::Order,std::less<Key>>::ll)" 时
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(449): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderUser::Key2,sjtu::OrderUser::Order,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::OrderUser::Order,std::less<Key>>::ll)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::Key2
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(192): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(187): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)" 时
+          with
+          [
+              Key=sjtu::OrderUser::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(216): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::KeyData,
+              T=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::ll)" 时
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(345): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderUser::KeyData,sjtu::String,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::ll)”的引用
+          with
+          [
+              Key=sjtu::OrderUser::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::file_seek(sjtu::BPTree<Key,int,std::less<Key>>::ll)" 时
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(449): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::OrderTime::KeyData,int,std::less<Key>>::file_seek(sjtu::BPTree<Key,int,std::less<Key>>::ll)”的引用
+          with
+          [
+              Key=sjtu::OrderTime::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(192): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(187): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)" 时
+          with
+          [
+              Key=sjtu::Tickets::KeyData,
+              T=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(216): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::traverse(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::node *,sjtu::vector<sjtu::pair<Key,T>> &)”的引用
+          with
+          [
+              Key=sjtu::Tickets::KeyData,
+              T=sjtu::String
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::ll”转换到“long”，可能丢失数据
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::ll)" 时
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(345): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<sjtu::Tickets::KeyData,sjtu::String,std::less<Key>>::file_seek(sjtu::BPTree<Key,sjtu::String,std::less<Key>>::ll)”的引用
+          with
+          [
+              Key=sjtu::Tickets::KeyData
+          ]
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(55): warning C4244: “参数”: 从“sjtu::BPTree<int,sjtu::User,std::less<int>>::ll”转换到“long”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(54): note: 编译 类 模板 成员函数 "void sjtu::BPTree<int,sjtu::User,std::less<int>>::file_seek(sjtu::BPTree<int,sjtu::User,std::less<int>>::ll)" 时
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\b_plus_tree.hpp(449): note: 参见对正在编译的函数 模板 实例化“void sjtu::BPTree<int,sjtu::User,std::less<int>>::file_seek(sjtu::BPTree<int,sjtu::User,std::less<int>>::ll)”的引用
+d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(160): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(141): note: 编译 类 模板 成员函数 "sjtu::pair<sjtu::map<Key,T,Compare>::SplayNode *,bool> sjtu::map<Key,T,Compare>::_insert(const sjtu::pair<const KeyType,Type> &)" 时
+          with
+          [
+              Key=int,
+              T=sjtu::String,
+              Compare=std::less<int>,
+              KeyType=int,
+              Type=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\map.hpp(471): note: 参见对正在编译的函数 模板 实例化“sjtu::pair<sjtu::map<Key,T,Compare>::SplayNode *,bool> sjtu::map<Key,T,Compare>::_insert(const sjtu::pair<const KeyType,Type> &)”的引用
+          with
+          [
+              Key=int,
+              T=sjtu::String,
+              Compare=std::less<int>,
+              KeyType=int,
+              Type=sjtu::String
+          ]
+  d:\github-clones\railwaymanagementsystem_fake12306\source\lib\file_map.hpp(13): note: 参见对正在编译的 类 模板 实例化 "sjtu::map<Key,T,Compare>" 的引用
+          with
+          [
+              Key=int,
+              T=sjtu::String,
+              Compare=std::less<int>
+          ]
+  Project1.vcxproj -> D:\Github-Clones\RailwayManagementSystem_Fake12306\RailwayManager_DS_2018Spring\x64\Debug\BackEndInteractive.dll
